@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
     actioncable (5.0.0.1)
       actionpack (= 5.0.0.1)
@@ -43,10 +44,17 @@ GEM
       sprockets (>= 3.0, < 5)
       tilt
     arel (7.1.4)
+    bcrypt (3.1.11)
     builder (3.2.2)
     byebug (9.0.6)
     concurrent-ruby (1.0.2)
     debug_inspector (0.0.2)
+    devise (4.2.0)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0, < 5.1)
+      responders
+      warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.14)
@@ -70,9 +78,11 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.1)
     multi_json (1.12.1)
+    ng-rails-csrf (0.1.0)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    orm_adapter (0.5.0)
     puma (3.6.0)
     rack (2.0.1)
     rack-test (0.6.3)
@@ -89,6 +99,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 5.0.0.1)
       sprockets-rails (>= 2.0.0)
+    rails-assets-angular (1.5.8)
+    rails-assets-angular-devise (1.3.0)
+      rails-assets-angular (>= 1.2.0, < 2)
     rails-dom-testing (2.0.1)
       activesupport (>= 4.2.0, < 6.0)
       nokogiri (~> 1.6.0)
@@ -104,6 +117,8 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.7)
       ffi (>= 0.5.0)
+    responders (2.3.0)
+      railties (>= 4.2.0, < 5.1)
     sass (3.4.22)
     sass-rails (5.0.6)
       railties (>= 4.0.0, < 6)
@@ -131,6 +146,8 @@ GEM
       thread_safe (~> 0.1)
     uglifier (3.0.3)
       execjs (>= 0.3.0, < 3)
+    warden (1.2.6)
+      rack (>= 1.0)
     web-console (3.4.0)
       actionview (>= 5.0)
       activemodel (>= 5.0)
@@ -146,10 +163,13 @@ PLATFORMS
 DEPENDENCIES
   angular-rails-templates
   byebug
+  devise
   jbuilder (~> 2.5)
   listen (~> 3.0.5)
+  ng-rails-csrf
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
+  rails-assets-angular-devise!
   sass-rails (~> 5.0)
   spring
   spring-watcher-listen (~> 2.0.0)
