@@ -22,7 +22,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'angular-rails-templates'
-gem 'ng-rails-csrf'
+gem 'angular_rails_csrf'
 gem 'devise'
 source "https://rails-assets.org" do
   gem "rails-assets-angular-devise"

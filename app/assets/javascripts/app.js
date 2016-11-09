@@ -1,4 +1,4 @@
-angular.module('pomoTracking',['ui.router', 'templates', 'ng-rails-csrf', 'Devise'])
+angular.module('pomoTracking',['ui.router', 'templates', 'Devise'])
 
 .config([
     '$stateProvider',

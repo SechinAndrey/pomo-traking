@@ -43,6 +43,8 @@ GEM
       railties (>= 4.2, < 6)
       sprockets (>= 3.0, < 5)
       tilt
+    angular_rails_csrf (2.0.0)
+      railties (>= 3, < 5.1)
     arel (7.1.4)
     bcrypt (3.1.11)
     builder (3.2.2)
@@ -78,7 +80,6 @@ GEM
     mini_portile2 (2.1.0)
     minitest (5.9.1)
     multi_json (1.12.1)
-    ng-rails-csrf (0.1.0)
     nio4r (1.2.1)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
@@ -162,11 +163,11 @@ PLATFORMS
 
 DEPENDENCIES
   angular-rails-templates
+  angular_rails_csrf
   byebug
   devise
   jbuilder (~> 2.5)
   listen (~> 3.0.5)
-  ng-rails-csrf
   puma (~> 3.0)
   rails (~> 5.0.0, >= 5.0.0.1)
   rails-assets-angular-devise!
