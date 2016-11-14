@@ -10,19 +10,23 @@ angular.module('pomoTracking')
 
         $scope.login = function(){
             Auth.login($scope.user).then(function(){
-                console.log('home state: Auth.currentUser() -> ', Auth.currentUser() );
                 $state.go('home');
             });
         };
 
         $scope.register = function(){
             Auth.register($scope.user).then(function(data){
+                var avatar = $scope.uploader.queue[0];
+                avatar.headers = {'X-CSRF-Token': $cookies.get('XSRF-TOKEN')};
+                avatar.url = "/avatars?id=" + data.id;
+                avatar.onSuccess = function(){
+                    $state.go('home');
+                };
+                avatar.onError = function(response, status, headers){
+                    console.log('   load avatar error: ', response);
+                };
+                avatar.upload();
 
-                av = $scope.uploader.queue[0];
-                av.headers = {'X-CSRF-Token': $cookies.get('XSRF-TOKEN')};
-                av.url = "/avatars?id=" + data.id;
-                av.upload();
-                $state.go('home');
             })
         };
     }
