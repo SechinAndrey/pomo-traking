@@ -1,4 +1,4 @@
-angular.module('pomoTracking',['ui.router', 'templates', 'Devise'])
+angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise', 'angularFileUpload'])
 
 .config([
     '$stateProvider',
