@@ -6,4 +6,6 @@
         <li ng-show="signedIn()"><a href="#/">{{ user.username }}</a></li>
         <li ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
     </ul>
+    <input type="text" name="userName"
+           ng-model="user.username" />
 </div>

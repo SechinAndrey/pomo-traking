@@ -23,10 +23,9 @@ angular.module('pomoTracking')
                     $state.go('home');
                 };
                 avatar.onError = function(response, status, headers){
-                    console.log('   load avatar error: ', response);
+                    console.log('!!! load avatar error: ', response);
                 };
                 avatar.upload();
-
             })
         };
     }
