@@ -4,4 +4,6 @@
 //= require angular-devise
 //= require angular-file-upload
 //= require angular-cookies
+//= require angular-websocket
+//= require angular-actioncable
 //= require_tree .
