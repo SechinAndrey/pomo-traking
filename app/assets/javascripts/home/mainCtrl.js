@@ -1,7 +1,6 @@
 angular.module('pomoTracking')
 .controller('MainCtrl', [
     '$scope',
-    '$http',
-    function($scope, $http){
+    function($scope){
         $scope.test = 'HomePage';
     }]);
