@@ -6,4 +6,4 @@ test:
 
 production:
   adapter: redis
-  url: redis://localhost:6379
+  url: <%= ENV["RAILS_ENV"] == "production" && (c = CF::App::Credentials.find_by_service_tag('redis')) && Addressable::URI.new(scheme: 'redis', host: c.fetch('hostname'), password: c.fetch('password'), port: c.fetch('port')).to_s %>
