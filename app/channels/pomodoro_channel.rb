@@ -58,6 +58,7 @@ class PomodoroChannel < ApplicationCable::Channel
     unless current_user.pomo_started? # when pomo NOT started
 
       porject_id = data.fetch('message')['project']
+      # получаем проект
       project = current_user.projects.find(porject_id)
 
       # получаем последний цикл
@@ -132,7 +133,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def end
     # Должен менять:
-    #   current_user.started_project на nil
+    #   current_user.started_proect на nil
     #   изменить period.ended на true
     #   если последний период в цикле то:
     #     изменить pomo_cycle.ended на true И разослать информацию о завершении цикла ???
