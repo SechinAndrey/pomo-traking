@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pomo_cycle_id: 1
+  type: 
+  end_time: 1
+  ended: false
+
+two:
+  pomo_cycle_id: 1
+  type: 
+  end_time: 1
+  ended: false

@@ -10,13 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161111130949) do
+ActiveRecord::Schema.define(version: 20161130093949) do
 
   create_table "avatars", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string   "avatar"
     t.integer  "user_id"
+  end
+
+  create_table "parts", force: :cascade do |t|
+    t.integer  "period_id"
+    t.string   "parts_type"
+    t.integer  "time",       limit: 8
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+  end
+
+  create_table "periods", force: :cascade do |t|
+    t.integer  "pomo_cycle_id"
+    t.string   "periods_type"
+    t.integer  "end_time",      limit: 8
+    t.string   "status"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "pause_time",    limit: 8
+  end
+
+  create_table "pomo_cycles", force: :cascade do |t|
+    t.integer  "project_id"
+    t.boolean  "ended"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "title"
+    t.integer  "pomo_time"
+    t.integer  "short_break_time"
+    t.integer  "long_break_time"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -33,6 +68,10 @@ ActiveRecord::Schema.define(version: 20161111130949) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
+    t.integer  "pomo_time",              default: 25
+    t.integer  "short_break_time",       default: 5
+    t.integer  "long_break_time",        default: 15
+    t.integer  "started_project"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -6,7 +6,15 @@
         <li ng-show="signedIn()"><a href="#/">{{ user.username }}</a></li>
         <li ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
     </ul>
-    <input type="text" name="userName"
-           ng-model="user.username" />
-    <button ng-click="sendToMyChannel(user.username)">Send</button>
+    <!--<input type="text" name="userName"-->
+           <!--ng-model="user.username" />-->
+    <!--<button ng-click="sendToMyChannel(user.username)">Send</button>-->
+    <br>
+    <br>
+    <span>{{("00" + pomodoro.min).slice(-2)}} : {{("00" + pomodoro.sec).slice(-2)}}</span>
+    <br>
+    <br>
+    <button ng-click="pomodoroStart()">Start</button>
+    <button ng-click="pomodoroPause()">Pause</button>
+    <button ng-click="pomodoroStop()">Stop</button>
 </div>

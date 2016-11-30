@@ -3,59 +3,75 @@ angular.module('pomoTracking')
 .controller('NavCtrl', [
     '$scope',
     'Auth',
-    'ActionCableChannel',
-    function($scope, Auth, ActionCableChannel){
+    'pomodoro',
+    'pomodoroSocket',
+    function($scope, Auth, pomodoro, pomodoroSocket){
 
         $scope.signedIn = Auth.isAuthenticated;
         $scope.logout = Auth.logout;
+        $scope.pomodoro = pomodoro;
 
-        var consumer;
+        /* authentication functions */
 
         Auth.currentUser().then(function (user){
             $scope.user = user;
-            if(!consumer) {
-                console.log('curr_user');
-                initActionCable();
+            if(!pomodoroSocket.pomodoroChannel) {
+                pomodoroSocket.initActionCable($scope.user); //TODO: remove email
             }
         });
 
         $scope.$on('devise:new-registration', function (e, user){
             $scope.user = user;
-            if(!consumer) {
-                initActionCable();
+            if(!pomodoroSocket.pomodoroChannel) {
+                pomodoroSocket.initActionCable($scope.user); //TODO: remove email
             }
         });
 
         $scope.$on('devise:login', function (e, user){
             $scope.user = user;
-            if(!consumer) {
-                console.log('login');
-                initActionCable();
+            if(!pomodoroSocket.pomodoroChannel) {
+                pomodoroSocket.initActionCable($scope.user); //TODO: remove email
             }
         });
 
         $scope.$on('devise:logout', function (e, user){
             $scope.user = {};
-            consumer.unsubscribe().then(function(){ $scope.sendToMyChannel = undefined; });
-            consumer = undefined;
+            pomodoroSocket.destroy();
         });
 
-        var callback = function(message) {
-            $scope.user.username = message;
+        /* ************** */
+
+        $scope.$on("$destroy", function(){
+            pomodoroSocket.destroy();
+        });
+
+        /* pomodoro actions */
+
+        $scope.pomodoroStart = function(){
+            data = {
+                action: 'start',
+                project: 1
+            };
+            pomodoroSocket.send(data);
         };
 
-        var initActionCable = function(){
-            consumer = new ActionCableChannel("PomodoroChannel", {user: $scope.user.email});
+        $scope.pomodoroPause = function(){
+            data = {
+                action: 'pause',
+                project: 1,
+                pause_time:  new Date().getTime()
+            };
+            pomodoroSocket.send(data);
+        };
 
-            consumer.subscribe(callback).then(function(){
-                $scope.sendToMyChannel = function(message){
-                    console.log('Send -> ', message);
-                    consumer.send(message);
-                };
-                $scope.$on("$destroy", function(){
-                    consumer.unsubscribe().then(function(){ $scope.sendToMyChannel = undefined; });
-                });
-            });
-        }
+        $scope.pomodoroStop = function(){
+            data = {
+                action: 'stop',
+                project: 1
+            };
+            pomodoroSocket.send(data);
+        };
+
+        /* ************** */
     }
 ]);
