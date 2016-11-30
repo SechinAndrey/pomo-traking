@@ -55,7 +55,7 @@ class PomodoroChannel < ApplicationCable::Channel
     #   current_user.started_proect на номер запушеного проекта
     #   разослать  action: 'start', end_time: period.end_time
 
-    unless current_user.pomo_started? # when pomo NOT started
+    unless User.find(current_user.id).pomo_started? # when pomo NOT started
 
       porject_id = data.fetch('message')['project']
       # получаем проект
@@ -85,10 +85,9 @@ class PomodoroChannel < ApplicationCable::Channel
         end
       end
 
-      current_user.started_project = project.id
-      current_user.save
-
-      ap period
+      User.find(current_user.id).update({started_project: project.id})
+      # current_user.started_project = project.id
+      # current_user.save
       ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time}
     end
 
@@ -103,8 +102,6 @@ class PomodoroChannel < ApplicationCable::Channel
     #   записать в базу время паузы
     #   разослать action: 'pause'
 
-
-
     ActionCable.server.broadcast stream_name, {action: 'pause'}
   end
 
@@ -116,18 +113,23 @@ class PomodoroChannel < ApplicationCable::Channel
     #   current_user.started_project на nil
     #   удалить текущий период
 
-    if current_user.pomo_started?
-
-      current_user.started_project = nil
+    if User.find(current_user.id).pomo_started?
 
       porject_id = data.fetch('message')['project']
       project = current_user.projects.find(porject_id)
 
-      project.pomo_cycles.last.periods.last.destroy
+      period = project.pomo_cycles.last.periods.last
+
+      User.find(current_user.id).update({started_project: nil})
+      # current_user.started_project = nil
+      # current_user.save
+
+      if period
+        period.destroy
+      end
 
       ActionCable.server.broadcast stream_name, {action: 'stop'}
     end
-
 
   end
 
