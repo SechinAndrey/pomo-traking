@@ -4,8 +4,7 @@ angular.module('pomoTracking')
     '$scope',
     'Auth',
     'pomodoro',
-    'pomodoroSocket',
-    function($scope, Auth, pomodoro, pomodoroSocket){
+    function($scope, Auth, pomodoro){
 
         $scope.signedIn = Auth.isAuthenticated;
         $scope.logout = Auth.logout;
@@ -15,34 +14,34 @@ angular.module('pomoTracking')
 
         Auth.currentUser().then(function (user){
             $scope.user = user;
-            if(!pomodoroSocket.pomodoroChannel) {
-                pomodoroSocket.initActionCable($scope.user); //TODO: remove email
+            if(!pomodoro.Socket.pomodoroChannel) {
+                pomodoro.Socket.initActionCable();
             }
         });
 
         $scope.$on('devise:new-registration', function (e, user){
             $scope.user = user;
-            if(!pomodoroSocket.pomodoroChannel) {
-                pomodoroSocket.initActionCable($scope.user); //TODO: remove email
+            if(!pomodoro.Socket.pomodoroChannel) {
+                pomodoro.Socket.initActionCable();
             }
         });
 
         $scope.$on('devise:login', function (e, user){
             $scope.user = user;
-            if(!pomodoroSocket.pomodoroChannel) {
-                pomodoroSocket.initActionCable($scope.user); //TODO: remove email
+            if(!pomodoro.Socket.pomodoroChannel) {
+                pomodoro.Socket.initActionCable($scope.user);
             }
         });
 
         $scope.$on('devise:logout', function (e, user){
             $scope.user = {};
-            pomodoroSocket.destroy();
+            pomodoro.Socket.destroy();
         });
 
         /* ************** */
 
         $scope.$on("$destroy", function(){
-            pomodoroSocket.destroy();
+            pomodoro.Socket.destroy();
         });
 
         /* pomodoro actions */
@@ -50,26 +49,26 @@ angular.module('pomoTracking')
         $scope.pomodoroStart = function(){
             data = {
                 action: 'start',
-                project: 1
+                project: 1 //TODO: set to project id
             };
-            pomodoroSocket.send(data);
+            pomodoro.Socket.send(data);
         };
 
         $scope.pomodoroPause = function(){
             data = {
                 action: 'pause',
-                project: 1,
+                project: 1, //TODO: set to project id
                 pause_time:  new Date().getTime()
             };
-            pomodoroSocket.send(data);
+            pomodoro.Socket.send(data);
         };
 
         $scope.pomodoroStop = function(){
             data = {
                 action: 'stop',
-                project: 1
+                project: 1 //TODO: set to project id
             };
-            pomodoroSocket.send(data);
+            pomodoro.Socket.send(data);
         };
 
         /* ************** */

@@ -23,6 +23,8 @@ class PomodoroChannel < ApplicationCable::Channel
         pause data
       when 'stop'
         stop data
+      when 'end'
+        end_pomo data
       else
         ActionCable.server.broadcast stream_name, {action: 'Wrong Action'}
     end
@@ -53,7 +55,7 @@ class PomodoroChannel < ApplicationCable::Channel
     # Должен менять:
     #   если помидор уже был запущен вернуть информацию об этом
     #   current_user.started_proect на номер запушеного проекта
-    #   status: 'starting'
+    #   status: 'started'
     #   разослать  action: 'start', end_time: period.end_time
 
     unless User.find(current_user.id).pomo_started? # when pomo NOT started
@@ -73,23 +75,23 @@ class PomodoroChannel < ApplicationCable::Channel
       period = pomo_cycle.periods.last
       # если периода нет или он завершился создаем новый если на паузе обновляем end_time
       if !period
-        period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
+        period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'started', end_time: (Time.now + 1.minutes).to_m})
       elsif period.ended?
         if period.periods_type == 'shot break'
-          period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
+          period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'started', end_time: (Time.now + 1.minutes).to_m})
         elsif period.periods_type == 'pomo'
-          if pomo_cycle.periods.size == 7
-            period = pomo_cycle.periods.create({periods_type: 'long break', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
+          if pomo_cycle.periods.size == 7 # pomo count in cycle
+            period = pomo_cycle.periods.create({periods_type: 'long break', status: 'started', end_time: (Time.now + 1.minutes).to_m})
           else
-            period = pomo_cycle.periods.create({periods_type: 'shot break', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
+            period = pomo_cycle.periods.create({periods_type: 'shot break', status: 'started', end_time: (Time.now + 1.minutes).to_m})
           end
         end
       elsif period.paused?
-        period.update({status: 'starting', end_time: Time.now.to_m + (period.end_time - period.pause_time)})
+        period.update({status: 'started', end_time: Time.now.to_m + (period.end_time - period.pause_time)})
       end
 
       User.find(current_user.id).update({started_project: project.id})
-      ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time, period_type: period.periods_type}
+      ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time, period_type: period.periods_type, periods: pomo_cycle.periods}
     end
 
   end
@@ -146,7 +148,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
   end
 
-  def end
+  def end_pomo data
     # Должен менять:
     #   period status: 'ended'
     #
@@ -157,6 +159,27 @@ class PomodoroChannel < ApplicationCable::Channel
     #     запустить следующий период
 
     ap 'END METHOD'
+
+    if User.find(current_user.id).pomo_started?
+
+      porject_id = data.fetch('message')['project']
+      project = current_user.projects.find(porject_id)
+
+      pomo_cycle = project.pomo_cycles.last
+      periods = pomo_cycle.periods
+      period = periods.last
+
+      period.update({status: 'ended'})
+      User.find(current_user.id).update({started_project: nil})
+
+      if periods.size == 8
+        pomo_cycle.update({ended: true})
+        ActionCable.server.broadcast stream_name, {action: 'end'}
+      else
+        start data
+      end
+
+    end
   end
 
 end
