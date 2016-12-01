@@ -11,10 +11,12 @@ angular.module('pomoTracking')
             var timer;
 
             o.start = function(){
+                var time;
                 timer = $interval(function() {
-                    var time = o.endTime - new Date().getTime();
+                    time = o.endTime - new Date().getTime();
                     o.min = Math.ceil(time/60000);
                     o.sec = Math.ceil(time/1000 % 60);
+                    if(time < 300){}
                 }, 200);
             };
 

@@ -12,15 +12,15 @@ class PomodoroChannel < ApplicationCable::Channel
   end
 
   def receive(data)
-    puts
-    ap data
-    puts
+    # puts
+    # ap data
+    # puts
 
     case data.fetch('message')['action']
       when 'start'
         start data
       when 'pause'
-        pause
+        pause data
       when 'stop'
         stop data
       else
@@ -53,6 +53,7 @@ class PomodoroChannel < ApplicationCable::Channel
     # Должен менять:
     #   если помидор уже был запущен вернуть информацию об этом
     #   current_user.started_proect на номер запушеного проекта
+    #   status: 'starting'
     #   разослать  action: 'start', end_time: period.end_time
 
     unless User.find(current_user.id).pomo_started? # when pomo NOT started
@@ -70,39 +71,51 @@ class PomodoroChannel < ApplicationCable::Channel
 
       # получаем последний период
       period = pomo_cycle.periods.last
-      # если периода нет или он завершился создаем новый
+      # если периода нет или он завершился создаем новый если на паузе обновляем end_time
       if !period
-        period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'starting', end_time: (Time.now + 24.minutes - 1.second).to_m})
+        period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
       elsif period.ended?
         if period.periods_type == 'shot break'
-          period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'starting', end_time: (Time.now + 24.minutes - 1.second).to_m})
+          period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
         elsif period.periods_type == 'pomo'
-          if period.id == 7
-            period = pomo_cycle.periods.create({periods_type: 'long break', status: 'starting', end_time: (Time.now + 14.minutes - 1.second).to_m})
+          if pomo_cycle.periods.size == 7
+            period = pomo_cycle.periods.create({periods_type: 'long break', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
           else
-            period = pomo_cycle.periods.create({periods_type: 'shot break', status: 'starting', end_time: (Time.now + 4.minutes - 1.second).to_m})
+            period = pomo_cycle.periods.create({periods_type: 'shot break', status: 'starting', end_time: (Time.now + 1.minutes - 1.second).to_m})
           end
         end
+      elsif period.paused?
+        period.update({status: 'starting', end_time: Time.now.to_m + (period.end_time - period.pause_time)})
       end
 
       User.find(current_user.id).update({started_project: project.id})
-      # current_user.started_project = project.id
-      # current_user.save
-      ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time}
+      ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time, period_type: period.periods_type}
     end
 
   end
 
-  def pause
+  def pause data
     puts
     ap 'PAUSE METHOD'
 
     # Должен менять:
     #   current_user.started_project на nil
+    #   period status: 'paused'
     #   записать в базу время паузы
     #   разослать action: 'pause'
 
-    ActionCable.server.broadcast stream_name, {action: 'pause'}
+    if User.find(current_user.id).pomo_started?
+      User.find(current_user.id).update({started_project: nil})
+
+      porject_id = data.fetch('message')['project']
+      project = current_user.projects.find(porject_id)
+
+      period = project.pomo_cycles.last.periods.last
+      period.update({status: 'paused', pause_time: Time.now.to_m})
+
+      ActionCable.server.broadcast stream_name, {action: 'pause'}
+    end
+
   end
 
   def stop data
@@ -135,10 +148,11 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def end
     # Должен менять:
-    #   current_user.started_proect на nil
-    #   изменить period.ended на true
+    #   period status: 'ended'
+    #
     #   если последний период в цикле то:
-    #     изменить pomo_cycle.ended на true И разослать информацию о завершении цикла ???
+    #     изменить pomo_cycle.ended на true    И разослать информацию о завершении цикла ???
+    #     current_user.started_proect на nil
     #   если НЕ последний период в цикле то:
     #     запустить следующий период
 
@@ -146,51 +160,3 @@ class PomodoroChannel < ApplicationCable::Channel
   end
 
 end
-# [:project]
-
-
-
-# #TODO: fix to run only one timer
-# def start
-#   ap 'START METHOD'
-#
-#   # Должен менять:
-#   #   если помидор уже был запущен вернуть информацию об этом
-#   #   current_user.started_proect на номер запушеного проекта
-#   #   разослать  action: 'start', end_time: period.end_time
-#
-#
-#   if current_user.pomo_started?
-#     return ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time}
-#   end
-#
-#   project = current_user.projects.find(current_user.started_proect)
-#   pomo_cycle = project.pomo_cycles.last
-#
-#   if !pomo_cycle or pomo_cycle.ended
-#     pomo_cycle = project.pomo_cycles.create({ended: false})
-#   end
-#
-#   periods = pomo_cycle.periods
-#   period = periods.last
-#
-#   if !period or period.ended
-#     if periods.empty?
-#       period = pomo_cycle.periods.create({periods_type:'pomo', end_time: (Time.now + 25.minutes).to_m})
-#     elsif periods[periods.size - 1].periods_type == 'short brake'
-#       period = pomo_cycle.periods.create({periods_type: 'pomo', end_time: (Time.now + 25.minutes).to_m})
-#     elsif periods[periods.size - 1].periods_type == 'pomo'
-#       (periods.size == (cycle_size - 1)) ?
-#           period = pomo_cycle.periods.create({periods_type: 'long break', end_time: (Time.now + 15.minutes).to_m}) :
-#           period = pomo_cycle.periods.create({periods_type: 'shot break', end_time: (Time.now + 5.minutes).to_m})
-#     end
-#   else
-#     if period.parts.last and period.parts.last.parts_type == 'pause'
-#       period.end_time = (Time.now + period.end_time - period.parts.last.time).to_m
-#     end
-#     period.save
-#   end
-#
-#   part = period.parts.create({parts_type: 'start', time: Time.now.to_m})
-#   ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time}
-# end

@@ -4,6 +4,7 @@ angular.module('pomoTracking')
         'pomodoro',
         function(ActionCableChannel, pomodoro){
             var o = {
+                period_type: undefined,
                 pomodoroChannel: undefined
             };
 
@@ -12,6 +13,7 @@ angular.module('pomoTracking')
                 switch (data.action) {
                     case "start":
                         pomodoro.endTime = data.end_time;
+                        pomodoro.period_type = data.period_type;
                         pomodoro.start();
                         break;
                     case "pause":

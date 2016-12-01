@@ -7,7 +7,7 @@ class Period < ApplicationRecord
   end
 
   def paused?
-    self.status == 'pause'
+    self.status == 'paused'
   end
 
 end
