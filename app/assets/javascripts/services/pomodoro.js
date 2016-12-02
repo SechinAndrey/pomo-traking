@@ -27,6 +27,7 @@ angular.module('pomoTracking')
             };
 
             o.pause = function(){
+                console.log("222222222222222222222222222222222222222222");
                 $interval.cancel(timer);
             };
 
@@ -40,20 +41,40 @@ angular.module('pomoTracking')
                 console.log('PomodoroChannel callback data: ', data);
                 switch (data.action) {
                     case "loading":
-                        o.period_type = data.period_type;
                         o.periods = data.periods;
+                        o.endTime = data.periods[data.periods.length - 1].end_time;
+                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
+                        o.time = o.endTime - new Date().getTime();
+                        o.min = Math.floor(o.time/60000);
+                        o.sec = Math.floor(o.time/1000 % 60);
                         break;
                     case "start":
-                        o.endTime = data.end_time;
-                        o.period_type = data.period_type;
                         o.periods = data.periods;
+                        o.endTime = data.periods[data.periods.length - 1].end_time;
+                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
+                        o.time = o.endTime - new Date().getTime();
+                        o.min = Math.floor(o.time/60000);
+                        o.sec = Math.floor(o.time/1000 % 60);
                         o.start();
                         break;
                     case "pause":
+                        console.log("1111111111111111111111");
+                        o.periods = data.periods;
+                        o.endTime = data.periods[data.periods.length - 1].end_time;
+                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
+                        o.time = o.endTime - new Date().getTime();
+                        o.min = Math.floor(o.time/60000);
+                        o.sec = Math.floor(o.time/1000 % 60);
                         o.pause();
                         break;
                     case "stop":
                     case "end":
+                        o.periods = data.periods;
+                        o.endTime = data.periods[data.periods.length - 1].end_time;
+                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
+                        o.time = o.endTime - new Date().getTime();
+                        o.min = Math.floor(o.time/60000);
+                        o.sec = Math.floor(o.time/1000 % 60);
                         o.stop();
                         break;
                 }

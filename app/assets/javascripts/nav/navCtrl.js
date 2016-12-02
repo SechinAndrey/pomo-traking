@@ -58,7 +58,6 @@ angular.module('pomoTracking')
             data = {
                 action: 'pause',
                 project: 1, //TODO: set to project id
-                pause_time:  new Date().getTime()
             };
             pomodoro.Socket.send(data);
         };

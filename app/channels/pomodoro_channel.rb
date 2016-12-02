@@ -58,10 +58,12 @@ class PomodoroChannel < ApplicationCable::Channel
         if period.end_time - Time.now.to_m <= 0
           end_pomo user.current_project
         else
-          ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time, period_type: period.periods_type, periods: pomo_cycle.periods}
+          ap "1"
+          ActionCable.server.broadcast stream_name, {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
         end
       elsif pomo_cycle.periods.size > 0
-        ActionCable.server.broadcast stream_name, {action: 'loading', period_type: period.periods_type, periods: pomo_cycle.periods}
+        ap "2"
+        ActionCable.server.broadcast stream_name, {action: 'loading', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
       end
     end
 
@@ -109,7 +111,7 @@ class PomodoroChannel < ApplicationCable::Channel
       end
 
       User.find(current_user.id).update({current_project: project.id, current_project_status: 'started'})
-      ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time, period_type: period.periods_type, periods: pomo_cycle.periods}
+      ActionCable.server.broadcast stream_name, {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
     end
 
   end
@@ -129,10 +131,11 @@ class PomodoroChannel < ApplicationCable::Channel
 
       project = current_user.projects.find(porject_id)
 
-      period = project.pomo_cycles.last.periods.last
+      pomo_cycle = project.pomo_cycles.last
+      period = pomo_cycle.periods.last
       period.update({status: 'paused', pause_time: Time.now.to_m})
 
-      ActionCable.server.broadcast stream_name, {action: 'pause'}
+      ActionCable.server.broadcast stream_name, {action: 'pause', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
     end
 
   end
@@ -149,17 +152,17 @@ class PomodoroChannel < ApplicationCable::Channel
 
       project = current_user.projects.find(porject_id)
 
-      period = project.pomo_cycles.last.periods.last
+
+      pomo_cycle = project.pomo_cycles.last
+      period = pomo_cycle.periods.last
 
       User.find(current_user.id).update({current_project_status: 'paused'})
-      # current_user.started_project = nil
-      # current_user.save
 
       if period
         period.destroy
       end
 
-      ActionCable.server.broadcast stream_name, {action: 'stop'}
+      ActionCable.server.broadcast stream_name, {action: 'stop', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
     end
 
   end
@@ -189,7 +192,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
       if periods.size == 8
         pomo_cycle.update({ended: true})
-        ActionCable.server.broadcast stream_name, {action: 'end'}
+        ActionCable.server.broadcast stream_name, {action: 'end', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
       else
         start porject_id
       end
