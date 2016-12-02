@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161130093949) do
+ActiveRecord::Schema.define(version: 20161202100349) do
 
   create_table "avatars", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -71,7 +71,8 @@ ActiveRecord::Schema.define(version: 20161130093949) do
     t.integer  "pomo_time",              default: 25
     t.integer  "short_break_time",       default: 5
     t.integer  "long_break_time",        default: 15
-    t.integer  "started_project"
+    t.integer  "current_project"
+    t.string   "current_project_status"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

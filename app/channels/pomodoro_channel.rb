@@ -5,6 +5,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from stream_name
+    loading
   end
 
   def unsubscribed
@@ -18,13 +19,13 @@ class PomodoroChannel < ApplicationCable::Channel
 
     case data.fetch('message')['action']
       when 'start'
-        start data
+        start data.fetch('message')['project']
       when 'pause'
-        pause data
+        pause data.fetch('message')['project']
       when 'stop'
-        stop data
+        stop data.fetch('message')['project']
       when 'end'
-        end_pomo data
+        end_pomo data.fetch('message')['project']
       else
         ActionCable.server.broadcast stream_name, {action: 'Wrong Action'}
     end
@@ -46,9 +47,27 @@ class PomodoroChannel < ApplicationCable::Channel
     #       вызвать метод end
     #     если end_time - Time.now > 0 то:
     #       вызвать метод start
+
+    user =  User.find(current_user.id)
+    unless user.current_project.nil?
+      project = user.projects.find(user.current_project)
+      pomo_cycle = project.pomo_cycles.last
+      period = pomo_cycle.periods.last
+
+      if user.pomo_started?
+        if period.end_time - Time.now.to_m <= 0
+          end_pomo user.current_project
+        else
+          ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time, period_type: period.periods_type, periods: pomo_cycle.periods}
+        end
+      elsif pomo_cycle.periods.size > 0
+        ActionCable.server.broadcast stream_name, {action: 'loading', period_type: period.periods_type, periods: pomo_cycle.periods}
+      end
+    end
+
   end
 
-  def start data
+  def start porject_id
     puts
     ap 'START METHOD'
 
@@ -60,7 +79,6 @@ class PomodoroChannel < ApplicationCable::Channel
 
     unless User.find(current_user.id).pomo_started? # when pomo NOT started
 
-      porject_id = data.fetch('message')['project']
       # получаем проект
       project = current_user.projects.find(porject_id)
 
@@ -90,13 +108,13 @@ class PomodoroChannel < ApplicationCable::Channel
         period.update({status: 'started', end_time: Time.now.to_m + (period.end_time - period.pause_time)})
       end
 
-      User.find(current_user.id).update({started_project: project.id})
+      User.find(current_user.id).update({current_project: project.id, current_project_status: 'started'})
       ActionCable.server.broadcast stream_name, {action: 'start', end_time: period.end_time, period_type: period.periods_type, periods: pomo_cycle.periods}
     end
 
   end
 
-  def pause data
+  def pause porject_id
     puts
     ap 'PAUSE METHOD'
 
@@ -107,9 +125,8 @@ class PomodoroChannel < ApplicationCable::Channel
     #   разослать action: 'pause'
 
     if User.find(current_user.id).pomo_started?
-      User.find(current_user.id).update({started_project: nil})
+      User.find(current_user.id).update({current_project_status: 'paused'})
 
-      porject_id = data.fetch('message')['project']
       project = current_user.projects.find(porject_id)
 
       period = project.pomo_cycles.last.periods.last
@@ -120,7 +137,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
   end
 
-  def stop data
+  def stop porject_id
     puts
     ap 'STOP METHOD'
 
@@ -130,12 +147,11 @@ class PomodoroChannel < ApplicationCable::Channel
 
     if User.find(current_user.id).pomo_started?
 
-      porject_id = data.fetch('message')['project']
       project = current_user.projects.find(porject_id)
 
       period = project.pomo_cycles.last.periods.last
 
-      User.find(current_user.id).update({started_project: nil})
+      User.find(current_user.id).update({current_project_status: 'paused'})
       # current_user.started_project = nil
       # current_user.save
 
@@ -148,7 +164,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
   end
 
-  def end_pomo data
+  def end_pomo porject_id
     # Должен менять:
     #   period status: 'ended'
     #
@@ -162,7 +178,6 @@ class PomodoroChannel < ApplicationCable::Channel
 
     if User.find(current_user.id).pomo_started?
 
-      porject_id = data.fetch('message')['project']
       project = current_user.projects.find(porject_id)
 
       pomo_cycle = project.pomo_cycles.last
@@ -170,13 +185,13 @@ class PomodoroChannel < ApplicationCable::Channel
       period = periods.last
 
       period.update({status: 'ended'})
-      User.find(current_user.id).update({started_project: nil})
+      User.find(current_user.id).update({current_project_status: 'ended'})
 
       if periods.size == 8
         pomo_cycle.update({ended: true})
         ActionCable.server.broadcast stream_name, {action: 'end'}
       else
-        start data
+        start porject_id
       end
 
     end

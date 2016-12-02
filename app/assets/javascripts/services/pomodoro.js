@@ -18,10 +18,10 @@ angular.module('pomoTracking')
                     o.min = Math.floor(o.time/60000);
                     o.sec = Math.floor(o.time/1000 % 60);
                     if(o.time < 300){
+                        o.stop();
                         o.Socket.pomodoroChannel.send({
                             action: 'end',
                             project: 1 }); //TODO: set to project id
-                        o.stop();
                     }
                 }, 200);
             };
@@ -39,6 +39,10 @@ angular.module('pomoTracking')
             var callback = function(data) {
                 console.log('PomodoroChannel callback data: ', data);
                 switch (data.action) {
+                    case "loading":
+                        o.period_type = data.period_type;
+                        o.periods = data.periods;
+                        break;
                     case "start":
                         o.endTime = data.end_time;
                         o.period_type = data.period_type;
@@ -49,6 +53,7 @@ angular.module('pomoTracking')
                         o.pause();
                         break;
                     case "stop":
+                    case "end":
                         o.stop();
                         break;
                 }

@@ -8,7 +8,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable
 
   def pomo_started?
-    !self.started_project.nil?
+    self.current_project_status == 'started'
   end
 
 end
