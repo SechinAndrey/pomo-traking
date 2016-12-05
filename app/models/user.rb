@@ -11,4 +11,8 @@ class User < ApplicationRecord
     self.current_project_status == 'started'
   end
 
+  def pomo_paused?
+    self.current_project_status == 'paused'
+  end
+
 end

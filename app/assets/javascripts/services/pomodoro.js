@@ -9,30 +9,33 @@ angular.module('pomoTracking')
                 Socket: {}
             };
 
-            var timer;
+            var started = false;
 
             o.start = function(){
-                var time;
-                timer = $interval(function() {
-                    o.time = o.endTime - new Date().getTime();
-                    o.min = Math.floor(o.time/60000);
-                    o.sec = Math.floor(o.time/1000 % 60);
-                    if(o.time < 300){
-                        o.stop();
-                        o.Socket.pomodoroChannel.send({
-                            action: 'end',
-                            project: 1 }); //TODO: set to project id
-                    }
-                }, 200);
+                if (!started){
+                    o.timer = $interval(function() {
+                        o.time = o.endTime - new Date().getTime();
+                        o.min = Math.floor(o.time/60000);
+                        o.sec = Math.floor(o.time/1000 % 60);
+                        if(o.time < 300){
+                            o.stop();
+                            o.Socket.pomodoroChannel.send({
+                                action: 'end',
+                                project: 1 }); //TODO: set to project id
+                        }
+                    }, 200);
+                    started = true;
+                }
             };
 
             o.pause = function(){
-                console.log("222222222222222222222222222222222222222222");
-                $interval.cancel(timer);
+                started = false;
+                $interval.cancel(o.timer);
             };
 
             o.stop = function(){
-                $interval.cancel(timer);
+                started = false;
+                $interval.cancel(o.timer);
                 o.min = 0;
                 o.sec = 0;
             };
@@ -41,40 +44,23 @@ angular.module('pomoTracking')
                 console.log('PomodoroChannel callback data: ', data);
                 switch (data.action) {
                     case "loading":
-                        o.periods = data.periods;
-                        o.endTime = data.periods[data.periods.length - 1].end_time;
-                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
-                        o.time = o.endTime - new Date().getTime();
-                        o.min = Math.floor(o.time/60000);
-                        o.sec = Math.floor(o.time/1000 % 60);
+                        update(data);
+                        console.log('o.endTime: ', o.endTime);
+                        console.log('min: ', o.min);
+                        console.log('sec', o.sec);
                         break;
                     case "start":
-                        o.periods = data.periods;
-                        o.endTime = data.periods[data.periods.length - 1].end_time;
-                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
-                        o.time = o.endTime - new Date().getTime();
-                        o.min = Math.floor(o.time/60000);
-                        o.sec = Math.floor(o.time/1000 % 60);
+                        update(data);
                         o.start();
                         break;
                     case "pause":
-                        console.log("1111111111111111111111");
-                        o.periods = data.periods;
-                        o.endTime = data.periods[data.periods.length - 1].end_time;
-                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
-                        o.time = o.endTime - new Date().getTime();
-                        o.min = Math.floor(o.time/60000);
-                        o.sec = Math.floor(o.time/1000 % 60);
+                        console.log('pause case');
+                        update(data);
                         o.pause();
                         break;
                     case "stop":
                     case "end":
-                        o.periods = data.periods;
-                        o.endTime = data.periods[data.periods.length - 1].end_time;
-                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
-                        o.time = o.endTime - new Date().getTime();
-                        o.min = Math.floor(o.time/60000);
-                        o.sec = Math.floor(o.time/1000 % 60);
+                        update(data);
                         o.stop();
                         break;
                 }
@@ -96,6 +82,20 @@ angular.module('pomoTracking')
                         });
                     };
                 });
+            };
+
+            var update = function(data){
+                o.periods = data.periods;
+                if(data.periods.length > 0){
+                    o.endTime = data.periods[data.periods.length - 1].end_time;
+                    o.period_type =  data.periods[data.periods.length - 1].periods_type;
+                }else{
+                    o.endTime = 0;
+                    o.period_type = '';
+                }
+                o.time = o.endTime - new Date().getTime();
+                o.min = Math.floor(o.time/60000);
+                o.sec = Math.floor(o.time/1000 % 60);
             };
 
             return o;

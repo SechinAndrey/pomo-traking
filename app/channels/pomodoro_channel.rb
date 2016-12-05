@@ -54,16 +54,20 @@ class PomodoroChannel < ApplicationCable::Channel
       pomo_cycle = project.pomo_cycles.last
       period = pomo_cycle.periods.last
 
-      if user.pomo_started?
-        if period.end_time - Time.now.to_m <= 0
-          end_pomo user.current_project
-        else
-          ap "1"
-          ActionCable.server.broadcast stream_name, {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
+      unless period.nil?
+        if user.pomo_started?
+          if period.end_time - Time.now.to_m <= 0
+            end_pomo user.current_project
+          else
+            ap "1"
+            ActionCable.server.broadcast stream_name, {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
+          end
+        elsif user.pomo_paused?
+          ap "2"
+          period.update({status: 'paused', end_time: Time.now.to_m + (period.end_time - period.pause_time), pause_time: Time.now.to_m})
+          User.find(current_user.id).update({current_project_status: 'paused'})
+          ActionCable.server.broadcast stream_name, {action: 'loading', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
         end
-      elsif pomo_cycle.periods.size > 0
-        ap "2"
-        ActionCable.server.broadcast stream_name, {action: 'loading', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
       end
     end
 
@@ -148,7 +152,7 @@ class PomodoroChannel < ApplicationCable::Channel
     #   current_user.started_project на nil
     #   удалить текущий период
 
-    if User.find(current_user.id).pomo_started?
+    if User.find(current_user.id).pomo_started? or User.find(current_user.id).pomo_paused?
 
       project = current_user.projects.find(porject_id)
 
