@@ -5,6 +5,9 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from stream_name
+    ap REDIS.get("sync_end_action_#{current_user.id}")
+
+
     loading
   end
 
@@ -34,19 +37,12 @@ class PomodoroChannel < ApplicationCable::Channel
   private
 
   def stream_name
-    "pomodoro_channel_#{current_user.email}"
+    "pomodoro_channel_#{current_user.id}"
   end
 
   def loading
     puts
     ap 'LOADING METHOD'
-
-    # Должен менять:
-    #   если current_user.pomo_started? то:
-    #     если end_time - Time.now <= 0 то:
-    #       вызвать метод end
-    #     если end_time - Time.now > 0 то:
-    #       вызвать метод start
 
     user =  User.find(current_user.id)
     unless user.current_project.nil?
@@ -160,7 +156,7 @@ class PomodoroChannel < ApplicationCable::Channel
       pomo_cycle = project.pomo_cycles.last
       period = pomo_cycle.periods.last
 
-      User.find(current_user.id).update({current_project_status: 'paused'})
+      User.find(current_user.id).update({current_project_status: 'stopped'})
 
       if period
         period.destroy
@@ -181,27 +177,34 @@ class PomodoroChannel < ApplicationCable::Channel
     #   если НЕ последний период в цикле то:
     #     запустить следующий период
 
-    ap 'END METHOD'
+    ap "END METHOD #{REDIS.get("sync_end_action_#{current_user.id}")}"
 
-    if User.find(current_user.id).pomo_started?
+    if  REDIS.get("sync_end_action_#{current_user.id}") == 'false'
+      REDIS.set("sync_end_action_#{current_user.id}", true)
 
-      project = current_user.projects.find(porject_id)
+      if User.find(current_user.id).pomo_started?
 
-      pomo_cycle = project.pomo_cycles.last
-      periods = pomo_cycle.periods
-      period = periods.last
+        project = current_user.projects.find(porject_id)
 
-      period.update({status: 'ended'})
-      User.find(current_user.id).update({current_project_status: 'ended'})
+        pomo_cycle = project.pomo_cycles.last
+        periods = pomo_cycle.periods
+        period = periods.last
 
-      if periods.size == 8
-        pomo_cycle.update({ended: true})
-        ActionCable.server.broadcast stream_name, {action: 'end', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
-      else
-        start porject_id
+        period.update({status: 'ended'})
+        User.find(current_user.id).update({current_project_status: 'ended'})
+
+        if periods.size == 8
+          pomo_cycle.update({ended: true})
+          ActionCable.server.broadcast stream_name, {action: 'end', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
+        else
+          start porject_id
+        end
       end
 
+      REDIS.set("sync_end_action_#{current_user.id}", false)
+
     end
+
   end
 
 end

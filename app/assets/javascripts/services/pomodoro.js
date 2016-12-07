@@ -85,17 +85,19 @@ angular.module('pomoTracking')
             };
 
             var update = function(data){
-                o.periods = data.periods;
-                if(data.periods.length > 0){
-                    o.endTime = data.periods[data.periods.length - 1].end_time;
-                    o.period_type =  data.periods[data.periods.length - 1].periods_type;
-                }else{
-                    o.endTime = 0;
-                    o.period_type = '';
+                if(data.periods){
+                    o.periods = data.periods;
+                    if(data.periods.length > 0){
+                        o.endTime = data.periods[data.periods.length - 1].end_time;
+                        o.period_type =  data.periods[data.periods.length - 1].periods_type;
+                    }else{
+                        o.endTime = 0;
+                        o.period_type = '';
+                    }
+                    o.time = o.endTime - new Date().getTime();
+                    o.min = Math.floor(o.time/60000);
+                    o.sec = Math.floor(o.time/1000 % 60);
                 }
-                o.time = o.endTime - new Date().getTime();
-                o.min = Math.floor(o.time/60000);
-                o.sec = Math.floor(o.time/1000 % 60);
             };
 
             return o;
