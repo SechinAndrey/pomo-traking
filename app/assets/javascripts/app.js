@@ -40,12 +40,12 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
             })
 
             .state('projects', {
-                url: '/projects',
+                url: '/projects/{id}',
                 templateUrl: 'projects/_projects.html',
                 controller: 'ProjectsCtrl',
                 resolve: {
-                    projectsPromise: ['projects', function (projects) {
-                        return projects.getAll();
+                    project: ['$stateParams', 'projects', function ($stateParams, projects) {
+                        return projects.get($stateParams.id);
                     }]
                 }
             });

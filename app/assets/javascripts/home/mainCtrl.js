@@ -3,6 +3,14 @@ angular.module('pomoTracking')
     '$scope',
     'projects',
     function($scope, projects){
-        $scope.test = 'HomePage';
+        $scope.header = 'HomePage';
         $scope.projects = projects.projects;
+
+        $scope.addProject = function(){
+            if(!$scope.title || $scope.title === '') { return; }
+            projects.create({
+                title: $scope.title
+            });
+            $scope.title = '';
+        };
     }]);
