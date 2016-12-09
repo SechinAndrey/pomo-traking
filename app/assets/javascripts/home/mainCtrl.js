@@ -1,6 +1,8 @@
 angular.module('pomoTracking')
 .controller('MainCtrl', [
     '$scope',
-    function($scope, timer){
+    'projects',
+    function($scope, projects){
         $scope.test = 'HomePage';
+        $scope.projects = projects.projects;
     }]);

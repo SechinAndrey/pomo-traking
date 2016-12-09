@@ -9,7 +9,12 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
             .state('home', {
                 url: '/home',
                 templateUrl: 'home/_home.html',
-                controller: 'MainCtrl'
+                controller: 'MainCtrl',
+                resolve: {
+                    projectsPromise: ['projects', function (projects) {
+                        return projects.getAll();
+                    }]
+                }
             })
 
             .state('login', {
@@ -32,6 +37,17 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                         $state.go('home');
                     })
                 }]
+            })
+
+            .state('projects', {
+                url: '/projects',
+                templateUrl: 'projects/_projects.html',
+                controller: 'ProjectsCtrl',
+                resolve: {
+                    projectsPromise: ['projects', function (projects) {
+                        return projects.getAll();
+                    }]
+                }
             });
 
         $urlRouterProvider.otherwise('home');

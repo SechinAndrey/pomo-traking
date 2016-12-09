@@ -45,9 +45,6 @@ angular.module('pomoTracking')
                 switch (data.action) {
                     case "loading":
                         update(data);
-                        console.log('o.endTime: ', o.endTime);
-                        console.log('min: ', o.min);
-                        console.log('sec', o.sec);
                         break;
                     case "start":
                         update(data);
