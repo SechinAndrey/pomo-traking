@@ -10,6 +10,8 @@ angular.module('pomoTracking')
         $scope.logout = Auth.logout;
         $scope.pomodoro = pomodoro;
 
+        console.log($scope.project);
+
         /* authentication functions */
 
         Auth.currentUser().then(function (user){
@@ -57,7 +59,7 @@ angular.module('pomoTracking')
         $scope.pomodoroPause = function(){
             data = {
                 action: 'pause',
-                project: 1, //TODO: set to project id
+                project: 1 //TODO: set to project id
             };
             pomodoro.Socket.send(data);
         };
