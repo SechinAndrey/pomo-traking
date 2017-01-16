@@ -50,7 +50,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 }
             });
 
-        $urlRouterProvider.otherwise('home');
+        //$urlRouterProvider.otherwise('home');
     }]);
 
 
