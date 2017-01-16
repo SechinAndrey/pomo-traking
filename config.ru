@@ -5,4 +5,5 @@ require_relative 'config/environment'
 require ::File.expand_path('../../config/environment', __FILE__)
 Rails.application.eager_load!
 
-run Rails.application
+run ActionCable.server
+# run Rails.application
