@@ -19,19 +19,19 @@ class PomodoroChannel < ApplicationCable::Channel
     # puts
     # ap data
     # puts
-    ActionCable.server.broadcast stream_name, {action: '666666666666666666666666666666666666666666666666666666666666666'}
-    # case data.fetch('message')['action']
-    #   when 'start'
-    #     start data.fetch('message')['project']
-    #   when 'pause'
-    #     pause data.fetch('message')['project']
-    #   when 'stop'
-    #     stop data.fetch('message')['project']
-    #   when 'end'
-    #     end_pomo data.fetch('message')['project']
-    #   else
-    #     ActionCable.server.broadcast stream_name, {action: 'Wrong Action'}
-    # end
+    # ActionCable.server.broadcast stream_name, {action: '666666666666666666666666666666666666666666666666666666666666666'}
+    case data.fetch('message')['action']
+      when 'start'
+        start data.fetch('message')['project']
+      when 'pause'
+        pause data.fetch('message')['project']
+      when 'stop'
+        stop data.fetch('message')['project']
+      when 'end'
+        end_pomo data.fetch('message')['project']
+      else
+        ActionCable.server.broadcast stream_name, {action: 'Wrong Action'}
+    end
   end
 
   private
