@@ -182,7 +182,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
     ap "END METHOD #{REDIS.get("sync_end_action_#{current_user.id}")}"
 
-    if  REDIS.get("sync_end_action_#{current_user.id}") == 'false'
+    if  REDIS.get("sync_end_action_#{current_user.id}") != true
       REDIS.set("sync_end_action_#{current_user.id}", true)
 
       if User.find(current_user.id).pomo_started?
