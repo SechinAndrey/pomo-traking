@@ -5,8 +5,9 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from stream_name
+    ap "subscribed"
     ap REDIS.get("sync_end_action_#{current_user.id}")
-
+    ap REDIS.ping
 
     loading
   end
