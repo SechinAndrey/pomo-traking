@@ -1,0 +1,15 @@
+ul {
+  list-style: none;
+}
+
+html, body, #wrapper, #buttons {
+  width: 100%;
+  height: 100%;
+}
+
+#buttons {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}

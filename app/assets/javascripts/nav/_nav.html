@@ -1,14 +1,15 @@
-<div class="collapse navbar-collapse pull-right" ng-controller="NavCtrl">
-    <ul class="nav navbar-nav">
-        <li><a href="#/home">Home</a></li>
-        <li ng-hide="signedIn()"><a href="#/login">Log In</a></li>
-        <li ng-hide="signedIn()"><a href="#/register">Register</a></li>
-        <li ng-show="signedIn()"><a href="#/">{{ user.username }}</a></li>
-        <li ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
-    </ul>
-    <!--<input type="text" name="userName"-->
-           <!--ng-model="user.username" />-->
-    <!--<button ng-click="sendToMyChannel(user.username)">Send</button>-->
+<div ng-controller="NavCtrl">
+    <div class="navbar navbar-default">
+        <ul class="nav navbar-nav pull-right">
+            <li><a href="#/home">Home</a></li>
+            <li ng-hide="signedIn()"><a href="#/login">Log In</a></li>
+            <li ng-hide="signedIn()"><a href="#/register">Register</a></li>
+            <li ng-show="signedIn()"><a href="#/">{{ user.username }}</a></li>
+            <li ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
+        </ul>
+    </div>
+
+
     <br>
     <strong>{{pomodoro.period_type}}</strong>
     <br>
@@ -17,10 +18,12 @@
     <span>{{("00" + pomodoro.min).slice(-2)}} : {{("00" + pomodoro.sec).slice(-2)}}</span>
     <br>
     <br>
+
     <div ng-repeat="period in pomodoro.periods">
         {{period.periods_type}} - status: {{period.status}}
     </div>
     <button ng-click="pomodoroStart()">Start</button>
     <button ng-click="pomodoroPause()">Pause</button>
     <button ng-click="pomodoroStop()">Stop</button>
+
 </div>
