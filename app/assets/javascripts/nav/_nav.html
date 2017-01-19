@@ -1,29 +1,29 @@
 <div ng-controller="NavCtrl">
     <div class="navbar navbar-default">
+        <a class="navbar-brand" href="#/home">
+            <span class="icon-heart"></span>
+            <span class="logo-name">PomoTracking</span>
+        </a>
         <ul class="nav navbar-nav pull-right">
-            <li><a href="#/home">Home</a></li>
+
+            <li ng-show="signedIn()" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="icon-avatar"></span>
+                    <span class="username">
+                        {{ user.username }}
+                        <span class="caret"></span>
+                    </span>
+
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-show="signedIn()"><a href="#/dashboard">Dashboard</a></li>
+                    <li ng-show="signedIn()"><a href="#/{{ user.id }}">Account</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="log-out" ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
+                </ul>
+            </li>
             <li ng-hide="signedIn()"><a href="#/login">Log In</a></li>
             <li ng-hide="signedIn()"><a href="#/register">Register</a></li>
-            <li ng-show="signedIn()"><a href="#/">{{ user.username }}</a></li>
-            <li ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
         </ul>
     </div>
-
-
-    <br>
-    <strong>{{pomodoro.period_type}}</strong>
-    <br>
-    <br>
-    <br>
-    <span>{{("00" + pomodoro.min).slice(-2)}} : {{("00" + pomodoro.sec).slice(-2)}}</span>
-    <br>
-    <br>
-
-    <div ng-repeat="period in pomodoro.periods">
-        {{period.periods_type}} - status: {{period.status}}
-    </div>
-    <button ng-click="pomodoroStart()">Start</button>
-    <button ng-click="pomodoroPause()">Pause</button>
-    <button ng-click="pomodoroStop()">Stop</button>
-
 </div>

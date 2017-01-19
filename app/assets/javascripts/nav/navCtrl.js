@@ -8,9 +8,9 @@ angular.module('pomoTracking')
 
         $scope.signedIn = Auth.isAuthenticated;
         $scope.logout = Auth.logout;
-        $scope.pomodoro = pomodoro;
 
-        console.log($scope.project);
+        console.log("1");
+        console.log(pomodoro);
 
         /* authentication functions */
 
@@ -46,32 +46,5 @@ angular.module('pomoTracking')
             pomodoro.Socket.destroy();
         });
 
-        /* pomodoro actions */
-
-        $scope.pomodoroStart = function(){
-            data = {
-                action: 'start',
-                project: 1 //TODO: set to project id
-            };
-            pomodoro.Socket.send(data);
-        };
-
-        $scope.pomodoroPause = function(){
-            data = {
-                action: 'pause',
-                project: 1 //TODO: set to project id
-            };
-            pomodoro.Socket.send(data);
-        };
-
-        $scope.pomodoroStop = function(){
-            data = {
-                action: 'stop',
-                project: 1 //TODO: set to project id
-            };
-            pomodoro.Socket.send(data);
-        };
-
-        /* ************** */
     }
 ]);

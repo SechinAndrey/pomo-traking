@@ -17,6 +17,17 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 }
             })
 
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: 'dashboard/_dashboard.html',
+                controller: 'MainCtrl',
+                resolve: {
+                    projectsPromise: ['projects', function (projects) {
+                        return projects.getAll();
+                    }]
+                }
+            })
+
             .state('login', {
                 url: '/login',
                 templateUrl: 'auth/_login.html',

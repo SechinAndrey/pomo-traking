@@ -1,0 +1,46 @@
+.navbar.navbar-default {
+  padding-left: 100px;
+  padding-right: 100px;
+
+  .navbar-brand{
+    position: relative;
+    padding: 10px 15px;
+
+    .icon-heart{
+      font-size: 30px;
+      color: #e93578;
+    }
+
+    .logo-name{
+      bottom: 7px;
+      position: relative;
+    }
+  }
+
+  li.dropdown{
+    &:hover{
+      background-color: #eaeaea;
+    }
+
+    a.dropdown-toggle{
+      padding: 4px 20px 3px 10px;
+
+      .icon-avatar{
+        font-size: 40px;
+      }
+
+      .username{
+        left: 8px;
+        bottom: 12px;
+        position: relative;
+      }
+    }
+
+
+
+    .log-out{
+      cursor: pointer;
+    }
+  }
+
+}
