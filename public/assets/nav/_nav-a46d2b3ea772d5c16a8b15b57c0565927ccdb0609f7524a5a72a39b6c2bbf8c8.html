@@ -1,0 +1,29 @@
+<div ng-controller="NavCtrl">
+    <div class="navbar navbar-default">
+        <a class="navbar-brand" href="#/home">
+            <span class="icon-heart"></span>
+            <span class="logo-name">PomoTracking</span>
+        </a>
+        <ul class="nav navbar-nav pull-right">
+
+            <li ng-show="signedIn()" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span class="icon-avatar"></span>
+                    <span class="username">
+                        {{ user.username }}
+                        <span class="caret"></span>
+                    </span>
+
+                </a>
+                <ul class="dropdown-menu">
+                    <li ng-show="signedIn()"><a href="#/dashboard">Dashboard</a></li>
+                    <li ng-show="signedIn()"><a href="#/{{ user.id }}">Account</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li class="log-out" ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
+                </ul>
+            </li>
+            <li ng-hide="signedIn()"><a href="#/login">Log In</a></li>
+            <li ng-hide="signedIn()"><a href="#/register">Register</a></li>
+        </ul>
+    </div>
+</div>
