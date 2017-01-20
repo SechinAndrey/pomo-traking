@@ -11,7 +11,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 templateUrl: 'home/_home.html',
                 controller: 'MainCtrl',
                 resolve: {
-                    projectsPromise: ['projects', function (projects) {
+                    projectsPromise: ['projects', 'Auth', function (projects, Auth) {
                         return projects.getAll();
                     }]
                 }
@@ -21,6 +21,11 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 url: '/dashboard',
                 templateUrl: 'dashboard/_dashboard.html',
                 controller: 'MainCtrl',
+                onEnter: ['$state', 'Auth', function($state, Auth) {
+                    Auth.currentUser().then(function (){
+                        $state.go('home');
+                    })
+                }],
                 resolve: {
                     projectsPromise: ['projects', function (projects) {
                         return projects.getAll();

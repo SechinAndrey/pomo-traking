@@ -1,10 +1,13 @@
 .navbar.navbar-default {
-  padding-left: 100px;
-  padding-right: 100px;
+
+  .container-fluid{
+    max-width: 1250px;
+  }
 
   .navbar-brand{
+    margin-left: 0;
     position: relative;
-    padding: 10px 15px;
+    padding: 10px 0 10px 0;
 
     .icon-heart{
       font-size: 30px;
@@ -17,21 +20,27 @@
     }
   }
 
+  .navbar-right{
+    margin: 0;
+  }
+
   li.dropdown{
     &:hover{
       background-color: #eaeaea;
     }
 
+    float: left;
+
     a.dropdown-toggle{
-      padding: 4px 20px 3px 10px;
+      padding: 11px 20px 11px 10px;
 
       .icon-avatar{
-        font-size: 40px;
+        font-size: 25px;
       }
 
       .username{
         left: 8px;
-        bottom: 12px;
+        bottom: 6px;
         position: relative;
       }
     }
