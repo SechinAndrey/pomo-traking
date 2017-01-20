@@ -12,19 +12,29 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 controller: 'MainCtrl',
                 resolve: {
                     projectsPromise: ['projects', 'Auth', function (projects, Auth) {
-                        return projects.getAll();
+                        Auth.currentUser().then(function(user) {
+                            return projects.getAll();
+                        }, function(error) {
+                            console.log(error);
+                        });
                     }]
-                }
+                },
+                onEnter: ['$rootScope', function($rootScope) {
+                    $rootScope.$emit('menuToggle', false);
+                }]
             })
 
             .state('dashboard', {
                 url: '/dashboard',
                 templateUrl: 'dashboard/_dashboard.html',
                 controller: 'MainCtrl',
-                onEnter: ['$state', 'Auth', function($state, Auth) {
-                    Auth.currentUser().then(function (){
+                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+                    $rootScope.$emit('menuToggle', false);
+
+                    Auth.currentUser().then(function(user) {
+                    }, function(error) {
                         $state.go('home');
-                    })
+                    });
                 }],
                 resolve: {
                     projectsPromise: ['projects', function (projects) {
@@ -37,7 +47,8 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 url: '/login',
                 templateUrl: 'auth/_login.html',
                 controller: 'AuthCtrl',
-                onEnter: ['$state', 'Auth', function($state, Auth) {
+                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+                    $rootScope.$emit('menuToggle', false);
                     Auth.currentUser().then(function (){
                         $state.go('home');
                     })
@@ -48,7 +59,8 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 url: '/register',
                 templateUrl: 'auth/_register.html',
                 controller: 'AuthCtrl',
-                onEnter: ['$state', 'Auth', function($state, Auth) {
+                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+                    $rootScope.$emit('menuToggle', false);
                     Auth.currentUser().then(function (){
                         $state.go('home');
                     })

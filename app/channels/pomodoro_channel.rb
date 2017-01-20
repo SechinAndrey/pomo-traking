@@ -55,13 +55,13 @@ class PomodoroChannel < ApplicationCable::Channel
             end_pomo user.current_project
           else
             ap "1"
-            ActionCable.server.broadcast stream_name, {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
+            ActionCable.server.broadcast stream_name, {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status]), project: project.as_json(only: [:id, :title])}
           end
         elsif user.pomo_paused?
           ap "2"
           period.update({status: 'paused', end_time: Time.now.to_m + (period.end_time - period.pause_time), pause_time: Time.now.to_m})
           User.find(current_user.id).update({current_project_status: 'paused'})
-          ActionCable.server.broadcast stream_name, {action: 'loading', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
+          ActionCable.server.broadcast stream_name, {action: 'loading', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status]), project: project.as_json(only: [:id, :title])}
         end
       end
     end

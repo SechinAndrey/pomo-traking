@@ -1,8 +1,9 @@
 angular.module('pomoTracking')
     .factory('pomodoro', [
+        '$rootScope',
         '$interval',
         'ActionCableChannel',
-        function($interval, ActionCableChannel){
+        function($rootScope, $interval, ActionCableChannel){
             var o = {
                 min: 0,
                 sec: 0,
@@ -44,7 +45,9 @@ angular.module('pomoTracking')
                 console.log('PomodoroChannel callback data: ', data);
                 switch (data.action) {
                     case "loading":
+                        o.project = data.project;
                         update(data);
+                        $rootScope.$emit('pomoLoaded', true);
                         break;
                     case "start":
                         update(data);

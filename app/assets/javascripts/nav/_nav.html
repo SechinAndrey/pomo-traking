@@ -5,8 +5,7 @@
                 <span class="icon-heart"></span>
                 <span class="logo-name">PomoTracking</span>
             </a>
-            <ul class="nav navbar-nav navbar-right">
-
+            <ul class="nav navbar-nav navbar-right dropdown">
                 <li ng-show="signedIn()" class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                         <span class="icon-avatar"></span>
@@ -26,6 +25,10 @@
                 <li ng-hide="signedIn()"><a href="#/login">Log In</a></li>
                 <li ng-hide="signedIn()"><a href="#/register">Register</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right mob-menu-button">
+                <li><a ng-click="openMobMenu()"><span class="icon-bars"></span></a></li>
+            </ul>
+            <mob-menu></mob-menu>
         </div>
     </div>
 </div>

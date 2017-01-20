@@ -1,16 +1,14 @@
 angular.module('pomoTracking')
 
 .controller('NavCtrl', [
+    '$rootScope',
     '$scope',
     'Auth',
     'pomodoro',
-    function($scope, Auth, pomodoro){
+    function($rootScope, $scope, Auth, pomodoro){
 
         $scope.signedIn = Auth.isAuthenticated;
         $scope.logout = Auth.logout;
-
-        console.log("1");
-        console.log(pomodoro);
 
         /* authentication functions */
 
@@ -42,9 +40,12 @@ angular.module('pomoTracking')
 
         /* ************** */
 
+        $scope.openMobMenu = function(){
+            $rootScope.$emit('menuToggle', true);
+        };
+
         $scope.$on("$destroy", function(){
             pomodoro.Socket.destroy();
         });
-
     }
 ]);

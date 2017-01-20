@@ -1,9 +1,13 @@
 .navbar.navbar-default {
 
+  max-height: 52px;
+
   .container-fluid{
-    max-width: 1250px;
+    max-width: 1170px;
   }
 
+
+  /* ------------------ [ logo ] */
   .navbar-brand{
     margin-left: 0;
     position: relative;
@@ -19,18 +23,41 @@
       position: relative;
     }
   }
+  /* ------------------ */
 
-  .navbar-right{
+
+  /* ------------------ [ mob-menu-button ] */
+  .mob-menu-button{
+    &:hover{
+      background-color: #eaeaea;
+    }
+
     margin: 0;
+    float: right;
+    cursor: pointer;
+
+    a{
+      font-size: 30px;
+      padding: 9px 10px 11px 11px;
+    }
+
+    @include breakpoint(small) { display: none; }
+  }
+  /* ------------------ */
+
+
+  /* ------------------ [ dropdown-button ] */
+  .navbar-right.dropdown{
+    margin: 0;
+    display: none;
+    @include breakpoint(small) { display: block; }
   }
 
   li.dropdown{
     &:hover{
       background-color: #eaeaea;
     }
-
     float: left;
-
     a.dropdown-toggle{
       padding: 11px 20px 11px 10px;
 
@@ -44,12 +71,67 @@
         position: relative;
       }
     }
-
-
-
     .log-out{
       cursor: pointer;
     }
   }
+  /* ------------------ */
 
+
+  /* ------------------ [ mob-menu ] */
+  .sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: white;
+    border-left: 1px solid #444444;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 5px;
+
+
+    ul{
+      padding: 0;
+      text-align: center;
+    }
+
+    li {
+      min-width: 250px;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 20px;
+
+      display: block;
+      transition: 0.3s
+    }
+
+    a{
+      height: 100%;
+      color: #444444;
+      display: block;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      text-decoration: none;
+    }
+    a:hover, .offcanvas a:focus{
+      color: #666666;
+      text-decoration: none;
+    }
+
+    .closebtn {
+      position: absolute;
+      top: 0;
+      right: 25px;
+      font-size: 36px;
+      margin-left: 50px;
+    }
+  }
+
+  .mob-menu-open{
+    width: 250px;
+  }
+  /* ------------------ */
 }
