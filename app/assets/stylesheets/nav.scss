@@ -1,6 +1,11 @@
 .navbar.navbar-default {
 
+  border-radius: 0;
   max-height: 52px;
+  margin-bottom: -1px;
+  border-bottom: 1px solid black;
+
+  @include breakpoint(w500) { margin-bottom: 10px; }
 
   .container-fluid{
     max-width: 1170px;
@@ -20,7 +25,10 @@
 
     .logo-name{
       bottom: 7px;
+      display: none;
       position: relative;
+
+      @include breakpoint(w300) { display: inline }
     }
   }
   /* ------------------ */
@@ -59,7 +67,7 @@
     }
     float: left;
     a.dropdown-toggle{
-      padding: 11px 20px 11px 10px;
+      padding: 11px 20px 10px 10px;
 
       .icon-avatar{
         font-size: 25px;

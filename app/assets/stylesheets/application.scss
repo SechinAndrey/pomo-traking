@@ -7,11 +7,16 @@
 @import "dashboard";
 @import "small-timer";
 
-//@mixin respond-nav($media) {
-//    @media only screen and (min-width: 768px) { @content; }
-//}
-
-
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+}
 .container-fluid.page-container{
   max-width: 1170px;
+}
+
+.ui-page{
+  height: 100%;
+  display: block;
 }

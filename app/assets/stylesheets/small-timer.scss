@@ -1,8 +1,17 @@
+.timer-container{
+  padding: 0;
+  font-size: 13px;
+  max-width: 1170px;
+  @include breakpoint(w300) { font-size: 14px; }
+  @include breakpoint(w500) { padding: 0 15px 0 15px; }
+}
+
 .small-timer{
   cursor: pointer;
   padding: 13px;
   height: 47px;
   border: 1px solid #5e5e5e;
+
 
   .period-type{
     color: #5e5e5e;
