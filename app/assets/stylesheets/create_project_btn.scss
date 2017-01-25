@@ -1,0 +1,36 @@
+.create-poject-btn{
+  width: 100%;
+  margin-top: 10px;
+  height: 47px;
+  float: right;
+  padding: 13px 5px 13px 5px;
+  color: #4b4b4b;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #5e5e5e;
+
+  @include breakpoint(w500) {
+    width: 29%;
+    margin: 0;
+  }
+
+  @include breakpoint(small) {
+    padding: 13px;
+  }
+
+  &:hover{
+    color: black;
+    background-color: lightgray;
+  }
+
+  >span{
+    bottom: 5px;
+    position: relative;
+  }
+
+  .icon-plus-circle{
+    top: 3px;
+    font-size: 20px;
+    position: relative;
+  }
+}

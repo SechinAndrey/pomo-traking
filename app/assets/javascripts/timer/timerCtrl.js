@@ -5,7 +5,16 @@ angular.module('pomoTracking')
     '$scope',
     'Auth',
     'pomodoro',
-    function($rootScope, $scope, Auth, pomodoro){
+    '$state',
+    function($rootScope, $scope, Auth, pomodoro, $state){
+        var narrowTimerState = [
+            'dashboard',
+            'projects'
+        ];
+
+        console.log('test');
+        console.log(narrowTimerState.includes($state.current.name));
+
         $scope.pomodoro = pomodoro;
 
         Auth.currentUser().then(function (user){
@@ -24,7 +33,6 @@ angular.module('pomoTracking')
             };
         });
 
-
         $scope.pomodoroToggle = function(){
             console.log('$scope.isPomoStrted()' + $scope.isPomoStrted());
             if($scope.isPomoStrted()){
@@ -36,6 +44,9 @@ angular.module('pomoTracking')
             }
         };
 
+        $scope.isNarrow = function(){
+            return narrowTimerState.includes($state.current.name);
+        };
 
         /* pomodoro actions */
 

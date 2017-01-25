@@ -4,26 +4,36 @@
   max-width: 1170px;
   @include breakpoint(w300) { font-size: 14px; }
   @include breakpoint(w500) { padding: 0 15px 0 15px; }
-}
 
-.small-timer{
-  cursor: pointer;
-  padding: 13px;
-  height: 47px;
-  border: 1px solid #5e5e5e;
+  .small-timer{
+    cursor: pointer;
+    padding: 13px;
+    height: 47px;
+    border: 1px solid #5e5e5e;
 
+    &:hover{
+      color: black;
+      background-color: lightgray;
+    }
 
-  .period-type{
-    color: #5e5e5e;
+    .period-type{
+      color: #5e5e5e;
+    }
+
+    .time-icon{
+      font-size: 11px;
+      padding-right: 5px;
+      color: #5e5e5e;
+    }
+
+    .time{
+      color: #5e5e5e;
+    }
   }
+  .narrow{
+    width: 100%;
+    float: left;
 
-  .time-icon{
-    font-size: 11px;
-    padding-right: 5px;
-    color: #5e5e5e;
-  }
-
-  .time{
-    color: #5e5e5e;
+    @include breakpoint(w500) { width: 70%; }
   }
 }
