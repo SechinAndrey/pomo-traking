@@ -5,6 +5,19 @@
 
   .nav.nav-tabs{
     display: block;
+
+    a{
+
+      font-size: 4.4vw;
+      padding: 10px 10px;
+
+      @include breakpoint(w350){
+        font-size: 14px;
+        padding: 10px 14px;
+      }
+    }
+
+
     @include breakpoint(small){
       display: none !important;
     }
