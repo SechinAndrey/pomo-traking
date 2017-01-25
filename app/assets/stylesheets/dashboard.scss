@@ -2,7 +2,6 @@
 
   text-align: center;
 
-
   .nav.nav-tabs{
     display: block;
 
@@ -36,6 +35,7 @@
 
     h4{
       padding: 5px;
+      line-height: 30px;
       background-color: #dedede;
     }
 
@@ -120,9 +120,89 @@
 
   .dash-project{
     margin: 6px;
-    height:150px;
-    width: 216px;
+    width: 100%;
     display: inline-block;
     border: 1px solid black;
+    text-align: left;
+
+
+    @include breakpoint(w486){
+      width: 216px;
+      height:150px;
+    }
+
+    .title{
+      width: 70%;
+      padding: 10px;
+      font-size: 14px;
+      text-align: left;
+      float: left;
+
+      @include breakpoint(w486){
+        width: 100%;
+        float: none;
+        font-size: 18px;
+      }
+    }
+
+    .pomo, .min{
+      width: 50%;
+      display: none;
+      padding-top: 10px;
+      text-align: center;
+      padding-bottom: 10px;
+
+      @include breakpoint(w486){
+        display: block;
+      }
+
+    }
+
+    .bottom-btn{
+      bottom: 0;
+      position: relative;
+
+      .start, .view{
+        cursor: pointer;
+        width:  50%;
+        text-align: center;
+        padding-top: 11px;
+        padding-bottom: 10px;
+        border: 1px solid black;
+      }
+
+      .start{
+        float: right;
+        width:  30%;
+        border: none;
+        border-left: 1px solid black;
+
+        &:hover{
+          background-color: #67B85B;
+        }
+
+        @include breakpoint(w486){
+          width: 50%;
+          float: left;
+          border: 1px solid black;
+          border-left: none;
+          border-right: none;
+        }
+      }
+      .view{
+        display: none;
+        border-right: none;
+
+        &:hover{
+          background-color: #68BEDD;
+        }
+
+        @include breakpoint(w486){
+          display: block;
+        }
+
+      }
+
+    }
   }
 }

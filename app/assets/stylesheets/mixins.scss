@@ -5,6 +5,9 @@
   @elseif $point == w350 {
     @media (min-width: 350px) { @content; }
   }
+  @elseif $point == w486 { // dash projects
+    @media (min-width: 486px) { @content; }
+  }
   @elseif $point == w500 {
     @media (min-width: 500px) { @content; }
   }

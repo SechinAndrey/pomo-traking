@@ -8,7 +8,19 @@
     <h3>Projects</h3>
     <div class="dash-project-conteiner">
         <div class="dash-project" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10]">
-            {{i}}
+            <div class="title"><span ng-show="i%2 == 0" class="icon-pause"></span> <a href>Work Hard {{i}}</a></div>
+            <div class="pomo pull-left">
+                20<br>
+                <span>pomo</span>
+            </div>
+            <div class="min pull-right">
+                600<br>
+                <span>min</span>
+            </div>
+            <div class="bottom-btn">
+                <div class="start pull-left"> <span>Start</span> </div>
+                <div class="view pull-right"> <span>View</span> </div>
+            </div>
         </div>
     </div>
 </div>
