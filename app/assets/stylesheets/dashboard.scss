@@ -112,5 +112,17 @@
   .info:last-child{
     margin: 0;
   }
+}
 
+.dash-project-conteiner{
+  width: 100%;
+  text-align: center;
+
+  .dash-project{
+    margin: 6px;
+    height:150px;
+    width: 216px;
+    display: inline-block;
+    border: 1px solid black;
+  }
 }
