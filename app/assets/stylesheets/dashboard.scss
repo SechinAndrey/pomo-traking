@@ -11,12 +11,13 @@
   }
 
   .info{
-    margin-right: 10px;
+    margin: 0;
     border-spacing: 5px;
     display: inline-block;
 
 
     @include breakpoint(small){
+      margin-right: 10px;
       display: inline-block !important;
     }
 
@@ -27,8 +28,9 @@
 
     /* ------------------ [ circle ] */
     .circle{
-      width: 14vw;
-      height: 14vw;
+      width: 45vw;
+      height: 43vw;
+
       border-radius: 50%;
 
       color: white;
@@ -37,25 +39,34 @@
       vertical-align: middle;
       background-color: #3c3c3c;
 
+
+      @include breakpoint(w350){
+        width: 150px;
+        height: 150px;
+      }
+
+      @include breakpoint(small){
+        width: 14vw;
+        height: 14vw;
+      }
+
       @include breakpoint(large){
         width: 177px;
         height: 177px;
       }
-
-      @include breakpoint(large) {
-        width: 177px;
-        height: 177px;
-      }
-    }
-    .pomo-inf{
-
-    }
-    .min-inf{
     }
     .count{
       float:none;
-      margin:0 auto;
-      font-size: 20px;
+      margin: 0 auto;
+
+      font-size: 6vw;
+
+      @include breakpoint(w350){
+        font-size: 25px;
+      }
+
+
+
     }
     /* ------------------ */
 
@@ -64,8 +75,12 @@
       border-spacing: 5px;
       border-collapse: separate;
       td{
-        font-size: 2.5vw;
-        line-height: 3vw;
+
+        font-size: 6vw;
+        line-height: 8vw;
+
+        //font-size: 2.5vw;
+        //line-height: 3vw;
 
         padding: 5px;
 
@@ -73,7 +88,7 @@
         border: 1px solid black;
         background-color: #3c3c3c;
 
-        @include breakpoint(large){
+        @include breakpoint(w350){
           font-size: 23px;
           line-height: 35px;
         }

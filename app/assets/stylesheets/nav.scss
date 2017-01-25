@@ -95,7 +95,6 @@
     top: 0;
     right: 0;
     background-color: white;
-    border-left: 1px solid #444444;
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 5px;
@@ -140,6 +139,7 @@
 
   .mob-menu-open{
     width: 250px;
+    border-left: 1px solid #444444;
   }
   /* ------------------ */
 }
