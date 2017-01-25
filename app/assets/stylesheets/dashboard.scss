@@ -2,10 +2,23 @@
 
   text-align: center;
 
+
+  .nav.nav-tabs{
+    display: block;
+    @include breakpoint(small){
+      display: none !important;
+    }
+  }
+
   .info{
     margin-right: 10px;
     border-spacing: 5px;
     display: inline-block;
+
+
+    @include breakpoint(small){
+      display: inline-block !important;
+    }
 
     h4{
       padding: 5px;
