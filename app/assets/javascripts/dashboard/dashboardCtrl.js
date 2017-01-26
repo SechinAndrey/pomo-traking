@@ -1,5 +1,5 @@
 angular.module('pomoTracking')
-    .controller('dashboard', [
+    .controller('DashboardCtrl', [
         '$scope',
         function($scope) {
         }

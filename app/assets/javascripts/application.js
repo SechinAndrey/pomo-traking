@@ -8,4 +8,5 @@
 //= require angular-actioncable
 //= require jquery
 //= require bootstrap
+//= require app
 //= require_tree .

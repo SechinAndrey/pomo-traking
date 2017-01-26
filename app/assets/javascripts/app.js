@@ -28,7 +28,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
             .state('dashboard', {
                 url: '/dashboard',
                 templateUrl: 'dashboard/_dashboard.html',
-                controller: 'MainCtrl',
+                controller: 'DashboardCtrl',
                 onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
@@ -44,19 +44,19 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 }
             })
 
-            //.state('account', {
-            //    url: '/users/{id}/edit',
-            //    templateUrl: 'account/_account.html',
-            //    controller: 'AccountCtrl',
-            //    onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
-            //        $rootScope.$emit('menuToggle', false); // close mob_menu
-            //
-            //        Auth.currentUser().then(function(user) {
-            //        }, function(error) {
-            //            $state.go('home');
-            //        });
-            //    }]
-            //})
+            .state('account', {
+                url: '/users/{id}/edit',
+                templateUrl: 'account/_account.html',
+                controller: 'AccountCtrl',
+                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+                    $rootScope.$emit('menuToggle', false); // close mob_menu
+
+                    Auth.currentUser().then(function(user) {
+                    }, function(error) {
+                        $state.go('home');
+                    });
+                }]
+            })
 
             .state('login', {
                 url: '/login',
