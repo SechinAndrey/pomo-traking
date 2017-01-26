@@ -1,3 +1,55 @@
+<div class="container-fluid timer-container">
+    <small-timer></small-timer>
+</div>
 <div class="container-fluid page-container">
-    <h1>Account</h1>
+    <h1>Account <span class="icon-cog2"></span></h1>
+    <div class="edit-wrap">
+        <div class="img-container">
+            <div class="square-img test"></div>
+        </div>
+        <div class="user-field-container">
+            <form editable-form name="editableForm" onaftersave="saveUser()">
+
+                <div>
+                    <span class="title">UserName:</span>
+                    <span class="data" editable-text="user.username" e-name="name" onbeforesave="checkName($data)" e-required>{{ user.username || 'empty' }}</span>
+                </div>
+                <div>
+                    <span class="title">Email:</span>
+                    <span class="data" editable-email="user.email" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.email || 'empty' }}</span>
+                </div>
+                <div>
+                    <span class="title">Pomo time:</span>
+                    <span class="data" editable-number="user.pomo_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.pomo_time || 'empty' }} min</span>
+                </div>
+                <div>
+                    <span class="title">Short break:</span>
+                    <span class="data" editable-number="user.short_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.short_break_time || 'empty' }} min</span>
+                </div>
+                <div>
+                    <span class="title">Long Break:</span>
+                    <span class="data" editable-number="user.long_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.long_break_time || 'empty' }} min</span>
+                </div>
+                <div>
+                    <!-- button to show form -->
+                    <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+                        <span class="icon-pencil"></span>Edit
+                    </button>
+                    <br ng-show="!editableForm.$visible">
+                    <a  class="delete-account" href ng-show="!editableForm.$visible" > Delete account </a>
+
+                    <!-- buttons to submit / cancel form -->
+                    <span ng-show="editableForm.$visible">
+                        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting"
+                                ng-click="editableForm.$cancel()">
+                            Cancel
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

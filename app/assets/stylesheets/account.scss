@@ -1,0 +1,108 @@
+.icon-cog2{
+  font-size: 28px;
+}
+.edit-wrap{
+
+  width: 100%;
+
+  @include breakpoint(small) {
+    width: 75%;
+    margin: auto;
+    margin-top: 25px;
+  }
+
+
+  .img-container{
+
+    width: 60%;
+    float: none;
+
+    @include breakpoint(small) {
+      width: 30%;
+      float: left;
+    }
+
+
+    .test{
+      background-image:url('https://farm4.staticflickr.com/3766/12953056854_b8cdf14f21.jpg');
+    }
+
+    .square-img{
+      //float:left;
+      width: 80%;
+      margin: 0;
+      position: relative;
+      padding-bottom : 80%; /* = width for a 1:1 aspect ratio */
+      background-size:cover; /* you change this to "contain" if you don't want the images to be cropped */
+      background-repeat:no-repeat;
+      background-position:center center;
+
+      @include breakpoint(w500) {
+        width: 60%;
+        padding-bottom : 60%;
+      }
+
+      @include breakpoint(small) {
+        width: 80%;
+        padding-bottom : 80%;
+        margin:auto;
+      }
+    }
+  }
+
+  .user-field-container{
+    width: 100%;
+    float: none;
+    color: #4b4b4b;
+    font-size: 16px;
+    line-height: 40px;
+    margin-top: 15px;
+
+    @include breakpoint(small) {
+      width: 60%;
+      float: right;
+      margin-top: -10px;
+    }
+
+    .editable-hide{
+      display: none;
+    }
+
+    .editable-controls{
+      width: 150px;
+      float: right;
+      margin-bottom: 0;
+    }
+
+    .editable-number{
+      .editable-controls{
+        width: 70px;
+      }
+    }
+
+    .title{
+      font-weight: 600;
+      display: inline;
+    }
+
+    .data{
+      float: right;
+    }
+
+    //input[type="text"], input[type="email"], input[type="number"] {
+    //}
+    //input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus,
+    //input[type="text"].focus, input[type="email"].focus, input[type="number"]:focus{
+    //
+    //}
+
+    .icon-pencil{
+      margin-right: 10px;
+    }
+
+    .delete-account{
+      color: #bb285c;
+    }
+  }
+}
+

@@ -6,6 +6,7 @@
 //= require angular-cookies
 //= require angular-websocket
 //= require angular-actioncable
+//= require angular-xeditable
 //= require jquery
 //= require bootstrap
 //= require app
