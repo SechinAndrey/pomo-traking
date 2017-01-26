@@ -1,8 +1,8 @@
 angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise', 'angularFileUpload', 'ngActionCable', 'xeditable'])
 
-.run(function(editableOptions) {
-    editableOptions.theme = 'bs3';
-})
+//.run(function(editableOptions) {
+//    editableOptions.theme = 'bs3';
+//})
 
 .config([
     '$stateProvider',
