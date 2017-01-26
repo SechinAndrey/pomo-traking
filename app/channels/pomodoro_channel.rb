@@ -19,17 +19,25 @@ class PomodoroChannel < ApplicationCable::Channel
     # ap data
     # puts
     # ActionCable.server.broadcast stream_name, {action: '666666666666666666666666666666666666666666666666666666666666666'}
-    case data.fetch('message')['action']
-      when 'start'
-        start data.fetch('message')['project']
-      when 'pause'
-        pause data.fetch('message')['project']
-      when 'stop'
-        stop data.fetch('message')['project']
-      when 'end'
-        end_pomo data.fetch('message')['project']
-      else
-        ActionCable.server.broadcast stream_name, {action: 'Wrong Action'}
+
+    action = data.fetch('message')['action']
+    project = data.fetch('message')['project']
+
+    if project.nil?
+      ap "[Pomo Log]: Action '#{action}' - project_id is NIL"
+    else
+      case action
+        when 'start'
+            start project
+        when 'pause'
+          pause project
+        when 'stop'
+          stop project
+        when 'end'
+          end_pomo project
+        else
+          ActionCable.server.broadcast stream_name, {action: 'Wrong Action'}
+      end
     end
   end
 
@@ -65,6 +73,8 @@ class PomodoroChannel < ApplicationCable::Channel
         end
       end
     end
+
+    ap 'END LOADING'
 
   end
 

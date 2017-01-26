@@ -12,9 +12,6 @@ angular.module('pomoTracking')
             'projects'
         ];
 
-        console.log('test');
-        console.log(narrowTimerState.includes($state.current.name));
-
         $scope.pomodoro = pomodoro;
 
         Auth.currentUser().then(function (user){
@@ -31,6 +28,12 @@ angular.module('pomoTracking')
             $scope.isPomoStopped = function(){
                 return $scope.user.current_project_status == 'stopped';
             };
+
+
+            $scope.isEmptyProject = function(){
+                return $scope.user.current_project == null;
+            };
+
         });
 
         $scope.pomodoroToggle = function(){
@@ -53,7 +56,7 @@ angular.module('pomoTracking')
         $scope.pomodoroStart = function(){
             data = {
                 action: 'start',
-                project: 1 //TODO: set to project id
+                project: $scope.user.current_project
             };
             pomodoro.Socket.send(data);
         };
@@ -61,7 +64,7 @@ angular.module('pomoTracking')
         $scope.pomodoroPause = function(){
             data = {
                 action: 'pause',
-                project: 1 //TODO: set to project id
+                project: $scope.user.current_project
             };
             pomodoro.Socket.send(data);
         };
@@ -69,7 +72,7 @@ angular.module('pomoTracking')
         $scope.pomodoroStop = function(){
             data = {
                 action: 'stop',
-                project: 1 //TODO: set to project id
+                project: $scope.user.current_project
             };
             pomodoro.Socket.send(data);
         };

@@ -1,4 +1,4 @@
-<div class="small-timer" ng-class="{ narrow:isNarrow() }" ng-click="pomodoroToggle()">
+<div class="small-timer" ng-class="{ narrow:isNarrow(), noproject:isEmptyProject()}" ng-click="pomodoroToggle()">
     <b>{{prjTitle}}</b>
     <span class="period-type">{{pomodoro.period_type}}</span>
     <span class="pull-right">

@@ -17,7 +17,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li ng-show="signedIn()"><a href="#/dashboard">Dashboard</a></li>
-                        <li ng-show="signedIn()"><a href="#/{{ user.id }}">Account</a></li>
+                        <li ng-show="signedIn()"><a href="#/users/{{ user.id }}/edit">Account</a></li>
                         <li role="separator" class="divider"></li>
                         <li class="log-out" ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
                     </ul>

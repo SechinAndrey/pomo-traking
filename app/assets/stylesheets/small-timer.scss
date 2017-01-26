@@ -36,4 +36,9 @@
 
     @include breakpoint(w500) { width: 70%; }
   }
+
+  .noproject{
+    display: none;
+  }
+
 }
