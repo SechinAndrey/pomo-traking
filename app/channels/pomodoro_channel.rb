@@ -104,15 +104,15 @@ class PomodoroChannel < ApplicationCable::Channel
       period = pomo_cycle.periods.last
       # если периода нет или он завершился создаем новый если на паузе обновляем end_time
       if !period
-        period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'started', end_time: (Time.now + 1.minutes).to_m})
+        period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'started', end_time: (Time.now + 25.minutes).to_m})
       elsif period.ended?
         if period.periods_type == 'shot break'
-          period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'started', end_time: (Time.now + 1.minutes).to_m})
+          period = pomo_cycle.periods.create({periods_type: 'pomo', status: 'started', end_time: (Time.now + 25.minutes).to_m})
         elsif period.periods_type == 'pomo'
           if pomo_cycle.periods.size == 7 # pomo count in cycle
-            period = pomo_cycle.periods.create({periods_type: 'long break', status: 'started', end_time: (Time.now + 1.minutes).to_m})
+            period = pomo_cycle.periods.create({periods_type: 'long break', status: 'started', end_time: (Time.now + 15.minutes).to_m})
           else
-            period = pomo_cycle.periods.create({periods_type: 'shot break', status: 'started', end_time: (Time.now + 1.minutes).to_m})
+            period = pomo_cycle.periods.create({periods_type: 'shot break', status: 'started', end_time: (Time.now + 5.minutes).to_m})
           end
         end
       elsif period.paused?

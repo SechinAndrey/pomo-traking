@@ -1,0 +1,27 @@
+.home-pomo-container{
+
+  width: 70%;
+  margin: auto;
+
+  .timer-box{
+    width: 50%;
+
+  }
+
+  .pomo-box{
+    width: 50%;
+    li{
+      list-style: none;
+      font-size: 18px;
+
+      .time{
+        font-size: 10px;
+      }
+
+      [class^="icon-"], [class*=" icon-"] {
+        position: relative;
+        top: 5px;
+      }
+    }
+  }
+}
