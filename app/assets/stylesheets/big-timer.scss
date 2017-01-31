@@ -1,3 +1,74 @@
-#timer, #timer0 {
-  position: absolute;
+.big-timer{
+
+  border: 1px solid grey;
+  height: 325px;
+  position: relative;
+
+  .title{
+    font-weight: 800;
+    font-size: 16px;
+    padding: 10px;
+    border-bottom: 1px solid grey;
+
+    >span{
+      font-weight: 400;
+      font-size: 14px;
+    }
+  }
+
+  #timer, #timer0 {
+    position: absolute;
+    left: 100px;
+    top: 50px;
+  }
+
+  #timer{
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  .time{
+    position: absolute;
+    left: 169px;
+    top: 135px;
+
+    >b{
+      font-size: 20px;
+    }
+    >span{
+      position: relative;
+      left: 25px
+    }
+  }
+
+  .last-projects{
+    position: relative;
+    top: 215px;
+    height: 65px;
+    padding-left: 10px;
+
+    .icon-clock{
+      margin-right: 5px;
+    }
+
+    >ul{
+      padding: 7px 0 0 0  ;
+      margin: 0;
+      height: 100%;
+      vertical-align: middle;
+      >li{
+        list-style: none;
+        display: inline-block;
+        padding: 3px 20px;
+        margin-left: 5px;
+        border: 1px solid grey;
+        border-radius: 3px;
+
+        &:first-child{
+          margin: 0;
+        }
+      }
+    }
+
+  }
 }

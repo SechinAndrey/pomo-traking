@@ -1,5 +1,7 @@
-# Be sure to restart your server when you modify this file.
-# Action Cable runs in a loop that does not support auto reloading.
+
+=begin
+  TODO: 1. Add project to pomo-action response.
+=end
 
 class PomodoroChannel < ApplicationCable::Channel
 

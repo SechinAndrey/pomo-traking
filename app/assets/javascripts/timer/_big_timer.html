@@ -1,11 +1,31 @@
 <div class="big-timer">
-    <div class="title"></div>
-    <canvas height='200' width='200' id="timer0">  </canvas>
-    <canvas ng-click="pomodoroToggle()" height='200' width='200' id="timer">  </canvas>
-        <!--<div class="last-project">-->
-            <!--<ul>-->
-                <!--<li>-->
-                <!--</li>-->
-            <!--</ul>-->
-        <!--</div>-->
+    <div class="title">
+        {{pomodoro.project.title}}
+        <span class="pull-right">{{pomodoro.period_type}}</span>
+    </div>
+
+    <canvas height='200' width='200' id="timer0"> </canvas>
+    <canvas ng-click="pomodoroToggle()" height='200' width='200' id="timer"></canvas>
+
+    <div class="time">
+        <b>{{("00" + pomodoro.min).slice(-2)}} : {{("00" + pomodoro.sec).slice(-2)}}</b>
+        <br>
+        <span ng-show="isPomoStrted()" class="icon-play"></span>
+        <span ng-show="isPomoPaused()" class="icon-pause"></span>
+    </div>
+
+    <div class="last-projects">
+        <span><span class="icon-clock"></span>Last projects</span>
+        <ul>
+            <li>
+                prj 1
+            </li>
+            <li>
+                prj 2
+            </li>
+            <li>
+                prj 3
+            </li>
+        </ul>
+    </div>
 </div>

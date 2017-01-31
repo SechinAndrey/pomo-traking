@@ -45,7 +45,7 @@ angular.module('pomoTracking')
                 console.log('PomodoroChannel callback data: ', data);
                 switch (data.action) {
                     case "loading":
-                        o.project = data.project;
+                        o.project = data.project; // TODO move to update function
                         update(data);
                         $rootScope.$emit('pomoLoaded', true);
                         break;
