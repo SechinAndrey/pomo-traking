@@ -47,6 +47,10 @@
     height: 65px;
     padding-left: 10px;
 
+    @include breakpoint(small){
+      display: none;
+    }
+
     .icon-clock{
       margin-right: 5px;
     }

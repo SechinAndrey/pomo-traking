@@ -4,12 +4,24 @@
   margin: auto;
 
   .timer-box{
-    width: 50%;
+    width: 100%;
+    float: none;
 
+    @include breakpoint(small){
+      width: 50%;
+      float: left;
+    }
   }
 
   .pomo-box{
-    width: 50%;
+    width: 100%;
+    float: none;
+
+    @include breakpoint(small){
+      width: 50%;
+      float: right;
+    }
+
     li{
       list-style: none;
       font-size: 18px;
