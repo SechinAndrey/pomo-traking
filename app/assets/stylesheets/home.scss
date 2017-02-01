@@ -1,8 +1,33 @@
-.home-page-0padding{
+.home-page{
   padding: 0;
 
   @include breakpoint(w486){
     padding: 0 15px;
+  }
+
+
+  .last-prj{
+    margin-top: 280px;
+  }
+
+  .dash-project-conteiner, .last-prj{
+    display: none;
+    @include breakpoint(small){
+     display: block;
+    }
+  }
+}
+
+.big-title{
+  display: none;
+  margin-bottom: 20px;
+
+  @include breakpoint(small){
+    display: block;
+  }
+
+  >h4{
+    display: inline;
   }
 }
 
@@ -14,19 +39,6 @@
   @include breakpoint(w486){
     width: 70%;
     margin-top: 10px;
-  }
-
-  .big-title{
-    display: none;
-    margin-bottom: 20px;
-
-    @include breakpoint(small){
-      display: block;
-    }
-
-    >h4{
-      display: inline;
-    }
   }
 
   .timer-box{

@@ -128,12 +128,12 @@
 
     @include breakpoint(w486){
       width: 216px;
-      height:150px;
+      height: 116px;
     }
 
     .title{
       width: 70%;
-      padding: 10px;
+      padding: 5px 10px 0 10px;
       font-size: 14px;
       text-align: left;
       float: left;
@@ -141,16 +141,16 @@
       @include breakpoint(w486){
         width: 100%;
         float: none;
-        font-size: 18px;
+        font-size: 15px;
       }
     }
 
     .pomo, .min{
       width: 50%;
       display: none;
-      padding-top: 10px;
+      padding-top: 5px;
+      padding-bottom: 5px;
       text-align: center;
-      padding-bottom: 10px;
 
       @include breakpoint(w486){
         display: block;
@@ -166,8 +166,8 @@
         cursor: pointer;
         width:  50%;
         text-align: center;
-        padding-top: 11px;
-        padding-bottom: 10px;
+        padding-top: 8px;
+        padding-bottom: 8px;
         border: 1px solid black;
       }
 
@@ -202,7 +202,6 @@
         }
 
       }
-
     }
   }
 }
