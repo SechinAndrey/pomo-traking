@@ -1,7 +1,33 @@
-.home-pomo-container{
+.home-page-0padding{
+  padding: 0;
 
-  width: 70%;
+  @include breakpoint(w486){
+    padding: 0 15px;
+  }
+}
+
+.home-pomo-container{
+  width: 100%;
   margin: auto;
+  margin-top: 0;
+
+  @include breakpoint(w486){
+    width: 70%;
+    margin-top: 10px;
+  }
+
+  .big-title{
+    display: none;
+    margin-bottom: 20px;
+
+    @include breakpoint(small){
+      display: block;
+    }
+
+    >h4{
+      display: inline;
+    }
+  }
 
   .timer-box{
     width: 100%;
@@ -16,23 +42,33 @@
   .pomo-box{
     width: 100%;
     float: none;
+    margin-top: 15px;
 
     @include breakpoint(small){
       width: 50%;
       float: right;
+      margin-top: 0;
     }
 
-    li{
-      list-style: none;
-      font-size: 18px;
+    .pomos{
+      padding: 0 10px 0 10px;
 
-      .time{
-        font-size: 10px;
+      @include breakpoint(small){
+        padding: 0 0 0 40px;
       }
 
-      [class^="icon-"], [class*=" icon-"] {
-        position: relative;
-        top: 5px;
+      li{
+        list-style: none;
+        font-size: 18px;
+
+        .time{
+          font-size: 10px;
+        }
+
+        [class^="icon-"], [class*=" icon-"] {
+          position: relative;
+          top: 5px;
+        }
       }
     }
   }

@@ -1,8 +1,25 @@
 .big-timer{
 
-  border: 1px solid grey;
   height: 325px;
   position: relative;
+  border-bottom: 1px solid grey;
+
+  @include breakpoint(small){
+    border: none;
+    height: auto;
+  }
+
+  .canvas-conteiner{
+    margin: auto;
+    margin-top: 20px;
+    width: 200px;
+    height: 200px;
+    position: relative;
+
+    @include breakpoint(small){
+      margin-top: 0;
+    }
+  }
 
   .title{
     font-weight: 800;
@@ -14,12 +31,16 @@
       font-weight: 400;
       font-size: 14px;
     }
+
+    @include breakpoint(small){
+      display: none;
+    }
   }
 
   #timer, #timer0 {
+    width: 100%;
+    height: 100%;
     position: absolute;
-    left: 100px;
-    top: 50px;
   }
 
   #timer{
@@ -29,8 +50,8 @@
 
   .time{
     position: absolute;
-    left: 169px;
-    top: 135px;
+    left: 70px;
+    top: 85px;
 
     >b{
       font-size: 20px;
@@ -43,8 +64,7 @@
 
   .last-projects{
     position: relative;
-    top: 215px;
-    height: 65px;
+    height: 60px;
     padding-left: 10px;
 
     @include breakpoint(small){
@@ -56,21 +76,31 @@
     }
 
     >ul{
-      padding: 7px 0 0 0  ;
+      padding: 2px 0 0 0  ;
       margin: 0;
-      height: 100%;
+      height: 40px;
       vertical-align: middle;
+
+      .hide-last-pjct{
+        display: none;
+        @include breakpoint(w305){
+          display: inline-block;
+        }
+      }
+
       >li{
         list-style: none;
         display: inline-block;
-        padding: 3px 20px;
-        margin-left: 5px;
-        border: 1px solid grey;
-        border-radius: 3px;
 
         &:first-child{
           margin: 0;
         }
+
+        .btn{
+          max-width: 75px;
+          background-color: lightgray;
+        }
+
       }
     }
 

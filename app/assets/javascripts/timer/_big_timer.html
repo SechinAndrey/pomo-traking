@@ -3,28 +3,48 @@
         {{pomodoro.project.title}}
         <span class="pull-right">{{pomodoro.period_type}}</span>
     </div>
-
-    <canvas height='200' width='200' id="timer0"> </canvas>
-    <canvas ng-click="pomodoroToggle()" height='200' width='200' id="timer"></canvas>
-
-    <div class="time">
-        <b>{{("00" + pomodoro.min).slice(-2)}} : {{("00" + pomodoro.sec).slice(-2)}}</b>
-        <br>
-        <span ng-show="isPomoStrted()" class="icon-play"></span>
-        <span ng-show="isPomoPaused()" class="icon-pause"></span>
+    <div class="canvas-conteiner">
+        <div class="time">
+            <b>{{("00" + pomodoro.min).slice(-2)}} : {{("00" + pomodoro.sec).slice(-2)}}</b>
+            <br>
+            <span ng-show="isPomoStrted()" class="icon-play"></span>
+            <span ng-show="isPomoPaused()" class="icon-pause"></span>
+        </div>
+        <canvas height="200" width="200" id="timer0"> </canvas>
+        <canvas height="200" width="200" id="timer" ng-click="pomodoroToggle()" ></canvas>
     </div>
-
     <div class="last-projects">
         <span><span class="icon-clock"></span>Last projects</span>
         <ul>
             <li>
-                prj 1
+                <button type="button" class="btn btn-default ellipsis">
+                    prjoctprjoctprjoctprjoct 1
+                </button>
             </li>
             <li>
-                prj 2
+                <button type="button" class="btn btn-default ellipsis">
+                    prjoct 2
+                </button>
+            </li>
+            <li class="hide-last-pjct">
+                <button type="button" class="btn btn-default ellipsis">
+                    prjoct 3
+                </button>
             </li>
             <li>
-                prj 3
+                <div class="dropup">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        All
+                        <span class="icon-bars"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                    </ul>
+                </div>
             </li>
         </ul>
     </div>

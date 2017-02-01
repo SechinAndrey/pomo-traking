@@ -2,7 +2,11 @@ angular.module('pomoTracking')
 .controller('MainCtrl', [
     '$scope',
     'projects',
-    function($scope, projects){
+    'pomodoro',
+    function($scope, projects, pomodoro){
+
+        $scope.pomodoro = pomodoro;
+
         $scope.periods = [
             {type: 'Pomo', status: 'ended'},
             {type: 'Short break', status: 'ended'},

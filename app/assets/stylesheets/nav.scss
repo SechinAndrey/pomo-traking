@@ -3,7 +3,7 @@
   border-radius: 0;
   max-height: 52px;
   margin-bottom: -1px;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid grey;
 
   @include breakpoint(w500) { margin-bottom: 10px; }
 
