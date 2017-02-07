@@ -5,10 +5,15 @@ angular.module('pomoTracking')
     '$scope',
     'Auth',
     'pomodoro',
-    function($rootScope, $scope, Auth, pomodoro){
+    '$state',
+    function($rootScope, $scope, Auth, pomodoro, $state){
 
         $scope.signedIn = Auth.isAuthenticated;
-        $scope.logout = Auth.logout;
+        $scope.logout = function () {
+            Auth.logout().then(function(){
+                $state.go('login');
+            });
+        };
 
         /* authentication functions */
 

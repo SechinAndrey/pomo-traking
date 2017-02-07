@@ -15,10 +15,11 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 templateUrl: 'home/_home.html',
                 controller: 'MainCtrl',
                 resolve: {
-                    projectsPromise: ['projects', 'Auth', function (projects, Auth) {
+                    projectsPromise: ['$rootScope', '$state', 'Auth', function ($rootScope, $state, Auth) {
                         Auth.currentUser().then(function(user) {
-                            return projects.getAll();
+                            // return projects.getAll();
                         }, function(error) {
+                            $state.go('login');
                             console.log(error);
                         });
                     }]
@@ -38,7 +39,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
 
                     Auth.currentUser().then(function(user) {
                     }, function(error) {
-                        $state.go('home');
+                        $state.go('login');
                     });
                 }],
                 resolve: {
@@ -57,7 +58,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
 
                     Auth.currentUser().then(function(user) {
                     }, function(error) {
-                        $state.go('home');
+                        $state.go('login');
                     });
                 }]
             })
@@ -68,9 +69,12 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 controller: 'AuthCtrl',
                 onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
-                    Auth.currentUser().then(function (){
+
+                    Auth.currentUser().then(function(user) {
                         $state.go('home');
-                    })
+                    }, function(error) {
+                        console.log(error)
+                    });
                 }]
             })
 
@@ -81,21 +85,31 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
-                    Auth.currentUser().then(function (){
+                    Auth.currentUser().then(function(user) {
                         $state.go('home');
-                    })
+                    }, function(error) {
+                        console.log(error)
+                    });
                 }]
             })
 
             .state('projects', {
-                url: '/projects/{id}',
+                url: '/projects',
                 templateUrl: 'projects/_projects.html',
                 controller: 'ProjectsCtrl',
-                resolve: {
-                    project: ['$stateParams', 'projects', function ($stateParams, projects) {
-                        return projects.get($stateParams.id);
-                    }]
-                }
+                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+                    $rootScope.$emit('menuToggle', false); // close mob_menu
+
+                    Auth.currentUser().then(function(user) {
+                    }, function(error) {
+                        $state.go('login');
+                    });
+                }]
+                //resolve: {
+                //    project: ['$stateParams', 'projects', function ($stateParams, projects) {
+                //        return projects.get($stateParams.id);
+                //    }]
+                //}
             });
 
         $urlRouterProvider.otherwise('home');

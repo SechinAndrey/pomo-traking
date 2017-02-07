@@ -6,6 +6,7 @@
 
 .idea/
 
+public/uploads/avatar/avatar/
 # Ignore bundler config.
 /.bundle
 
