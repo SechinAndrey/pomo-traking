@@ -1,3 +1,46 @@
-<small-timer></small-timer>
-<h1>Projects</h1>
-<i>~~~  {{project.title}}  ~~~~</i>
+<div class="container-fluid timer-container">
+    <small-timer></small-timer>
+    <create-project-btn></create-project-btn>
+</div>
+<div class="container-fluid page-container projects-page">
+
+
+    <div class="projects-sort-container">
+        <h3 class="title">Projects</h3>
+        <div class="sort">
+            <div class="menu">
+                <span class="icon-three"></span>
+            </div>
+            <div class="sort-btn">
+                <span class="icon-long-arrow-down"></span>
+                <span class="icon-alphabet"></span>
+            </div>
+            <div class="sort-btn">
+                <!--<span></span>-->
+                <span class="icon-calendar-1"></span>
+            </div>
+            <div class="sort-btn">
+                <!--<span></span>-->
+                <span class="icon-graphic"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-project-conteiner">
+        <div class="dash-project" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
+            <div class="title"><span ng-show="i%2 == 0" class="icon-pause"></span> <a href>Work Hard {{i}}</a></div>
+            <div class="pomo pull-left">
+                20<br>
+                <span>pomo</span>
+            </div>
+            <div class="min pull-right">
+                600<br>
+                <span>min</span>
+            </div>
+            <div class="bottom-btn">
+                <div class="start pull-left"><span>Start</span></div>
+                <div class="view pull-right"><span>View</span></div>
+            </div>
+        </div>
+    </div>
+</div>

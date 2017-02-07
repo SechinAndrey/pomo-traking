@@ -1,0 +1,36 @@
+.projects-page{
+  padding: 0 5px;
+
+  @include breakpoint(w486){
+    padding: 0 15px;
+  }
+
+
+  .projects-sort-container{
+
+      .title{
+        display: inline-block;
+      }
+
+      .sort{
+        top: 15px;
+        float: right;
+        position: relative;
+        display: inline-block;
+
+        .sort-btn, .menu{
+          width: 55px;
+          font-size: 18px;
+          cursor: pointer;
+          padding-top: 5px;
+          text-align: center;
+          display: inline-block;
+          background-color: lightgray;
+        }
+
+        .menu{
+          background-color: white;
+        }
+      }
+  }
+}
