@@ -8,6 +8,9 @@
   @elseif $point == w350 {
     @media (min-width: 350px) { @content; }
   }
+  @elseif $point == w372 {
+    @media (min-width: 372px) { @content; }
+  }
   @elseif $point == w486 {
     @media (min-width: 486px) { @content; }
   }

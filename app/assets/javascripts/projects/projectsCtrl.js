@@ -5,5 +5,10 @@ angular.module('pomoTracking')
         // 'project',
         function($scope, projects /*project*/) {
             // $scope.project = project;
+            $scope.isMenuOpen = false;
+
+            $scope.toggleSortMenu = function (){
+                $scope.isMenuOpen = !$scope.isMenuOpen;
+            }
         }
     ]);

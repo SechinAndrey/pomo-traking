@@ -5,24 +5,28 @@
 <div class="container-fluid page-container projects-page">
 
 
-    <div class="projects-sort-container">
+    <div class="projects-sort-container" ng-class="{'menu-open':isMenuOpen}">
         <h3 class="title">Projects</h3>
-        <div class="sort">
-            <div class="menu">
+        <div class="sort-container">
+            <div class="menu-btn" ng-click="toggleSortMenu()">
                 <span class="icon-three"></span>
             </div>
-            <div class="sort-btn">
-                <span class="icon-long-arrow-down"></span>
-                <span class="icon-alphabet"></span>
+
+            <div class="sort-items">
+                <div class="sort-btn">
+                    <span class="icon-long-arrow-down"></span>
+                    <span class="icon-alphabet"></span>
+                </div>
+                <div class="sort-btn">
+                    <!--<span></span>-->
+                    <span class="icon-calendar-1"></span>
+                </div>
+                <div class="sort-btn">
+                    <!--<span></span>-->
+                    <span class="icon-graphic"></span>
+                </div>
             </div>
-            <div class="sort-btn">
-                <!--<span></span>-->
-                <span class="icon-calendar-1"></span>
-            </div>
-            <div class="sort-btn">
-                <!--<span></span>-->
-                <span class="icon-graphic"></span>
-            </div>
+
         </div>
     </div>
 

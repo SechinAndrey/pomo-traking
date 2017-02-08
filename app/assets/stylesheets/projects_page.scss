@@ -12,13 +12,13 @@
         display: inline-block;
       }
 
-      .sort{
+      .sort-container{
         top: 15px;
         float: right;
         position: relative;
         display: inline-block;
 
-        .sort-btn, .menu{
+        .sort-btn, .menu-btn{
           width: 55px;
           font-size: 18px;
           cursor: pointer;
@@ -28,9 +28,77 @@
           background-color: lightgray;
         }
 
-        .menu{
+        .menu-btn{
+          display: inline-block;
           background-color: white;
+
+          @include breakpoint(w486){
+            display: none;
+          }
+        }
+
+        .sort-items{
+          display: none;
+          @include breakpoint(w486){
+            display: block;
+          }
         }
       }
+  }
+
+  .menu-open{
+    height: 105px;
+
+    @include breakpoint(w486){
+      height: auto;
+    }
+
+    .sort-container{
+      right: 0;
+      top: 170px;
+      width: 100%;
+      padding: 0 5px 5px 5px;
+      text-align: right;
+      position: absolute;
+
+      @include breakpoint(w486){
+        top: 15px;
+        float: right;
+        position: relative;
+        width: auto;
+      }
+
+      .menu-btn{
+        margin-bottom: 7px;
+        @include breakpoint(w486){
+          margin: 0;
+        }
+      }
+
+      .sort-items{
+        width: 100%;
+        text-align: center;
+        display: block !important;
+
+        @include breakpoint(w486){
+          width: auto;
+        }
+
+        .sort-btn{
+          width: 32%;
+          padding-top: 8px;
+          padding-bottom: 6px;
+
+          @include breakpoint(w372){
+            width: 32.6%;
+          }
+
+          @include breakpoint(w486){
+            width: 55px;
+            padding: 5px 0 0 0;
+          }
+        }
+      }
+    }
   }
 }
