@@ -22,6 +22,7 @@
     }
   }
 
+  /*------------- [  Info ] --------------*/
   .info{
     margin: 0;
     border-spacing: 5px;
@@ -108,10 +109,51 @@
       }
     }
   }
-
   .info:last-child{
     margin: 0;
   }
+
+  .project-info{
+    width: auto;
+
+    @include breakpoint(w668){
+      width: 100%;
+    }
+
+    .inf-title{
+      display: none;
+    }
+
+    .circles, .table{
+      margin: 0;
+
+      @include breakpoint(w668){
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+
+    .circle{
+      @include breakpoint(w350){
+        width: 150px;
+        height: 150px;
+      }
+
+      @include breakpoint(large){
+        width: 177px;
+        height: 177px;
+      }
+    }
+
+    .table{
+      width: auto;
+
+      @include breakpoint(w668){
+        width: 50%;
+      }
+    }
+  }
+  /*------------------------------------*/
 }
 
 .dash-project-conteiner{

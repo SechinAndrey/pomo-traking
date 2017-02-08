@@ -17,6 +17,9 @@
   @elseif $point == w500 {
     @media (min-width: 500px) { @content; }
   }
+  @elseif $point == w668 {
+    @media (min-width: 668px) { @content; }
+  }
   @elseif $point == small {
     @media (min-width: 768px) { @content; }
   }
