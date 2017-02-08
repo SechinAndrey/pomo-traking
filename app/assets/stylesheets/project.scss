@@ -1,0 +1,22 @@
+.project-page{
+
+  .sub-hint{
+    font-size: 12px;
+    color: #a1a1a1;
+  }
+
+  .edit-wrap{
+    width: 100%;
+
+    .user-field-container{
+      width: 100%;
+
+      @include breakpoint(small) {
+        width: 80%;
+        float: none;
+        margin: auto;
+      }
+    }
+  }
+
+}

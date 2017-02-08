@@ -1,6 +1,5 @@
-<div class="container-fluid page-container">
+<div class="container-fluid page-container project-page">
     <h3>{{project.title}}</h3>
-
     <div class="info-conteinr">
         <div class="info project-info">
             <h4 class="inf-title">Last project</h4>
@@ -33,6 +32,49 @@
                </table>
            </div>
         </div>
+    </div>
+
+    <hr>
+
+    <div class="project-settings">
+        <h3> Project settings <span class="sub-hint"> (for this project only) </span> </h3>
+    </div>
+
+    <div class="edit-wrap">
+        <div class="user-field-container">
+            <form editable-form name="editableForm" onaftersave="saveUser()">
+                <div>
+                    <span class="title">Pomo time:</span>
+                    <span class="data" editable-number="user.pomo_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.pomo_time || 'empty' }} min</span>
+                </div>
+                <div>
+                    <span class="title">Short break:</span>
+                    <span class="data" editable-number="user.short_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.short_break_time || 'empty' }} min</span>
+                </div>
+                <div>
+                    <span class="title">Long Break:</span>
+                    <span class="data" editable-number="user.long_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.long_break_time || 'empty' }} min</span>
+                </div>
+                <div>
+                    <!-- button to show form -->
+                    <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
+                        <span class="icon-pencil"></span>Edit
+                    </button>
+
+                    <!-- buttons to submit / cancel form -->
+                    <span ng-show="editableForm.$visible">
+                        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting"
+                                ng-click="editableForm.$cancel()">
+                            Cancel
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+
     </div>
 
 </div>
