@@ -17,7 +17,7 @@ angular.module('pomoTracking')
         $scope.register = function(){
             Auth.register($scope.user).then(function(data){
                 // TODO: fix avatar uploading logic
-                let avatar = $scope.uploader.queue[0];
+                var avatar = $scope.uploader.queue[0];
                 avatar.headers = {'X-CSRF-Token': $cookies.get('XSRF-TOKEN')};
                 avatar.url = "/avatars?id=" + data.id;
                 avatar.onSuccess = function(){
