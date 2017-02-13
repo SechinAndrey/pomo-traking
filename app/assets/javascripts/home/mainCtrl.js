@@ -18,7 +18,6 @@ angular.module('pomoTracking')
             {type: 'Long break',  status: 'no'}
         ];
 
-
         $scope.projects = projects.projects;
 
 
@@ -34,12 +33,4 @@ angular.module('pomoTracking')
             return period.status == '';
         };
 
-
-        $scope.addProject = function(){
-            if(!$scope.title || $scope.title === '') { return; }
-            projects.create({
-                title: $scope.title
-            });
-            $scope.title = '';
-        };
     }]);
