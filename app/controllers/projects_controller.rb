@@ -16,7 +16,7 @@ class ProjectsController < ApplicationController
 
   private
   def project_params
-    params.require(:project).permit(:title)
+    params.require(:project).permit(:title, :pomo_time, :short_break_time, :long_break_time)
   end
 
 end
