@@ -5,6 +5,7 @@ angular.module('pomoTracking')
         'projects',
         function($scope, projects){
             $scope.onlyNumbers = /^\d+$/;
+
             $scope.addProject = function(){
                 if(!$scope.title || $scope.title === '') { return; }
                 projects.create({
@@ -12,4 +13,8 @@ angular.module('pomoTracking')
                 });
                 $scope.title = '';
             };
+
+            $scope.pomo_time = 25;
+            $scope.long_break = 15;
+            $scope.short_break = 5;
         }]);

@@ -37,14 +37,21 @@
 
 .modal{
 
-  .time-container{
+  .time-container {
+    clear: both;
+    padding: 0 10px 0 10px;
+    height: 33px;
     margin-top: 10px;
 
-    .time{
+    .title {
+      line-height: 36px;
+    }
+
+    .time {
       width: 70px;
+      float: right;
     }
   }
-
 
   .submit{
     width: 100%;

@@ -1,5 +1,5 @@
 angular.module('pomoTracking')
-    .directive('restrictInput', [function(){
+    .directive('numberInput', [function(){
 
         return {
             restrict: 'A',
