@@ -1,3 +1,5 @@
+//= require jquery
+//= require bootstrap
 //= require angular
 //= require angular-ui-router
 //= require angular-rails-templates
@@ -7,7 +9,5 @@
 //= require angular-websocket
 //= require angular-actioncable
 //= require angular-xeditable
-//= require jquery
-//= require bootstrap
 //= require app
 //= require_tree .

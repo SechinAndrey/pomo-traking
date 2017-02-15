@@ -22,5 +22,6 @@ angular.module('pomoTracking')
                     long_break_time: $scope.long_break_time
                 });
                 $scope.title = '';
+                $scope.closeModal();
             };
         }]);
