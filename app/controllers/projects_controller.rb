@@ -11,7 +11,12 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    render json: current_user.projects.create(project_params)
+    project = current_user.projects.create(project_params)
+    if project.valid?
+      render json: project
+    else
+      render json: project.errors.full_messages
+    end
   end
 
   private
