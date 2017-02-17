@@ -9,5 +9,6 @@
 //= require angular-websocket
 //= require angular-actioncable
 //= require angular-xeditable
+//= require ng-rails-csrf
 //= require app
 //= require_tree .

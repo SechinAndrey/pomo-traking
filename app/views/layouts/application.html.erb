@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>PomoTrecking</title>
+    <%= csrf_meta_tag %>
     <%= javascript_include_tag 'application' %>
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <meta name="action-cable-url" content="<%= ENV["SOCKET_URL"] %>"/>

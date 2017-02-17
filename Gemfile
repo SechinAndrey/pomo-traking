@@ -25,6 +25,7 @@ gem 'figaro'
 
 gem 'angular-rails-templates'
 gem 'angular_rails_csrf'
+gem 'ng-rails-csrf'
 gem 'devise'
 source "https://rails-assets.org" do
   gem "rails-assets-angular-devise"
