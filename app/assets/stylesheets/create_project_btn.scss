@@ -37,6 +37,19 @@
 
 .modal{
 
+  input.ng-dirty.ng-valid {
+    border-color: green;
+  }
+
+  input.ng-dirty.ng-invalid {
+    border-color: #ff3c70;
+  }
+
+  .hint{
+    color: grey;
+    padding-top: 5px;
+  }
+
   .time-container {
     clear: both;
     padding: 0 10px 0 10px;

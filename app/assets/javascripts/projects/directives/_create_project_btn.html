@@ -13,25 +13,26 @@
                     <h4 class="modal-title">Create project</h4>
                 </div>
                 <div class="modal-body">
-                    <form ng-submit="addProject()">
+                    <form name="newProject" ng-submit="addProject(newProject.$valid)">
 
                         <h4>Project title</h4>
-                        <input type="text" placeholder="Project Title" ng-model="title" class="form-control">
+                        <input type="text" class="form-control" name="title" placeholder="Project Title" ng-model="title" maxlength="100" required>
+                        <span ng-show="newProject.title.$error.required && newProject.title.$touched" class="hint">The title should not be empty</span>
 
                         <h4>Project settings</h4>
                         <div class="time-container">
                             <span class="title">Pomo time: </span>
-                            <span><input type="number" number-input ng-model="pomo_time" class="form-control time"></span>
+                            <span><input type="number" class="form-control time" ng-model="pomo_time"  min="1" max="100" number-input required></span>
                         </div>
 
                         <div class="time-container">
                             <span class="title">Short break: </span>
-                            <span><input type="number" number-input ng-model="short_break_time" class="form-control time"></span>
+                            <span><input type="number" class="form-control time" ng-model="short_break_time" min="1" max="100" number-input required></span>
                         </div>
 
                         <div class="time-container">
                             <span class="title">Long break: </span>
-                            <span><input type="number" number-input ng-model="long_break_time" class="form-control time"></span>
+                            <span><input type="number" class="form-control time" ng-model="long_break_time" min="1" max="100" number-input required></span>
                         </div>
 
                         <button type="submit" class="btn btn-default submit">Create</button>
