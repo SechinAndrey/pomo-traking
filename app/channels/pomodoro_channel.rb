@@ -57,7 +57,7 @@ class PomodoroChannel < ApplicationCable::Channel
     unless user.current_project.nil?
       project = user.projects.find(user.current_project)
       pomo_cycle = project.pomo_cycles.last
-      period = pomo_cycle.periods.last
+      period = pomo_cycle.periods.last if pomo_cycle
 
       unless period.nil?
         if user.pomo_started?
