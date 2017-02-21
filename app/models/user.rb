@@ -1,3 +1,5 @@
+require 'counter'
+
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -16,6 +18,10 @@ class User < ApplicationRecord
       greater_than_or_equal_to: 1,
       less_than_or_equal_to: 100
   }
+
+  def counter
+    @counter ||= Counter.new self
+  end
 
   def pomo_started?
     self.current_project_status == 'started'
