@@ -29,7 +29,6 @@ angular.module('pomoTracking')
                 return $scope.user.current_project_status == 'stopped';
             };
 
-
             $scope.isEmptyProject = function(){
                 return $scope.user.current_project == null;
             };

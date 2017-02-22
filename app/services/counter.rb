@@ -7,22 +7,22 @@ class Counter
     puts
     ap 'LOADING METHOD'
 
-    user = User.find(@user.id)
-    unless user.current_project.nil?
-      project = user.projects.find(user.current_project)
+    @user.reload
+    unless @user.current_project.nil?
+      project = @user.projects.find(@user.current_project)
       pomo_cycle = project.pomo_cycles.last
       period = pomo_cycle.periods.last if pomo_cycle
 
       unless period.nil?
-        if user.pomo_started?
+        if @user.pomo_started?
           if period.end_time - Time.now.to_m <= 0
-            end_pomo user.current_project
+            end_pomo @user.current_project
           else
             return {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status]), project: project.as_json(only: [:id, :title])}
           end
-        elsif user.pomo_paused?
+        elsif @user.pomo_paused?
           period.update({status: 'paused', end_time: Time.now.to_m + (period.end_time - period.pause_time), pause_time: Time.now.to_m})
-          User.find(@user.id).update({current_project_status: 'paused'})
+          @user.update({current_project_status: 'paused'})
           return {action: 'loading', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status]), project: project.as_json(only: [:id, :title])}
         end
       end
@@ -35,12 +35,10 @@ class Counter
     puts
     ap 'START METHOD'
 
-    # получаем проект
+    @user.reload
     project = @user.projects.find(porject_id)
 
-    # получаем последний цикл
     pomo_cycle = project.pomo_cycles.last
-    # если цикла нет или он завершился создаем новый
     if !pomo_cycle or pomo_cycle.ended
       pomo_cycle = project.pomo_cycles.create({ended: false})
     end
@@ -64,7 +62,7 @@ class Counter
       period.update({status: 'started', end_time: Time.now.to_m + (period.end_time - period.pause_time)})
     end
 
-    User.find(@user.id).update({current_project: project.id, current_project_status: 'started'})
+    @user.update({current_project: project.id, current_project_status: 'started'})
     {action: 'start', periods: pomo_cycle.periods.as_json(only: [:end_time, :periods_type, :status])}
   end
 
@@ -72,7 +70,8 @@ class Counter
     puts
     ap 'PAUSE METHOD'
 
-    User.find(@user.id).update({current_project_status: 'paused'})
+    @user.reload
+    @user.update({current_project_status: 'paused'})
 
     project = @user.projects.find(porject_id)
 
@@ -87,12 +86,13 @@ class Counter
     puts
     ap 'STOP METHOD'
 
+    @user.reload
     project = @user.projects.find(porject_id)
 
     pomo_cycle = project.pomo_cycles.last
     period = pomo_cycle.periods.last
 
-    User.find(@user.id).update({current_project_status: 'stopped'})
+    @user.update({current_project_status: 'stopped'})
 
     if period
       period.destroy
@@ -104,7 +104,8 @@ class Counter
   def end_pomo porject_id
     ap "END METHOD #{REDIS.get("sync_end_action_#{@user.id}")}"
 
-    if User.find(@user.id).pomo_started?
+    @user.reload
+    if @user.pomo_started?
       project = @user.projects.find(porject_id)
 
       pomo_cycle = project.pomo_cycles.last
@@ -112,7 +113,7 @@ class Counter
       period = periods.last
 
       period.update({status: 'ended'})
-      User.find(@user.id).update({current_project_status: 'ended'})
+      @user.update({current_project_status: 'ended'})
 
       if periods.size == 8
         pomo_cycle.update({ended: true})
