@@ -43,24 +43,21 @@ angular.module('pomoTracking')
 
             var callback = function(data) {
                 console.log('PomodoroChannel callback data: ', data);
+                update(data);
                 switch (data.action) {
                     case "loading":
                         o.project = data.project; // TODO move to update function
-                        update(data);
                         $rootScope.$emit('pomoLoaded', true);
                         break;
                     case "start":
-                        update(data);
                         o.start();
                         break;
                     case "pause":
                         console.log('pause case');
-                        update(data);
                         o.pause();
                         break;
                     case "stop":
                     case "end":
-                        update(data);
                         o.stop();
                         break;
                 }
@@ -87,6 +84,7 @@ angular.module('pomoTracking')
             var update = function(data){
                 if(data.periods){
                     o.periods = data.periods;
+                    o.action = data.action;
                     if(data.periods.length > 0){
                         o.endTime = data.periods[data.periods.length - 1].end_time;
                         o.period_type =  data.periods[data.periods.length - 1].periods_type;
