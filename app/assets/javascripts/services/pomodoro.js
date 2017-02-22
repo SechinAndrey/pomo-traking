@@ -47,7 +47,7 @@ angular.module('pomoTracking')
                 switch (data.action) {
                     case "loading":
                         o.project = data.project; // TODO move to update function
-                        $rootScope.$emit('pomoLoaded', true);
+                        // $rootScope.$emit('pomoLoaded', true);
                         break;
                     case "start":
                         o.start();

@@ -71,11 +71,4 @@ angular.module('pomoTracking')
             };
             pomodoro.Socket.send(data);
         };
-
-        /* ************** */
-
-        $rootScope.$on('pomoLoaded', function() {
-            $scope.prjTitle = pomodoro.project.title;
-        });
-
     }]);
