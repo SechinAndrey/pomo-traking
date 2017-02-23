@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   devise_for :users
   resources :avatars, only: [:create]
   resources :projects, only: [:create, :destroy, :index, :show]
+  get '/activities', to: 'activities#activities'
 end
