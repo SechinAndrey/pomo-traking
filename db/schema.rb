@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170223115344) do
+ActiveRecord::Schema.define(version: 20170223124009) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,6 @@ ActiveRecord::Schema.define(version: 20170223115344) do
     t.integer  "pomo_cycle_id"
     t.string   "periods_type"
     t.bigint   "end_time"
-    t.string   "status"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.bigint   "pause_time"
@@ -42,11 +41,8 @@ ActiveRecord::Schema.define(version: 20170223115344) do
   create_table "projects", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "title"
-    t.integer  "pomo_time"
-    t.integer  "short_break_time"
-    t.integer  "long_break_time"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -63,11 +59,7 @@ ActiveRecord::Schema.define(version: 20170223115344) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
-    t.integer  "pomo_time",              default: 25
-    t.integer  "short_break_time",       default: 5
-    t.integer  "long_break_time",        default: 15
     t.integer  "current_project"
-    t.string   "current_project_status"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
