@@ -8,8 +8,11 @@ class PomodoroChannel < ApplicationCable::Channel
   def subscribed
     stream_from stream_name
     ap 'subscribed'
-    data = current_user.counter.loading
-    ActionCable.server.broadcast stream_name, data
+
+    current_user.current_project.load_timer if current_user.current_project
+
+    # data = current_user.counter.loading
+    # ActionCable.server.broadcast stream_name, data
   end
 
   def receive(data)
