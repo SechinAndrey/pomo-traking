@@ -43,9 +43,14 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                     });
                 }],
                 resolve: {
-                    projectsPromise: ['projects', function (projects) {
-                        return projects.getAll();
+                    projectsPromise: ['projects', '$state', 'Auth', function (projects, $state, Auth) {
+                        Auth.currentUser().then(function(user) {
+                            return projects.getAll();
+                        }, function(error) {
+                            $state.go('login');
+                        });
                     }]
+
                     // activitiesPromise: ['activities', function (activities) {
                     //         return activities.get(['all_time', 'last_month', 'last_project']);
                     // }]

@@ -19,6 +19,10 @@ class User < ApplicationRecord
     @counter ||= Counter.new self
   end
 
+  def current_project
+    self.current_project_id.nil? ? nil : self.projects.find(self.current_project_id)
+  end
+
   def pomo_started?
     self.current_project_status == 'started'
   end
