@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_one :avatar, :dependent => :destroy
   has_many :projects, :dependent => :destroy
+  has_one :duration_settings, as: :durationable
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
