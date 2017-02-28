@@ -9,7 +9,9 @@ class PomodoroChannel < ApplicationCable::Channel
     stream_from stream_name
     ap 'subscribed'
 
-    current_user.current_project.load_timer if current_user.current_project
+    ActionCable.server.broadcast stream_name, current_user.current_project.serialize
+
+    # current_user.current_project.load_timer if current_user.current_project
 
     # data = current_user.counter.loading
     # ActionCable.server.broadcast stream_name, data

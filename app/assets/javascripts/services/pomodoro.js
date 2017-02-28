@@ -43,24 +43,24 @@ angular.module('pomoTracking')
 
             var callback = function(data) {
                 console.log('PomodoroChannel callback data: ', data);
-                update(data);
-                switch (data.action) {
-                    case "loading":
-                        o.project = data.project; // TODO move to update function
-                        // $rootScope.$emit('pomoLoaded', true);
-                        break;
-                    case "start":
-                        o.start();
-                        break;
-                    case "pause":
-                        console.log('pause case');
-                        o.pause();
-                        break;
-                    case "stop":
-                    case "end":
-                        o.stop();
-                        break;
-                }
+                // update(data);
+                // switch (data.action) {
+                //     case "loading":
+                //         o.project = data.project; // TODO move to update function
+                //         // $rootScope.$emit('pomoLoaded', true);
+                //         break;
+                //     case "start":
+                //         o.start();
+                //         break;
+                //     case "pause":
+                //         console.log('pause case');
+                //         o.pause();
+                //         break;
+                //     case "stop":
+                //     case "end":
+                //         o.stop();
+                //         break;
+                // }
             };
 
             o.Socket.initActionCable = function(){

@@ -34,6 +34,7 @@ gem 'redis'
 # gem 'angularjs-file-upload-rails', '~> 2.2.0'
 gem 'carrierwave', '>= 1.0.0.rc', '< 2.0'
 gem 'awesome_print', :require => 'ap'
+gem 'active_model_serializers'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
