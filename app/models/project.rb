@@ -7,12 +7,8 @@ class Project < ApplicationRecord
   validates :title, length: { maximum: 100 }
 
   def load_timer
-    puts
-    ap '------> load_timer'
-
     if current?
-      period = self.pomo_cycles.last.periods.last if pomo_cycle
-
+      period = self.pomo_cycles.last.periods.last if self.pomo_cycles.last
       unless period.nil?
         if started?
           end_timer if period.end_time - Time.now.to_m <= 0
@@ -24,9 +20,8 @@ class Project < ApplicationRecord
             })
         end
       end
+      self
     end
-
-    ap 'END LOADING'
   end
 
   def start_timer

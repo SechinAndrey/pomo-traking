@@ -7,14 +7,7 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from stream_name
-    ap 'subscribed'
-
-    ActionCable.server.broadcast stream_name, current_user.current_project.serialize
-
-    # current_user.current_project.load_timer if current_user.current_project
-
-    # data = current_user.counter.loading
-    # ActionCable.server.broadcast stream_name, data
+    loading
   end
 
   def receive(data)
@@ -57,6 +50,12 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def stream_name
     "pomodoro_channel_#{current_user.id}"
+  end
+
+  def loading
+    current_project = current_user.current_project.load_timer if current_user.current_project
+    broadcast_data = {current_project: current_project.serialize}
+    ActionCable.server.broadcast stream_name, broadcast_data
   end
 
 end
