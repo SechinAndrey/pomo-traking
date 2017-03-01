@@ -2,7 +2,6 @@ class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
   def serialize
-    ap 'serialize'
     options = {
         include: '**'
     }

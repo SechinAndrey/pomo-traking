@@ -85,8 +85,13 @@ class Project < ApplicationRecord
   end
 
   def end_timer
-    if started?
+    if started? and current?
+      pomo_cycle = self.pomo_cycles.last
+      periods = pomo_cycle.periods
+      periods.last.update({ended: true})
+      self.update({status: 'ended'})
 
+      periods.size == 8 ? pomo_cycle.update({ended: true}) : start_timer
     end
   end
 

@@ -1,16 +1,8 @@
-
-=begin
-  TODO: 1. Add project to pomo-action response.
-=end
-
 class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
     stream_from stream_name
-    # load_timer
-    # start
-    # pause
-    stop
+    load_timer
   end
 
   def receive(data)
@@ -28,12 +20,7 @@ class PomodoroChannel < ApplicationCable::Channel
         when 'stop'
           stop
         when 'end'
-          if  REDIS.get("sync_end_action_#{current_user.id}") != true
-            REDIS.set("sync_end_action_#{current_user.id}", true)
-            data = current_user.counter.end_pomo project
-            ActionCable.server.broadcast stream_name, data
-            REDIS.set("sync_end_action_#{current_user.id}", false)
-          end
+          end_timer
         else
           ActionCable.server.broadcast stream_name, {action: 'Wrong Action'}
       end
@@ -47,6 +34,7 @@ class PomodoroChannel < ApplicationCable::Channel
   end
 
   def load_timer
+    REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')
     current_project = current_user.current_project.load_timer if current_user.current_project
     broadcast_data = {current_project: current_project.serialize}
     ActionCable.server.broadcast stream_name, broadcast_data
@@ -79,4 +67,16 @@ class PomodoroChannel < ApplicationCable::Channel
     end
   end
 
+  def end_timer
+    if REDIS.get("sync_end_action_#{current_user.id}") == 'synchronized'
+      REDIS.set("sync_end_action_#{current_user.id}", 'syncs')
+      current_project = current_user.current_project
+      if current_project&.started?
+        current_project.end_timer
+        broadcast_data = {current_project: current_project.serialize}
+        ActionCable.server.broadcast stream_name, broadcast_data
+      end
+      REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')
+    end
+  end
 end
