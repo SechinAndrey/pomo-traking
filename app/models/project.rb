@@ -78,8 +78,9 @@ class Project < ApplicationRecord
   end
 
   def stop_timer
-    unless stopped?
-
+    unless stopped? and current?
+      self.pomo_cycles.last.periods.last.destroy
+      self.update({status: 'stopped'})
     end
   end
 

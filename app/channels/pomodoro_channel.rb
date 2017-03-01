@@ -9,7 +9,8 @@ class PomodoroChannel < ApplicationCable::Channel
     stream_from stream_name
     # load_timer
     # start
-    pause
+    # pause
+    stop
   end
 
   def receive(data)
@@ -25,10 +26,7 @@ class PomodoroChannel < ApplicationCable::Channel
         when 'pause'
           pause
         when 'stop'
-          if User.find(current_user.id).pomo_started? or User.find(current_user.id).pomo_paused?
-            data = current_user.counter.stop project
-            ActionCable.server.broadcast stream_name, data
-          end
+          stop
         when 'end'
           if  REDIS.get("sync_end_action_#{current_user.id}") != true
             REDIS.set("sync_end_action_#{current_user.id}", true)
@@ -67,6 +65,15 @@ class PomodoroChannel < ApplicationCable::Channel
     current_project = current_user.current_project
     if current_project&.started?
       current_project.pause_timer
+      broadcast_data = {current_project: current_project.serialize}
+      ActionCable.server.broadcast stream_name, broadcast_data
+    end
+  end
+
+  def stop
+    current_project = current_user.current_project
+    if current_project and !current_project.stopped?
+      current_project.stop_timer
       broadcast_data = {current_project: current_project.serialize}
       ActionCable.server.broadcast stream_name, broadcast_data
     end
