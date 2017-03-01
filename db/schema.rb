@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170224124409) do
+ActiveRecord::Schema.define(version: 20170301135355) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,16 +37,18 @@ ActiveRecord::Schema.define(version: 20170224124409) do
     t.integer  "pomo_cycle_id"
     t.string   "periods_type"
     t.bigint   "end_time"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.bigint   "pause_time"
+    t.integer  "duration"
+    t.boolean  "ended",         default: false
   end
 
   create_table "pomo_cycles", force: :cascade do |t|
     t.integer  "project_id"
-    t.boolean  "ended"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.boolean  "ended",      default: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "projects", force: :cascade do |t|

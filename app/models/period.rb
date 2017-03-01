@@ -2,11 +2,6 @@ class Period < ApplicationRecord
   belongs_to :pomo_cycle
 
   def ended?
-    self.status == 'ended'
+    self.ended
   end
-
-  def paused?
-    self.status == 'paused'
-  end
-
 end
