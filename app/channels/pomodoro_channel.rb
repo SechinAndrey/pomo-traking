@@ -8,7 +8,8 @@ class PomodoroChannel < ApplicationCable::Channel
   def subscribed
     stream_from stream_name
     # load_timer
-    start
+    # start
+    pause
   end
 
   def receive(data)
@@ -20,12 +21,9 @@ class PomodoroChannel < ApplicationCable::Channel
     else
       case action
         when 'start'
-            start
+          start
         when 'pause'
-          if User.find(current_user.id).pomo_started?
-            data = current_user.counter.pause project
-            ActionCable.server.broadcast stream_name, data
-          end
+          pause
         when 'stop'
           if User.find(current_user.id).pomo_started? or User.find(current_user.id).pomo_paused?
             data = current_user.counter.stop project
@@ -60,6 +58,15 @@ class PomodoroChannel < ApplicationCable::Channel
     current_project = current_user.current_project
     if current_project and !current_project.started?
       current_project.start_timer
+      broadcast_data = {current_project: current_project.serialize}
+      ActionCable.server.broadcast stream_name, broadcast_data
+    end
+  end
+
+  def pause
+    current_project = current_user.current_project
+    if current_project&.started?
+      current_project.pause_timer
       broadcast_data = {current_project: current_project.serialize}
       ActionCable.server.broadcast stream_name, broadcast_data
     end

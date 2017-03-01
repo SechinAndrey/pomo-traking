@@ -14,7 +14,6 @@ class Project < ApplicationRecord
           end_timer if period.end_time - Time.now.to_m <= 0
         elsif paused?
           period.update({
-            status: 'paused',
             end_time: Time.now.to_m + (period.end_time - period.pause_time),
             pause_time: Time.now.to_m
             })
@@ -62,7 +61,6 @@ class Project < ApplicationRecord
         end
       elsif paused?
         period.update({
-            status: 'started',
             end_time: Time.now.to_m + (period.end_time - period.pause_time)
         })
       end
@@ -73,8 +71,9 @@ class Project < ApplicationRecord
   end
 
   def pause_timer
-    unless paused?
-
+    if started? and current?
+      self.pomo_cycles.last.periods.last.update({pause_time: Time.now.to_m})
+      self.update({status: 'paused'})
     end
   end
 
