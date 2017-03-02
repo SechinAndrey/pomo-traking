@@ -36,16 +36,16 @@ class PomodoroChannel < ApplicationCable::Channel
   def load_timer
     REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')
     current_project = current_user.current_project.load_timer if current_user.current_project
-    broadcast_data = {current_project: current_project.serialize}
-    ActionCable.server.broadcast stream_name, broadcast_data
+    @broadcast_data = {current_project: current_project.serialize}
+    broadcast
   end
 
   def start
     current_project = current_user.current_project
     if current_project and !current_project.started?
       current_project.start_timer
-      broadcast_data = {current_project: current_project.serialize}
-      ActionCable.server.broadcast stream_name, broadcast_data
+      @broadcast_data = {current_project: current_project.serialize}
+      broadcast
     end
   end
 
@@ -53,8 +53,8 @@ class PomodoroChannel < ApplicationCable::Channel
     current_project = current_user.current_project
     if current_project&.started?
       current_project.pause_timer
-      broadcast_data = {current_project: current_project.serialize}
-      ActionCable.server.broadcast stream_name, broadcast_data
+      @broadcast_data = {current_project: current_project.serialize}
+      broadcast
     end
   end
 
@@ -62,8 +62,8 @@ class PomodoroChannel < ApplicationCable::Channel
     current_project = current_user.current_project
     if current_project and !current_project.stopped?
       current_project.stop_timer
-      broadcast_data = {current_project: current_project.serialize}
-      ActionCable.server.broadcast stream_name, broadcast_data
+      @broadcast_data = {current_project: current_project.serialize}
+      broadcast
     end
   end
 
@@ -73,10 +73,15 @@ class PomodoroChannel < ApplicationCable::Channel
       current_project = current_user.current_project
       if current_project&.started?
         current_project.end_timer
-        broadcast_data = {current_project: current_project.serialize}
-        ActionCable.server.broadcast stream_name, broadcast_data
+        @broadcast_data = {current_project: current_project.serialize}
+        broadcast
       end
       REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')
     end
+  end
+
+  def broadcast
+    ap @broadcast_data
+    ActionCable.server.broadcast stream_name, @broadcast_data
   end
 end

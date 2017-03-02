@@ -18,17 +18,17 @@ angular.module('pomoTracking')
             $scope.user = user;
 
             $scope.isEmptyProject = function(){
-                return $scope.user.current_project == null;
+                return $scope.user.current_project_id == null;
             };
 
         });
 
         $scope.isPomoStrted = function(){
-            return pomodoro.action == 'start';
+            return pomodoro.current_project ? pomodoro.current_project.status == 'started' : false;
         };
 
         $scope.isPomoPaused = function(){
-            return pomodoro.action == 'pause' || pomodoro.action == 'loading';
+            return pomodoro.current_project ? pomodoro.current_project.status == 'paused' : false;
         };
 
         $scope.isNarrow = function(){
@@ -39,35 +39,37 @@ angular.module('pomoTracking')
             console.log('$scope.isPomoStrted()' + $scope.isPomoStrted());
             if($scope.isPomoStrted()){
                 $scope.pomodoroPause();
-                $scope.user.current_project_status = 'paused';
             }else{
                 $scope.pomodoroStart();
-                $scope.user.current_project_status = 'started';
             }
         };
 
         /* pomodoro actions */
 
         $scope.pomodoroStart = function(){
-            data = {
-                action: 'start',
-                project: $scope.user.current_project
-            };
-            pomodoro.Socket.send(data);
+            if(!$scope.isPomoStrted()){
+                data = {
+                    action: 'start',
+                    project: $scope.user.current_project_id
+                };
+                pomodoro.Socket.send(data);
+            }
         };
 
         $scope.pomodoroPause = function(){
-            data = {
-                action: 'pause',
-                project: $scope.user.current_project
-            };
-            pomodoro.Socket.send(data);
+            if(!$scope.isPomoPaused()){
+                data = {
+                    action: 'pause',
+                    project: $scope.user.current_project_id
+                };
+                pomodoro.Socket.send(data);
+            }
         };
 
         $scope.pomodoroStop = function(){
             data = {
                 action: 'stop',
-                project: $scope.user.current_project
+                project: $scope.user.current_project_id
             };
             pomodoro.Socket.send(data);
         };

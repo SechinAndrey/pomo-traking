@@ -1,3 +1,3 @@
 class PeriodSerializer < ActiveModel::Serializer
-  attributes :id, :periods_type, :end_time, :pause_time
+  attributes :periods_type, :end_time, :pause_time, :ended
 end

@@ -129,7 +129,4 @@ class Project < ApplicationRecord
     duration_settings[:long_break_duration]
   end
 
-  def xxx
-  end
-
 end
