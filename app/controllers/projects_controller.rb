@@ -10,17 +10,17 @@ class ProjectsController < ApplicationController
   end
 
   def create
-    project = current_user.projects.create(project_params)
-    if project.valid?
-      render json: project
+    @project = current_user.projects.create(project_params)
+    if @project.valid?
+      render json: @project
     else
-      render json: project.errors.full_messages
+      render json: @project.errors.full_messages
     end
   end
 
   private
   def project_params
-    params.require(:project).permit(:title, :pomo_time, :short_break_time, :long_break_time)
+    params.require(:project).permit(:title)
   end
 
 end
