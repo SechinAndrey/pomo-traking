@@ -2,6 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
+  after_create :create_settings
+
   has_one :avatar, :dependent => :destroy
   has_many :projects, :dependent => :destroy
   has_one :duration_settings, as: :durationable
@@ -17,4 +19,8 @@ class User < ApplicationRecord
     self.current_project_id.nil? ? nil : self.projects.find(self.current_project_id)
   end
 
+  private
+  def create_settings
+    self.create_duration_settings
+  end
 end

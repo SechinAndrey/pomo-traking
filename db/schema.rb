@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170301135355) do
+ActiveRecord::Schema.define(version: 20170303101054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,13 +23,13 @@ ActiveRecord::Schema.define(version: 20170301135355) do
   end
 
   create_table "duration_settings", force: :cascade do |t|
-    t.integer  "pomo_duration"
-    t.integer  "short_break_duration"
-    t.integer  "long_break_duration"
+    t.integer  "pomo_duration",        default: 25
+    t.integer  "short_break_duration", default: 5
+    t.integer  "long_break_duration",  default: 15
     t.integer  "durationable_id"
     t.string   "durationable_type"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
     t.index ["durationable_id", "durationable_type"], name: "index_duration_settings", using: :btree
   end
 
