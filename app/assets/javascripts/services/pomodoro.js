@@ -1,15 +1,14 @@
 angular.module('pomoTracking')
     .factory('pomodoro', [
+        '$window',
         '$rootScope',
         '$interval',
         'ActionCableChannel',
-        function($rootScope, $interval, ActionCableChannel){
+        function($window, $rootScope, $interval, ActionCableChannel){
             var o = {
-                min: 0,
-                sec: 0,
-                Socket: {},
-                periods: {}
+                Socket: {}
             };
+
             var started = false;
 
             o.start = function(){
@@ -43,8 +42,8 @@ angular.module('pomoTracking')
 
             var callback = function(data) {
                 console.log("Callback data: ", data);
-                update(data);
                 if (!data.current_project){return}
+                update(data);
                 switch (data.current_project.status) {
                     case 'started':
                         o.start();
@@ -70,8 +69,7 @@ angular.module('pomoTracking')
 
                     o.Socket.destroy =  function(){
                         o.Socket.pomodoroChannel.unsubscribe().then(function(){
-                            o.Socket.send = undefined;
-                            o.Socket.pomodoroChannel = undefined;
+                            set_default();
                         });
                     };
                 });
@@ -99,6 +97,19 @@ angular.module('pomoTracking')
                     o.min = Math.floor(o.time/60000);
                     o.sec = Math.floor(o.time/1000 % 60);
                 }
+            };
+
+            var set_default = function(){
+                o.min = 0;
+                o.sec = 0;
+                o.time = 0;
+
+                o.current_project = undefined;
+                o.periods = undefined;
+                o.endTime = 0;
+                o.period_type = '';
+                o.Socket.send = undefined;
+                o.Socket.pomodoroChannel = undefined;
             };
 
             return o;

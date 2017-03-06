@@ -39,8 +39,8 @@ angular.module('pomoTracking')
         });
 
         $scope.$on('devise:logout', function (e, user){
+
             $scope.user = {};
-            console.log(123123123123123);
             pomodoro.Socket.destroy();
         });
 

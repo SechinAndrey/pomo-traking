@@ -26,7 +26,7 @@ class Project < ApplicationRecord
   def start_timer
     if started?
       ap 'timer is started'
-    elsif current?
+    else
       pomo_cycle = self.pomo_cycles.last
       pomo_cycle = self.pomo_cycles.create if !pomo_cycle or pomo_cycle.ended
       period = pomo_cycle.periods.last
@@ -78,7 +78,7 @@ class Project < ApplicationRecord
   end
 
   def stop_timer
-    unless stopped? and current?
+    if !stopped? and current?
       self.pomo_cycles.last.periods.last.destroy
       self.update({status: 'stopped'})
     end

@@ -16,7 +16,7 @@ class User < ApplicationRecord
   validates :username, length: { maximum: 100 }
 
   def current_project
-    self.current_project_id.nil? ? nil : self.projects.find(self.current_project_id)
+    self.current_project_id.nil? ? nil : self.projects.where(id: self.current_project_id).last
   end
 
   private

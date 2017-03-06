@@ -11,9 +11,9 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def receive(data)
     action = data.fetch('message')['action']
-    project = data.fetch('message')['project']
+    @project_id = data.fetch('message')['project']
 
-    if project.nil?
+    if @project_id.nil?
       ap "[Pomo Log]: Action '#{action}' - project_id is NIL"
     else
       case action
@@ -45,10 +45,11 @@ class PomodoroChannel < ApplicationCable::Channel
   end
 
   def start
-    current_project = current_user.current_project
-    if current_project and !current_project.started?
-      current_project.start_timer
-      @broadcast_data = {current_project: current_project.serialize}
+    project = current_user.projects.where(id: @project_id).last
+
+    if project and !current_user.current_project&.started?
+      project.start_timer
+      @broadcast_data = {current_project: project.serialize}
       broadcast
     end
   end

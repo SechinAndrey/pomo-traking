@@ -1,5 +1,5 @@
 <div class="small-timer" ng-class="{ narrow:isNarrow(), noproject:isEmptyProject()}" ng-click="pomodoroToggle()">
-    <b>{{pomodoro.project.title}}</b>
+    <b>{{pomodoro.current_project.title}}</b>
     <span class="period-type">{{pomodoro.period_type}}</span>
     <span class="pull-right">
         <span ng-show="isPomoStrted()" class="icon-play time-icon"></span>
