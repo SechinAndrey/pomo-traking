@@ -43,8 +43,8 @@ angular.module('pomoTracking')
 
             var callback = function(data) {
                 console.log("Callback data: ", data);
-                if (!data.current_project){return}
                 update(data);
+                if (!data.current_project){return}
                 switch (data.current_project.status) {
                     case 'started':
                         o.start();

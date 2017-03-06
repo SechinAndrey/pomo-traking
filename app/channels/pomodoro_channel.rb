@@ -1,19 +1,12 @@
 class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
-    ap '1'*100
-    ap current_user
-    ap '--------------------'
-    # current_user.reload
     stream_from stream_name
     load_timer
   end
 
   def unsubscribed
-    ap '2'*100
-    ap current_user
-    ap '--------------------'
-    self.destroy
+    connection.close
   end
 
   def receive(data)

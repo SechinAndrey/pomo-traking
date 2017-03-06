@@ -4,16 +4,8 @@ module ApplicationCable
     identified_by :current_user
 
     def connect
-      ap 'CONNECT CONNECT CONNECT'
-      ap'-----------------'
-      ap "cookies.signed['user.id'] - #{cookies.signed['user.id']}"
-      ap'-----------------'
       self.current_user = find_verified_user
       logger.add_tags 'ActionCable', current_user.username
-    end
-
-    def disconnect
-      ap 'DISCONNECT DISCONNECT DISCONNECT'
     end
 
     protected
