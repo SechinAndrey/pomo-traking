@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @projects = current_user.projects.all.as_json(only: [:id, :title])
     render json: current_user.projects.all.as_json(only: [:id, :title])
   end
 

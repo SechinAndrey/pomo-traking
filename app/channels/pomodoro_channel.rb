@@ -86,7 +86,7 @@ class PomodoroChannel < ApplicationCable::Channel
   end
 
   def broadcast
-    ap @broadcast_data
+    # ap @broadcast_data
     ActionCable.server.broadcast stream_name, @broadcast_data
   end
 end

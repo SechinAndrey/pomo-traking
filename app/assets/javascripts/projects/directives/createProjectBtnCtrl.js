@@ -17,6 +17,8 @@ angular.module('pomoTracking')
                     title: $scope.title,
                 }).then(function (){
                     $scope.title = '';
+                    $scope.newProject.$setPristine();
+                    $scope.newProject.$setUntouched();
                     $scope.closeModal();
                 });
             };

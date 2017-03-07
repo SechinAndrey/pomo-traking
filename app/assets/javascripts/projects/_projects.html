@@ -1,4 +1,4 @@
-<div class="container-fluid timer-container">
+<div class="container-fluid timer-container" ng-controller="topItemCtrl">
     <small-timer></small-timer>
     <create-project-btn></create-project-btn>
 </div>
@@ -31,8 +31,9 @@
     </div>
 
     <div class="dash-project-conteiner">
-        <div class="dash-project" ng-repeat="i in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]">
-            <div class="title"><span ng-show="i%2 == 0" class="icon-pause"></span> <a href="#/projects/{{i}}">Work Hard {{i}}</a></div>
+        <switch-project></switch-project>
+        <div class="dash-project" ng-repeat="project in projects">
+            <div class="title"><span ng-show="" class="icon-pause"></span> <a href="#/projects/{{project.id}}">{{project.title}}</a></div>
             <div class="pomo pull-left">
                 20<br>
                 <span>pomo</span>
@@ -42,8 +43,8 @@
                 <span>min</span>
             </div>
             <div class="bottom-btn">
-                <div class="start pull-left"><span>Start</span></div>
-                <div class="view pull-right"><span>View</span></div>
+                <div class="start pull-left" ng-click="startProject(project)"><span>Start</span></div>
+                <a href="#/projects/{{project.id}}"><div class="view pull-right"><span>View</span></div></a>
             </div>
         </div>
     </div>

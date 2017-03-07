@@ -112,12 +112,12 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                     }, function(error) {
                         $state.go('login');
                     });
-                }]
-                //resolve: {
-                //    project: ['$stateParams', 'projects', function ($stateParams, projects) {
-                //        return projects.get($stateParams.id);
-                //    }]
-                //}
+                }],
+                resolve: {
+                   projects: ['$stateParams', 'projects', function ($stateParams, projects) {
+                       return projects.getAll();
+                   }]
+                }
             })
 
             .state('project', {

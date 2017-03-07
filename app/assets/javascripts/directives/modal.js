@@ -6,6 +6,10 @@ angular.module('pomoTracking')
                 scope.closeModal = function() {
                     element.modal('hide');
                 };
+
+                scope.openModal = function () {
+                    element.modal('show');
+                }
             }
         }
     });
