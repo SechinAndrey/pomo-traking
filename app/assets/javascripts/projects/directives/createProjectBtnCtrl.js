@@ -15,11 +15,13 @@ angular.module('pomoTracking')
                 if(!valid) { return; }
                 projects.create({
                     title: $scope.title,
-                }).then(function (){
-                    $scope.title = '';
-                    $scope.newProject.$setPristine();
-                    $scope.newProject.$setUntouched();
-                    $scope.closeModal();
+                }).then(function (response){
+                    if(response.status == 200){
+                        $scope.title = '';
+                        $scope.newProject.$setPristine();
+                        $scope.newProject.$setUntouched();
+                        $scope.closeModal();
+                    }
                 });
             };
         }]);

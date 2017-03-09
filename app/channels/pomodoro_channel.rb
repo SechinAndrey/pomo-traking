@@ -19,6 +19,8 @@ class PomodoroChannel < ApplicationCable::Channel
       case action
         when 'start'
           start
+        when 'switch'
+          switch
         when 'pause'
           pause
         when 'stop'
@@ -50,6 +52,19 @@ class PomodoroChannel < ApplicationCable::Channel
     if project and !current_user.current_project&.started?
       project.start_timer
       @broadcast_data = {current_project: project.serialize}
+      broadcast
+    end
+  end
+
+  def switch
+    project = current_user.projects.where(id: @project_id).last
+
+    if project and current_user.current_project&.started?
+      project.switch_timer
+      @broadcast_data = {
+          current_project: project.serialize,
+          switched: true
+      }
       broadcast
     end
   end

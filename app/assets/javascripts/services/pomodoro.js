@@ -4,7 +4,8 @@ angular.module('pomoTracking')
         '$rootScope',
         '$interval',
         'ActionCableChannel',
-        function($window, $rootScope, $interval, ActionCableChannel){
+        'Auth',
+        function($window, $rootScope, $interval, ActionCableChannel, Auth){
             var o = {
                 Socket: {}
             };
@@ -76,6 +77,10 @@ angular.module('pomoTracking')
             };
 
             var update = function(data){
+                if(data.switched){
+                    Auth._currentUser.current_project_id = data.current_project.id;
+                }
+
                 o.current_project = {
                     id: data.current_project.id,
                     title: data.current_project.title,

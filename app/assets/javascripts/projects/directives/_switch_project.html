@@ -1,16 +1,21 @@
 <div class="modal fade" id="myModal" role="dialog" modal>
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-sm">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Oops</h4>
+                <h4 class="modal-title">Switching project</h4>
             </div>
             <div class="modal-body">
-                <h4>Project {{pomodoro.current_project.title}} is started.</h4>
-                <a>Pause {{current_project.title}} and start {{running_project}}</a>
+                <p>
+                    <h3>{{pomodoro.current_project.title}}</h3> is started.
+                </p>
+                <p style="color: grey">
+                    You can pause the current project and start another.
+                </p>
             </div>
             <div class="modal-footer">
+                <button type="button" class="btn btn-default pull-left" ng-click="switch_project()">Start Another</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>

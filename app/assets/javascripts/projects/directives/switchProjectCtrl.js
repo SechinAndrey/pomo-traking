@@ -4,11 +4,19 @@ angular.module('pomoTracking')
         '$scope',
         'pomodoro',
         function($scope, pomodoro){
-            $scope.running_project = '';
+            $scope.running_project = {};
             $scope.pomodoro = pomodoro;
 
-            $scope.$on('start-project', function(data){
-                console.log(data);
+            $scope.$on('switch-project', function(event, projectt){
+                $scope.running_project = projectt;
                 $scope.openModal();
             });
+
+            $scope.switch_project = function () {
+                data = {
+                    action: 'switch',
+                    project: $scope.running_project.id
+                };
+                pomodoro.Socket.send(data);
+            }
         }]);

@@ -84,6 +84,13 @@ class Project < ApplicationRecord
     end
   end
 
+  def switch_timer
+    if self.user.current_project.started?
+      self.user.current_project.pause_timer
+      self.start_timer
+    end
+  end
+
   def end_timer
     if started? and current?
       pomo_cycle = self.pomo_cycles.last

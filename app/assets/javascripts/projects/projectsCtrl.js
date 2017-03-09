@@ -8,9 +8,25 @@ angular.module('pomoTracking')
             $scope.projects = projects.data;
             $scope.isMenuOpen = false;
 
-            $scope.startProject = function (project) {
-                if(pomodoro.current_project && pomodoro.current_project.id != project.id){
-                    $scope.$emit('start-project', project);
+            $scope.toggleProject = function (project) {
+                if(pomodoro.current_project){
+                   if(pomodoro.current_project.status == 'started'){
+                       if(pomodoro.current_project.id != project.id){
+                           $scope.$emit('switch-project', project);
+                       }else{
+                           data = {
+                               action: 'pause',
+                               project: project.id
+                           };
+                           pomodoro.Socket.send(data);
+                       }
+                   }else{
+                       data = {
+                           action: 'start',
+                           project: project.id
+                       };
+                       pomodoro.Socket.send(data);
+                   }
                 }else{
                     data = {
                         action: 'start',
