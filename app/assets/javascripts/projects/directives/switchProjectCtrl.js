@@ -18,5 +18,6 @@ angular.module('pomoTracking')
                     project: $scope.running_project.id
                 };
                 pomodoro.Socket.send(data);
+                $scope.closeModal();
             }
         }]);
