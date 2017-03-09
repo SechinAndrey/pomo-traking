@@ -15,13 +15,13 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 templateUrl: 'home/_home.html',
                 controller: 'MainCtrl',
                 resolve: {
-                    projectsPromise: ['$rootScope', '$state', 'Auth', function ($rootScope, $state, Auth) {
-                        Auth.currentUser().then(function(user) {
-                            // return projects.getAll();
-                        }, function(error) {
-                            $state.go('login');
-                            console.log(error);
-                        });
+                    projects: ['$rootScope', '$state', 'Auth', 'projects', function ($rootScope, $state, Auth, projects) {
+                        // Auth.currentUser().then(function(user) {
+                            return projects.getAll();
+                        // }, function(error) {
+                        //     $state.go('login');
+                        //     console.log(error);
+                        // });
                     }]
                 },
                 onEnter: ['$rootScope', function($rootScope) {
@@ -43,12 +43,12 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                     });
                 }],
                 resolve: {
-                    projectsPromise: ['projects', '$state', 'Auth', function (projects, $state, Auth) {
-                        Auth.currentUser().then(function(user) {
+                    projects: ['projects', '$state', 'Auth', function (projects, $state, Auth) {
+                    //     Auth.currentUser().then(function(user) {
                             return projects.getAll();
-                        }, function(error) {
-                            $state.go('login');
-                        });
+                        // }, function(error) {
+                        //     $state.go('login');
+                        // });
                     }]
 
                     // activitiesPromise: ['activities', function (activities) {

@@ -3,7 +3,7 @@ angular.module('pomoTracking')
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: "projects/directives/_create_project_btn.html",
+            templateUrl: "projects/directives/create_project_btn/_create_project_btn.html",
             controller: 'CreateProjectBtnCtrl'
         };
     });

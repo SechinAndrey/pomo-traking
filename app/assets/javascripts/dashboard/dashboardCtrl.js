@@ -1,6 +1,8 @@
 angular.module('pomoTracking')
     .controller('DashboardCtrl', [
         '$scope',
-        function($scope) {
+        'projects',
+        function($scope, projects) {
+            $scope.projects = projects.data;
         }
     ]);

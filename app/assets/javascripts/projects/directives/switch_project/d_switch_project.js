@@ -3,7 +3,7 @@ angular.module('pomoTracking')
         return {
             restrict: 'E',
             replace: true,
-            templateUrl: "projects/directives/_switch_project.html",
+            templateUrl: "projects/directives/switch_project/_switch_project.html",
             controller: 'SwitchProjectCtrl'
         };
     });
