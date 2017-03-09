@@ -216,6 +216,10 @@
         //padding-top: 9px;
         //padding-bottom: 8px;
         border: 1px solid black;
+
+        &:active{
+          font-size: 16px;
+        }
       }
 
       .start{
@@ -226,6 +230,7 @@
 
         &:hover{
           background-color: #67B85B;
+          color: white;
         }
 
         @include breakpoint(w486){
@@ -242,6 +247,7 @@
 
         &:hover{
           background-color: #68BEDD;
+          color: white;
         }
 
         @include breakpoint(w486){
