@@ -36,6 +36,15 @@ angular.module('pomoTracking')
                 }
             };
 
+            $scope.actionTitle = function(project){
+                if(pomodoro.current_project && pomodoro.current_project.id == project.id){
+                    pomodoro.current_project.status == 'started' ? title = 'Pause' : title = 'Start'
+                }else{
+                    title = 'Start'
+                }
+                return title;
+            };
+
             $scope.toggleSortMenu = function (){
                 $scope.isMenuOpen = !$scope.isMenuOpen;
             }
