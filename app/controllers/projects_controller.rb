@@ -13,7 +13,6 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.create(project_params)
     if @project.valid?
-      ActionCable.server.broadcast stream_name, {action: 'Cooool ahahahaha'}
       render json: @project
     else
       render json: @project.errors.full_messages
@@ -25,8 +24,8 @@ class ProjectsController < ApplicationController
     params.require(:project).permit(:title)
   end
 
-  def stream_name
-    "pomodoro_channel_#{current_user.id}"
+  def project_channel
+    "project_channel_#{current_user.id}"
   end
 
 end

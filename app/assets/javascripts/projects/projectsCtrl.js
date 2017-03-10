@@ -3,13 +3,12 @@ angular.module('pomoTracking')
         '$scope',
         'projects',
         'pomodoro',
-        // 'project',
-        function($scope, projects, pomodoro /*project*/) {
-            $scope.projects = projects.data;
+        function($scope, projects, pomodoro) {
+            $scope.projects = projects.projects;
             $scope.isMenuOpen = false;
 
             $scope.toggleSortMenu = function (){
                 $scope.isMenuOpen = !$scope.isMenuOpen;
-            }
+            };
         }
     ]);

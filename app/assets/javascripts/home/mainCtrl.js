@@ -18,7 +18,7 @@ angular.module('pomoTracking')
             {type: 'Long break',  status: 'no'}
         ];
 
-        $scope.projects = projects.data;
+        $scope.projects = projects.projects;
 
 
         $scope.isStarted = function(period){

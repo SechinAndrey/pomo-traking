@@ -4,12 +4,8 @@ angular.module('pomoTracking')
         '$scope',
         'projects',
         'pomodoro',
-        'wsproject',
-        function($scope, projects, pomodoro, wsproject){
+        function($scope, projects, pomodoro){
 
-            projects.getAll();
-            wsproject.Socket.initActionCable();
-            console.log(projects);
             $scope.toggleProject = function (project) {
                 if(pomodoro.current_project){
                     if(pomodoro.current_project.status == 'started'){

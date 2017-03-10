@@ -14,18 +14,13 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 url: '/home',
                 templateUrl: 'home/_home.html',
                 controller: 'MainCtrl',
-                resolve: {
-                    projects: ['$rootScope', '$state', 'Auth', 'projects', function ($rootScope, $state, Auth, projects) {
-                        // Auth.currentUser().then(function(user) {
-                            return projects.getAll();
-                        // }, function(error) {
-                        //     $state.go('login');
-                        //     console.log(error);
-                        // });
-                    }]
-                },
-                onEnter: ['$rootScope', function($rootScope) {
+                onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
+                    Auth.currentUser().then(function(user) {
+                        projects.getAll();
+                    }, function(error) {
+                        $state.go('login');
+                    });
                 }]
             })
 
@@ -34,27 +29,15 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 url: '/dashboard',
                 templateUrl: 'dashboard/_dashboard.html',
                 controller: 'DashboardCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+                onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
                     Auth.currentUser().then(function(user) {
+                        projects.getAll();
                     }, function(error) {
                         $state.go('login');
                     });
-                }],
-                resolve: {
-                    projects: ['projects', '$state', 'Auth', function (projects, $state, Auth) {
-                    //     Auth.currentUser().then(function(user) {
-                            return projects.getAll();
-                        // }, function(error) {
-                        //     $state.go('login');
-                        // });
-                    }]
-
-                    // activitiesPromise: ['activities', function (activities) {
-                    //         return activities.get(['all_time', 'last_month', 'last_project']);
-                    // }]
-                }
+                }]
             })
 
             .state('account', {
@@ -105,19 +88,15 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 url: '/projects',
                 templateUrl: 'projects/_projects.html',
                 controller: 'ProjectsCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
+                onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
                     Auth.currentUser().then(function(user) {
+                        projects.getAll();
                     }, function(error) {
                         $state.go('login');
                     });
-                }],
-                resolve: {
-                   projects: ['$stateParams', 'projects', function ($stateParams, projects) {
-                       return projects.getAll();
-                   }]
-                }
+                }]
             })
 
             .state('project', {

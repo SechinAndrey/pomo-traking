@@ -7,23 +7,8 @@ angular.module('pomoTracking')
                 Socket: {}
             };
 
-
             var callback = function(data) {
                 console.log("Callback data: ", data);
-                // if (!data.current_project){return}
-                // update(data);
-                // switch (data.current_project.status) {
-                //     case 'started':
-                //         o.start();
-                //         break;
-                //     case 'paused':
-                //         o.pause();
-                //         break;
-                //     case 'stopped':
-                //     case 'ended':
-                //         o.stop();
-                //         break;
-                // }
             };
 
             o.Socket.initActionCable = function(){
@@ -41,9 +26,6 @@ angular.module('pomoTracking')
                         });
                     };
                 });
-            };
-
-            var update = function(data){
             };
 
             return o;
