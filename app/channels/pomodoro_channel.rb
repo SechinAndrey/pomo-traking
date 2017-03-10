@@ -1,11 +1,13 @@
 class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
+    ap 'PomodoroChannel - subscribed'
     stream_from stream_name
     load_timer
   end
 
   def unsubscribed
+    ap 'PomodoroChannel - UNsubscribed'
     connection.close
   end
 
