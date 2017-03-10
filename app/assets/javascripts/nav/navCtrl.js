@@ -5,8 +5,9 @@ angular.module('pomoTracking')
     '$scope',
     'Auth',
     'pomodoro',
+    'wsproject',
     '$state',
-    function($rootScope, $scope, Auth, pomodoro, $state){
+    function($rootScope, $scope, Auth, pomodoro, wsproject, $state){
 
         $scope.signedIn = Auth.isAuthenticated;
         $scope.logout = function () {
@@ -22,6 +23,9 @@ angular.module('pomoTracking')
             if(!pomodoro.Socket.pomodoroChannel) {
                 pomodoro.Socket.initActionCable();
             }
+            if(!wsproject.Socket.projectChannel){
+                wsproject.Socket.initActionCable();
+            }
         });
 
         $scope.$on('devise:new-registration', function (e, user){
@@ -29,12 +33,18 @@ angular.module('pomoTracking')
             if(!pomodoro.Socket.pomodoroChannel) {
                 pomodoro.Socket.initActionCable();
             }
+            if(!wsproject.Socket.projectChannel){
+                wsproject.Socket.initActionCable();
+            }
         });
 
         $scope.$on('devise:login', function (e, user){
             $scope.user = user;
             if(!pomodoro.Socket.pomodoroChannel) {
-                pomodoro.Socket.initActionCable($scope.user);
+                pomodoro.Socket.initActionCable();
+            }
+            if(!wsproject.Socket.projectChannel){
+                wsproject.Socket.initActionCable();
             }
         });
 

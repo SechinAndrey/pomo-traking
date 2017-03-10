@@ -10,7 +10,7 @@ angular.module('pomoTracking')
 
             o.create = function(project) {
                 return $http.post('/projects.json', project).success(function(data){
-                    o.projects.push(data);
+                    //o.projects.push(data);
                 });
             };
 

@@ -13,7 +13,12 @@ class ProjectsController < ApplicationController
   def create
     @project = current_user.projects.create(project_params)
     if @project.valid?
-      render json: @project
+      @broadcast_data = {
+          created: true,
+          project: @project.serialize
+      }
+      broadcast
+      render json: { created: true }
     else
       render json: @project.errors.full_messages
     end
@@ -28,4 +33,8 @@ class ProjectsController < ApplicationController
     "project_channel_#{current_user.id}"
   end
 
+
+  def broadcast
+    ActionCable.server.broadcast project_channel, @broadcast_data
+  end
 end
