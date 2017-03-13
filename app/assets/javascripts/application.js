@@ -10,5 +10,6 @@
 //= require angular-actioncable
 //= require angular-xeditable
 //= require ng-rails-csrf
+//= require ngstorage
 //= require app
 //= require_tree .

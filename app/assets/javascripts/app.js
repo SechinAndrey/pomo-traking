@@ -1,4 +1,4 @@
-angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise', 'angularFileUpload', 'ngActionCable', 'xeditable', 'ng-rails-csrf'])
+angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise', 'angularFileUpload', 'ngActionCable', 'xeditable', 'ng-rails-csrf', 'ngStorage'])
 
 .run(['editableOptions', function(editableOptions) {
     editableOptions.theme = 'bs3';
