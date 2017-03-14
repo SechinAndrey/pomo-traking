@@ -21,6 +21,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'figaro'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'kaminari'
 
 
 gem 'angular-rails-templates'

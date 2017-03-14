@@ -2,6 +2,15 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    # TODO: Sort
+    #  alphabet, alphabet:DESC
+    #  date, date:DESC
+    #  pomo_count, pomo_count:desc
+
+    ap '========================='
+    ap params
+    ap '========================='
+
     @projects = current_user.projects.all.as_json(only: [:id, :title])
     render json: current_user.projects.all.as_json(only: [:id, :title])
   end

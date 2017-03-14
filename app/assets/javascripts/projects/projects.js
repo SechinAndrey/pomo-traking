@@ -10,12 +10,17 @@ angular.module('pomoTracking')
 
             o.create = function(project) {
                 return $http.post('/projects.json', project).success(function(data){
-                    //o.projects.push(data);
                 });
             };
 
-            o.getAll = function() {
-                return $http.get('/projects.json').success(function(data){
+            o.getAll = function(page, sort, per_page) {
+                return $http.get('/projects.json',
+                    { params: {
+                            page: page,
+                            sort: sort,
+                            per_page: per_page
+                        }
+                    }).success(function(data){
                     angular.copy(data, o.projects);
                 });
             };

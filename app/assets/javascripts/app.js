@@ -17,7 +17,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
                     Auth.currentUser().then(function(user) {
-                        projects.getAll();
+                        projects.getAll(1, 'date:DESC', 10);
                     }, function(error) {
                         $state.go('login');
                     });
