@@ -11,8 +11,28 @@ class ProjectsController < ApplicationController
     ap params
     ap '========================='
 
-    @projects = current_user.projects.all.as_json(only: [:id, :title])
-    render json: current_user.projects.all.as_json(only: [:id, :title])
+    page = params[:page]
+    per_page = params[:per_page]
+    sort = params[:sort]
+
+    case sort
+      when 'alphabet'
+        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title])
+      when 'alphabet:DESC'
+        @projects = current_user.projects.order(title: :desc).page(page).per(per_page).as_json(only: [:id, :title])
+      when 'date'
+        @projects = current_user.projects.order(:updated_at).page(page).per(per_page).as_json(only: [:id, :title])
+      when 'date:DESC'
+        @projects = current_user.projects.order(updated_at: :desc).page(page).per(per_page).as_json(only: [:id, :title])
+      when 'pomo_count'
+        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title]) # TODO
+      when 'pomo_count:desc'
+        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title]) # TODO
+      else
+        ap '------- Default Sort'
+        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title])
+    end
+    render json: @projects
   end
 
   def show
