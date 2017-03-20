@@ -10,12 +10,6 @@
 
     .user-field-container{
       width: 100%;
-
-      @include breakpoint(small) {
-        width: 80%;
-        float: none;
-        margin: auto;
-      }
     }
   }
 

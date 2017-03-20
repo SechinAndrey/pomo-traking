@@ -14,7 +14,7 @@
     }
   }
 
-  .dash-project-conteiner, .last-prj{
+  .project-list-container, .last-prj{
     display: none;
     @include breakpoint(small){
      display: block;
