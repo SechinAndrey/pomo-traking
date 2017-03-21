@@ -15,7 +15,7 @@ angular.module('pomoTracking')
             o.start = function(){
                 if (!started){
                     o.timer = $interval(function() {
-                        o.time = o.endTime - new Date().getTime();
+                        o.time = o.endTime - new Date().getTime(); //TODO: move to backend
                         o.min = Math.floor(o.time/60000);
                         o.sec = Math.floor(o.time/1000 % 60);
                         if(o.time < 300){

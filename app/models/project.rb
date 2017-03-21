@@ -84,6 +84,7 @@ class Project < ApplicationRecord
     end
   end
 
+  #TODO: move to start
   def switch_timer
     if self.user.current_project.started?
       self.user.current_project.pause_timer
@@ -99,7 +100,9 @@ class Project < ApplicationRecord
       self.update({status: 'ended'})
 
       periods.size == 8 ? pomo_cycle.update({ended: true}) : start_timer
+      #TODO: update statics
     end
+
   end
 
   def current?
@@ -118,6 +121,8 @@ class Project < ApplicationRecord
     self.status == 'stopped'
   end
 
+  #TODO: move to Period
+  #(self.duration_settings || self.user.duration_settings)[:pomo_duration]
   def pomo_duration
     duration_settings = self.duration_settings
     duration_settings = self.user.duration_settings if duration_settings.nil?

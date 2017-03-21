@@ -60,6 +60,28 @@
                     <button type="button" class="btn btn-default" ng-click="editableForm.$show()" ng-show="!editableForm.$visible">
                         <span class="icon-pencil"></span>Edit
                     </button>
+                    <br>
+                    <a href ng-click="openDeleteModal()"><span class="icon-cross"></span> Delete </a>
+
+                    <div class="modal fade" id="deleteProject" role="dialog" modal>
+                        <div class="modal-dialog modal-sm">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Are you sure?</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>{{project.title}}</h4>
+                                    <p class="modal-message"> project will be deleted along with all the tracking data.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger pull-left" ng-click="">Delete Project</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- buttons to submit / cancel form -->
                     <span ng-show="editableForm.$visible">
