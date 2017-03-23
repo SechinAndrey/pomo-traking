@@ -22,11 +22,11 @@ angular.module('pomoTracking')
         });
 
         $scope.isPomoStrted = function(){
-            return pomodoro.current_project ? pomodoro.current_project.status == 'started' : false;
+            return pomodoro.current_project ? pomodoro.current_project.pomo_cycle.status == 'started' : false;
         };
 
         $scope.isPomoPaused = function(){
-            return pomodoro.current_project ? pomodoro.current_project.status == 'paused' : false;
+            return pomodoro.current_project ? pomodoro.current_project.pomo_cycle.status == 'paused' : false;
         };
 
         $scope.isNarrow = function(){

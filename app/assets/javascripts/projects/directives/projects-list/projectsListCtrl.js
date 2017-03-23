@@ -8,7 +8,7 @@ angular.module('pomoTracking')
 
             $scope.toggleProject = function (project) {
                 if(pomodoro.current_project){
-                    if(pomodoro.current_project.status == 'started'){
+                    if(pomodoro.current_project.pomo_cycle.status == 'started'){
                         if(pomodoro.current_project.id != project.id){
                             $scope.$emit('switch-project', project);
                         }else{
@@ -36,7 +36,7 @@ angular.module('pomoTracking')
 
             $scope.actionTitle = function(project){
                 if(pomodoro.current_project && pomodoro.current_project.id == project.id){
-                    pomodoro.current_project.status == 'started' ? title = 'Pause' : title = 'Start'
+                    pomodoro.current_project.pomo_cycle.status == 'started' ? title = 'Pause' : title = 'Start'
                 }else{
                     title = 'Start'
                 }

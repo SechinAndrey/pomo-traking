@@ -45,7 +45,7 @@ angular.module('pomoTracking')
                 console.log("Callback data: ", data);
                 if (!data.current_project){return}
                 update(data);
-                switch (o.current_project.status) {
+                switch (o.current_project.pomo_cycle.status) {
                     case 'started':
                         o.start();
                         break;
@@ -81,18 +81,13 @@ angular.module('pomoTracking')
                     Auth._currentUser.current_project_id = data.current_project.id;
                 }
 
-                o.current_project = {
-                    id: data.current_project.id,
-                    title: data.current_project.title,
-                    status: data.current_project.pomo_cycle.status,
-                };
+                o.current_project = data.current_project;
 
                 if(data.current_project.pomo_cycle && data.current_project.pomo_cycle.periods){
-                    o.periods = data.current_project.pomo_cycle.periods;
-
-                    if(o.periods.length > 0){
-                        o.endTime = o.periods[o.periods.length - 1].end_time;
-                        o.period_type = o.periods[o.periods.length - 1].periods_type;
+                    var periods = data.current_project.pomo_cycle.periods;
+                    if(periods.length > 0){
+                        o.endTime = periods[periods.length - 1].end_time;
+                        o.period_type = periods[periods.length - 1].periods_type;
                     }else{
                         o.endTime = 0;
                         o.period_type = '';
@@ -110,7 +105,6 @@ angular.module('pomoTracking')
                 o.time = 0;
 
                 o.current_project = undefined;
-                o.periods = undefined;
                 o.endTime = 0;
                 o.period_type = '';
                 o.Socket.send = undefined;
