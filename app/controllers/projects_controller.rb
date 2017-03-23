@@ -7,9 +7,9 @@ class ProjectsController < ApplicationController
     #  date, date:DESC
     #  pomo_count, pomo_count:desc
 
-    ap '========================='
-    ap params
-    ap '========================='
+    # ap '========================='
+    # ap params
+    # ap '========================='
 
     page = params[:page]
     per_page = params[:per_page]

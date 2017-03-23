@@ -45,7 +45,7 @@ angular.module('pomoTracking')
                 console.log("Callback data: ", data);
                 if (!data.current_project){return}
                 update(data);
-                switch (data.current_project.status) {
+                switch (o.current_project.status) {
                     case 'started':
                         o.start();
                         break;
@@ -84,7 +84,7 @@ angular.module('pomoTracking')
                 o.current_project = {
                     id: data.current_project.id,
                     title: data.current_project.title,
-                    status: data.current_project.status,
+                    status: data.current_project.pomo_cycle.status,
                 };
 
                 if(data.current_project.pomo_cycle && data.current_project.pomo_cycle.periods){

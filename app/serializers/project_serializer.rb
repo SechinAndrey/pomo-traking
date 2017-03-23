@@ -1,7 +1,7 @@
 class ProjectSerializer < ActiveModel::Serializer
-  attributes :id, :title, :status, :pomo_cycle
+  attributes :id, :title, :pomo_cycle
 
   def pomo_cycle
-    object.pomo_cycles.last.serialize
+    object.pomo_cycle.serialize
   end
 end

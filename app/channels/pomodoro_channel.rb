@@ -43,16 +43,16 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def load_timer
     REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')
-    current_project = current_user.current_project.load_timer if current_user.current_project
+    current_project = current_user.current_project.pomo_cycle.load_timer if current_user.current_project&.pomo_cycle
     @broadcast_data = {current_project: current_project.serialize}
     broadcast
   end
 
   def start
     project = current_user.projects.where(id: @project_id).last
-
-    if project and !current_user.current_project&.started?
-      project.start_timer
+    if project and !current_user.current_project&.pomo_cycle&.started?
+      pomo_cycle = project.pomo_cycle || project.create_pomo_cycle
+      pomo_cycle.start_timer
       @broadcast_data = {current_project: project.serialize}
       broadcast
     end
@@ -60,9 +60,8 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def switch
     project = current_user.projects.where(id: @project_id).last
-
-    if project and current_user.current_project&.started?
-      project.switch_timer
+    if project and current_user.current_project&.pomo_cycle&.started?
+      project.pomo_cycle.switch_timer
       @broadcast_data = {
           current_project: project.serialize,
           switched: true
@@ -73,8 +72,8 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def pause
     current_project = current_user.current_project
-    if current_project&.started?
-      current_project.pause_timer
+    if current_project&.pomo_cycle&.started?
+      current_project.pomo_cycle.pause_timer
       @broadcast_data = {current_project: current_project.serialize}
       broadcast
     end
@@ -82,8 +81,8 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def stop
     current_project = current_user.current_project
-    if current_project and !current_project.stopped?
-      current_project.stop_timer
+    if current_project and !current_project.pomo_cycle&.stopped?
+      current_project.pomo_cycle.stop_timer
       @broadcast_data = {current_project: current_project.serialize}
       broadcast
     end
@@ -93,8 +92,8 @@ class PomodoroChannel < ApplicationCable::Channel
     if REDIS.get("sync_end_action_#{current_user.id}") == 'synchronized'
       REDIS.set("sync_end_action_#{current_user.id}", 'syncs')
       current_project = current_user.current_project
-      if current_project&.started?
-        current_project.end_timer
+      if current_project&.pomo_cycle&.started?
+        current_project.pomo_cycle.end_timer
         @broadcast_data = {current_project: current_project.serialize}
         broadcast
       end

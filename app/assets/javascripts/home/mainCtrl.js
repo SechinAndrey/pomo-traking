@@ -8,14 +8,14 @@ angular.module('pomoTracking')
         $scope.pomodoro = pomodoro;
 
         $scope.periods = [
-            {type: 'Pomo', status: 'ended'},
-            {type: 'Short break', status: 'ended'},
-            {type: 'Pomo', status: 'started'},
-            {type: 'Short break', status: 'no'},
-            {type: 'Pomo', status: 'no'},
-            {type: 'Short break', status: 'no'},
-            {type: 'Pomo', status: 'no'},
-            {type: 'Long break',  status: 'no'}
+            {type: 'pomo', status: 'ended'},
+            {type: 'short_break', status: 'ended'},
+            {type: 'pomo', status: 'started'},
+            {type: 'short_break', status: 'no'},
+            {type: 'pomo', status: 'no'},
+            {type: 'short_break', status: 'no'},
+            {type: 'pomo', status: 'no'},
+            {type: 'long_break',  status: 'no'}
         ];
 
         $scope.projects = projects.projects;

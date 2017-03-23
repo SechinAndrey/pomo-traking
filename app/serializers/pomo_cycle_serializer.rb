@@ -1,4 +1,4 @@
 class PomoCycleSerializer < ActiveModel::Serializer
-  attributes :ended
+  attributes :ended, :status
   has_many :periods
 end

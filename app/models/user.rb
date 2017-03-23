@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
-  after_create :create_settings
+  after_create :create_defaults
 
   has_one :avatar, :dependent => :destroy
   has_many :projects, :dependent => :destroy
@@ -20,7 +20,7 @@ class User < ApplicationRecord
   end
 
   private
-  def create_settings
+  def create_defaults
     self.create_duration_settings
   end
 end
