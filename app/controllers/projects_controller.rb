@@ -23,7 +23,7 @@ class ProjectsController < ApplicationController
       when 'date'
         @projects = current_user.projects.order(:updated_at).page(page).per(per_page).as_json(only: [:id, :title])
       when 'date:DESC'
-        @projects = current_user.projects.order(updated_at: :desc).page(page).per(per_page).as_json(only: [:id, :title])
+        @projects = current_user.projects.order(updated_at: :desc).page(page).per(per_page)
       when 'pomo_count'
         @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title]) # TODO
       when 'pomo_count:desc'

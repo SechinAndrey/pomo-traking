@@ -43,7 +43,8 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def load_timer
     REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')
-    current_project = current_user.current_project.pomo_cycle.load_timer if current_user.current_project&.pomo_cycle
+    current_project = current_user.current_project
+    current_project = current_project.pomo_cycle.load_timer if current_project&.pomo_cycle
     @broadcast_data = {current_project: current_project.serialize}
     broadcast
   end

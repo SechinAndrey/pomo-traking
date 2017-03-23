@@ -5,7 +5,8 @@ angular.module('pomoTracking')
         '$interval',
         'ActionCableChannel',
         'Auth',
-        function($window, $rootScope, $interval, ActionCableChannel, Auth){
+        'projects',
+        function($window, $rootScope, $interval, ActionCableChannel, Auth, projects){
             var o = {
                 Socket: {}
             };
@@ -43,9 +44,9 @@ angular.module('pomoTracking')
 
             var callback = function(data) {
                 console.log("Callback data: ", data);
-                if (!data.current_project){return}
                 update(data);
-                switch (o.current_project.pomo_cycle.status) {
+                if (!o.pomo_cycle){return}
+                switch (o.pomo_cycle.status) {
                     case 'started':
                         o.start();
                         break;
@@ -81,10 +82,15 @@ angular.module('pomoTracking')
                     Auth._currentUser.current_project_id = data.current_project.id;
                 }
 
-                o.current_project = data.current_project;
+                o.current_project = {
+                    id: data.current_project.id,
+                    title: data.current_project.title
+                };
 
-                if(data.current_project.pomo_cycle && data.current_project.pomo_cycle.periods){
-                    var periods = data.current_project.pomo_cycle.periods;
+                o.pomo_cycle = data.current_project.pomo_cycle;
+
+                if(o.pomo_cycle){
+                    var periods = o.pomo_cycle.periods;
                     if(periods.length > 0){
                         o.endTime = periods[periods.length - 1].end_time;
                         o.period_type = periods[periods.length - 1].periods_type;
@@ -105,6 +111,7 @@ angular.module('pomoTracking')
                 o.time = 0;
 
                 o.current_project = undefined;
+                o.pomo_cycle = undefined;
                 o.endTime = 0;
                 o.period_type = '';
                 o.Socket.send = undefined;

@@ -3,12 +3,12 @@
     <div class="dash-project" ng-repeat="project in projects">
         <div class="title"><span ng-show="" class="icon-pause"></span> <a href="#/projects/{{project.id}}">{{project.title}}</a></div>
         <div class="pomo pull-left">
-            20<br>
-            <span>pomo</span>
+            {{project.pomo_count}}<br>
+            <span>Pomo</span>
         </div>
         <div class="min pull-right">
-            600<br>
-            <span>min</span>
+            {{project.time}}<br>
+            <span>Time</span>
         </div>
         <div class="bottom-btn">
             <div class="start pull-left" ng-click="toggleProject(project)"><span>{{actionTitle(project)}}</span></div>

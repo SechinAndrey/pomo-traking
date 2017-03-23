@@ -22,11 +22,11 @@ angular.module('pomoTracking')
         });
 
         $scope.isPomoStrted = function(){
-            return pomodoro.current_project ? pomodoro.current_project.pomo_cycle.status == 'started' : false;
+            pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status == 'started' : false;
         };
 
         $scope.isPomoPaused = function(){
-            return pomodoro.current_project ? pomodoro.current_project.pomo_cycle.status == 'paused' : false;
+            pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status == 'paused' : false;
         };
 
         $scope.isNarrow = function(){
@@ -34,7 +34,6 @@ angular.module('pomoTracking')
         };
 
         $scope.pomodoroToggle = function(){
-            console.log('$scope.isPomoStrted()' + $scope.isPomoStrted());
             if($scope.isPomoStrted()){
                 $scope.pomodoroPause();
             }else{
