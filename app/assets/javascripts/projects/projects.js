@@ -8,14 +8,12 @@ angular.module('pomoTracking')
                 projects: []
             };
 
-
             o.create = function(project) {
                 return $http.post('/projects.json', project).success(function(data){
                 });
             };
 
             o.getAll = function(page, per_page, sort ) {
-                if(!sort){sort = $localStorage.sort}
                 return $http.get('/projects.json',
                     { params: {
                             page: page,
@@ -29,7 +27,6 @@ angular.module('pomoTracking')
 
             o.get = function(id) {
                 return $http.get('/projects/' + id + '.json').then(function(res){
-                    console.log(res.data);
                     return res.data;
                 });
             };

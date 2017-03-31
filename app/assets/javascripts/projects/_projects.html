@@ -13,17 +13,11 @@
             </div>
 
             <div class="sort-items">
-                <div class="sort-btn">
-                    <span class="icon-long-arrow-down"></span>
-                    <span class="icon-alphabet"></span>
-                </div>
-                <div class="sort-btn">
-                    <!--<span></span>-->
-                    <span class="icon-calendar-1"></span>
-                </div>
-                <div class="sort-btn">
-                    <!--<span></span>-->
-                    <span class="icon-graphic"></span>
+                <div class="sort-btn" ng-repeat="sort in sort_type" ng-click="sortProject(sort)"
+                    ng-class="{'current-sort':currentSort(sort)}">
+                    <span class="icon-long-arrow-down" ng-show="showArrowASC(sort)"></span>
+                    <span class="icon-long-arrow-up" ng-show="showArrowDesc(sort)"></span>
+                    <span class="icon-{{sort}}"></span>
                 </div>
             </div>
 

@@ -2,11 +2,6 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    # TODO: Sort
-    #  alphabet, alphabet:DESC
-    #  date, date:DESC
-    #  pomo_count, pomo_count:desc
-
     # ap '========================='
     # ap params
     # ap '========================='
@@ -17,20 +12,20 @@ class ProjectsController < ApplicationController
 
     case sort
       when 'alphabet'
-        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title])
-      when 'alphabet:DESC'
-        @projects = current_user.projects.order(title: :desc).page(page).per(per_page).as_json(only: [:id, :title])
+        @projects = current_user.projects.order(:title).page(page).per(per_page)
+      when 'alphabet:desc'
+        @projects = current_user.projects.order(title: :desc).page(page).per(per_page)
       when 'date'
-        @projects = current_user.projects.order(:updated_at).page(page).per(per_page).as_json(only: [:id, :title])
-      when 'date:DESC'
+        @projects = current_user.projects.order(:updated_at).page(page).per(per_page)
+      when 'date:desc'
         @projects = current_user.projects.order(updated_at: :desc).page(page).per(per_page)
       when 'pomo_count'
-        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title]) # TODO
+        @projects = current_user.projects.left_joins(:statistics).group(:id).order('COUNT(statistics.id)').page(page).per(per_page)
       when 'pomo_count:desc'
-        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title]) # TODO
+        @projects = current_user.projects.left_joins(:statistics).group(:id).order('COUNT(statistics.id) DESC').page(page).per(per_page)
       else
         ap '------- Default Sort'
-        @projects = current_user.projects.order(:title).page(page).per(per_page).as_json(only: [:id, :title])
+        @projects = current_user.projects.order(:title).page(page).per(per_page)
     end
     render json: @projects
   end

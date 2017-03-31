@@ -39,6 +39,11 @@
 
         .sort-items{
           display: none;
+
+          .current-sort{
+            background-color: #545454;
+            color: white;
+          }
           @include breakpoint(w486){
             display: block;
           }

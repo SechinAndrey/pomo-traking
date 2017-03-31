@@ -1,7 +1,10 @@
 angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise', 'angularFileUpload', 'ngActionCable', 'xeditable', 'ng-rails-csrf', 'ngStorage'])
 
-.run(['editableOptions', function(editableOptions) {
+.run(['editableOptions', '$localStorage', function(editableOptions,$localStorage) {
     editableOptions.theme = 'bs3';
+    $localStorage.$default({
+        sort: 'alphabet'
+    });
 }])
 
 .config([
@@ -16,7 +19,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
                     Auth.currentUser().then(function(user) {
-                        projects.getAll(1, 10, 'date:DESC');
+                        projects.getAll(1, 10, 'date:desc');
                     }, function(error) {
                         $state.go('login');
                     });
@@ -33,7 +36,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
                     Auth.currentUser().then(function(user) {
-                        projects.getAll(1, 50);
+                        projects.getAll(1, 50, 'pomo_count:desc');
                     }, function(error) {
                         $state.go('login');
                     });
@@ -88,11 +91,12 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 url: '/projects',
                 templateUrl: 'projects/_projects.html',
                 controller: 'ProjectsCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
+                onEnter: ['$rootScope', '$state', 'Auth', 'projects', '$localStorage',
+                    function($rootScope, $state, Auth, projects, $localStorage) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
                     Auth.currentUser().then(function(user) {
-                        projects.getAll(1, 50);
+                        projects.getAll(1, 50, $localStorage.sort);
                     }, function(error) {
                         $state.go('login');
                     });
