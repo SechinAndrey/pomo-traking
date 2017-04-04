@@ -1,5 +1,6 @@
 .project-list-container{
   width: 100%;
+  position: relative;
   text-align: center;
 
   .dash-project{
@@ -97,6 +98,15 @@
         }
 
       }
+    }
+  }
+}
+.loading-projects{
+  color: #5a5a5a;
+  .dash-project{
+    border: 1px solid #5a5a5a;
+    a{
+      color: grey;
     }
   }
 }

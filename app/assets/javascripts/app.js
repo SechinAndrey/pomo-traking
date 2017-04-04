@@ -1,4 +1,15 @@
-angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise', 'angularFileUpload', 'ngActionCable', 'xeditable', 'ng-rails-csrf', 'ngStorage'])
+angular.module('pomoTracking', [
+    'ui.router',
+    'ngCookies',
+    'templates',
+    'Devise',
+    'angularFileUpload',
+    'ngActionCable',
+    'xeditable',
+    'ng-rails-csrf',
+    'ngStorage',
+    'infinite-scroll'
+])
 
 .run(['editableOptions', '$localStorage', function(editableOptions,$localStorage) {
     editableOptions.theme = 'bs3';
@@ -19,7 +30,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                 onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
                     $rootScope.$emit('menuToggle', false); // close mob_menu
                     Auth.currentUser().then(function(user) {
-                        projects.getAll(1, 10, 'date:desc');
+                        projects.getAll('date:desc', 10, 1);
                     }, function(error) {
                         $state.go('login');
                     });
@@ -36,7 +47,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
                     Auth.currentUser().then(function(user) {
-                        projects.getAll(1, 50, 'pomo_count:desc');
+                        projects.getAll('pomo_count:desc', 10, 1);
                     }, function(error) {
                         $state.go('login');
                     });
@@ -96,7 +107,7 @@ angular.module('pomoTracking', ['ui.router', 'ngCookies', 'templates', 'Devise',
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
                     Auth.currentUser().then(function(user) {
-                        projects.getAll(1, 50, $localStorage.sort);
+                        // projects.getAll(1, 50, $localStorage.sort);
                     }, function(error) {
                         $state.go('login');
                     });

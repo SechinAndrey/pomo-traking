@@ -6,9 +6,13 @@ angular.module('pomoTracking')
         '$localStorage',
         function($scope, projects, pomodoro, $localStorage) {
             $scope.isMenuOpen = false;
+            $scope.$projects = projects;
             $scope.projects = projects.projects;
+            // console.log('ssssssssssssssssssssssssssss');
+            console.log($scope.projects);
             $scope.$storage = $localStorage;
             $scope.desc = $localStorage.sort.includes('desc');
+            $scope.page = 1;
 
             $scope.sort_type = ['alphabet','date','pomo_count'];
 
@@ -28,12 +32,11 @@ angular.module('pomoTracking')
                 return $scope.currentSort(sort) && $scope.desc
             };
 
-
             $scope.sortProject = function(sort){
                 if($localStorage.sort === sort || $scope.desc){$scope.desc = !$scope.desc;}
                 if($scope.desc){sort += ':desc'}
                 $localStorage.sort = sort;
-                projects.getAll(1, 50, sort);
+                projects.getAll(sort, 50, 1);
             }
         }
     ]);

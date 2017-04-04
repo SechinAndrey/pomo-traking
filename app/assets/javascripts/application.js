@@ -11,5 +11,6 @@
 //= require angular-xeditable
 //= require ng-rails-csrf
 //= require ngstorage
+//= require ngInfiniteScroll
 //= require app
 //= require_tree .
