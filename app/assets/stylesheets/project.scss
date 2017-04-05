@@ -8,6 +8,16 @@
   .edit-wrap{
     width: 100%;
 
+    .save-cancel{
+      position: relative;
+      bottom: 40px;
+    }
+    .delete{
+      color: #e93578;
+      span{
+        font-size: 13px;
+      }
+    }
     .user-field-container{
       width: 100%;
     }
@@ -19,8 +29,6 @@
       .modal-message{
         line-height: 30px;
       }
-
-
     }
   }
 

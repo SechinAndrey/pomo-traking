@@ -19,11 +19,11 @@ angular.module('pomoTracking')
             o.getAll = function(sort, per_page, page) {
                 if (o.busy || (o.ended && !page)) return;
                 o.busy = true;
-                console.log('======= getAll success =======');
-                console.log('o.busy', o.busy);
-                console.log('o.page', o.page);
-                console.log('page', page);
-                console.log('==============================');
+                // console.log('======= getAll success =======');
+                // console.log('o.busy', o.busy);
+                // console.log('o.page', o.page);
+                // console.log('page', page);
+                // console.log('==============================');
                 return $http.get('/projects.json', {
                     params: {
                         page: page || o.page,

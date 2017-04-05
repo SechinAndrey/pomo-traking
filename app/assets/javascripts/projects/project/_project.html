@@ -61,7 +61,7 @@
                         <span class="icon-pencil"></span>Edit
                     </button>
                     <br>
-                    <a href ng-click="openDeleteModal()"><span class="icon-cross"></span> Delete </a>
+                    <a href class="delete" ng-click="openDeleteModal()" ng-hide="editableForm.$visible"><span class="icon-cross"></span> Delete </a>
 
                     <div class="modal fade" id="deleteProject" role="dialog" modal>
                         <div class="modal-dialog modal-sm">
@@ -84,7 +84,7 @@
                     </div>
 
                     <!-- buttons to submit / cancel form -->
-                    <span ng-show="editableForm.$visible">
+                    <span class="save-cancel" ng-show="editableForm.$visible">
                         <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
                             Save
                         </button>
