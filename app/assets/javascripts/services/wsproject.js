@@ -3,7 +3,9 @@ angular.module('pomoTracking')
         'ActionCableChannel',
         'Auth',
         'projects',
-        function(ActionCableChannel, Auth, projects){
+        '$rootScope',
+        '$state',
+        function(ActionCableChannel, Auth, projects, $rootScope, $state){
             var o = {
                 Socket: {}
             };
@@ -12,6 +14,11 @@ angular.module('pomoTracking')
                 console.log("Callback data: ", data);
                 if(data.created){
                     projects.projects.unshift(data.project);
+                }else if(data.deleted){
+                    console.log('$state.current.name', $state.current.name);
+                    if($state.current.name === 'project'){
+                        $rootScope.$emit('projectDeleted');
+                    }else $state.reload();
                 }
             };
 

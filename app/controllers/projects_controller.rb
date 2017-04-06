@@ -49,7 +49,17 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-
+    project = current_user.projects.find(params[:id]).destroy
+    if project.destroyed?
+      @broadcast_data = {
+          deleted: true,
+          project: project.serialize
+      }
+      broadcast
+      render json: { deleted: true }
+    else
+      render json: {deleted: false}
+    end
   end
 
   private

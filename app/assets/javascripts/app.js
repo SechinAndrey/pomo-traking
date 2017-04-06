@@ -11,12 +11,17 @@ angular.module('pomoTracking', [
     'infinite-scroll'
 ])
 
-.run(['editableOptions', '$localStorage', function(editableOptions,$localStorage) {
-    editableOptions.theme = 'bs3';
-    $localStorage.$default({
-        sort: 'alphabet'
-    });
-}])
+.run(['editableOptions', '$localStorage', '$rootScope', '$state',
+    function(editableOptions,$localStorage, $rootScope, $state) {
+        editableOptions.theme = 'bs3';
+        $localStorage.$default({
+            sort: 'alphabet'
+        });
+        $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
+            $state.previous = fromState;
+        });
+    }
+])
 
 .config([
     '$stateProvider',
@@ -107,7 +112,7 @@ angular.module('pomoTracking', [
                     $rootScope.$emit('menuToggle', false); // close mob_menu
 
                     Auth.currentUser().then(function(user) {
-                        // projects.getAll(1, 50, $localStorage.sort);
+                        projects.getAll($localStorage.sort, 50, 1);
                     }, function(error) {
                         $state.go('login');
                     });

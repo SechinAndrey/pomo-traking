@@ -4,7 +4,9 @@ angular.module('pomoTracking')
         '$scope',
         'projects',
         'pomodoro',
-        function($scope, projects, pomodoro){
+        '$localStorage',
+        function($scope, projects, pomodoro, $localStorage){
+            $scope.$storage = $localStorage;
 
             $scope.toggleProject = function (project) {
                 if(pomodoro.pomo_cycle){

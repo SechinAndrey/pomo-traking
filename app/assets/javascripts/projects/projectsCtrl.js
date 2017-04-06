@@ -9,10 +9,9 @@ angular.module('pomoTracking')
             $scope.$projects = projects;
             $scope.projects = projects.projects;
             // console.log('ssssssssssssssssssssssssssss');
-            console.log($scope.projects);
+            // console.log($scope.projects);
             $scope.$storage = $localStorage;
             $scope.desc = $localStorage.sort.includes('desc');
-            $scope.page = 1;
 
             $scope.sort_type = ['alphabet','date','pomo_count'];
 

@@ -1,8 +1,7 @@
 angular.module('pomoTracking')
     .factory('projects', [
         '$http',
-        '$localStorage',
-        function($http, $localStorage){
+        function($http){
 
             var o = {
                 page: 1,
@@ -19,11 +18,6 @@ angular.module('pomoTracking')
             o.getAll = function(sort, per_page, page) {
                 if (o.busy || (o.ended && !page)) return;
                 o.busy = true;
-                // console.log('======= getAll success =======');
-                // console.log('o.busy', o.busy);
-                // console.log('o.page', o.page);
-                // console.log('page', page);
-                // console.log('==============================');
                 return $http.get('/projects.json', {
                     params: {
                         page: page || o.page,
@@ -47,6 +41,12 @@ angular.module('pomoTracking')
 
             o.get = function(id) {
                 return $http.get('/projects/' + id + '.json').then(function(res){
+                    return res.data;
+                });
+            };
+
+            o.delete = function(id) {
+                return $http.delete('/projects/' + id + '.json').then(function(res){
                     return res.data;
                 });
             };

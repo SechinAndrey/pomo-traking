@@ -3,7 +3,8 @@ angular.module('pomoTracking')
         '$scope',
         'projects',
         'project',
-        function($scope, projects, project) {
+        '$rootScope',
+        function($scope, projects, project, $rootScope) {
             $scope.project = project;
             $scope.user = {
                 pomo_time: 25,
@@ -13,6 +14,14 @@ angular.module('pomoTracking')
 
             $scope.openDeleteModal = function () {
                 $scope.openModal();
-            }
+            };
+
+            $scope.deleteProject = function(){
+                projects.delete(project.id);
+            };
+
+            $rootScope.$on('projectDeleted', function() {
+                $scope.closeModal();
+            });
         }
     ]);
