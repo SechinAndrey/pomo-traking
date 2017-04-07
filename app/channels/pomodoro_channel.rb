@@ -62,7 +62,8 @@ class PomodoroChannel < ApplicationCable::Channel
   def switch
     project = current_user.projects.where(id: @project_id).last
     if project and current_user.current_project&.pomo_cycle&.started?
-      project.pomo_cycle.switch_timer
+      pomo_cycle = project.pomo_cycle || project.create_pomo_cycle
+      pomo_cycle.switch_timer
       @broadcast_data = {
           current_project: project.serialize,
           switched: true

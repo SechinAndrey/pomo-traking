@@ -16,17 +16,17 @@ angular.module('pomoTracking')
 
         Auth.currentUser().then(function (){
             $scope.isEmptyProject = function(){
-                return Auth._currentUser.current_project_id == null;
+                return Auth._currentUser.current_project_id === null;
             };
 
         });
 
         $scope.isPomoStrted = function(){
-            pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status == 'started' : false;
+            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'started' : false;
         };
 
         $scope.isPomoPaused = function(){
-            pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status == 'paused' : false;
+            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'paused' : false;
         };
 
         $scope.isNarrow = function(){

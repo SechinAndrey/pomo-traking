@@ -49,7 +49,9 @@ class ProjectsController < ApplicationController
   end
 
   def destroy
-    project = current_user.projects.find(params[:id]).destroy
+    project = current_user.projects.find(params[:id])
+    project.pomo_cycle.stop_timer
+    project.destroy
     if project.destroyed?
       @broadcast_data = {
           deleted: true,

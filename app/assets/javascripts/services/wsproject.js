@@ -5,7 +5,8 @@ angular.module('pomoTracking')
         'projects',
         '$rootScope',
         '$state',
-        function(ActionCableChannel, Auth, projects, $rootScope, $state){
+        'pomodoro',
+        function(ActionCableChannel, Auth, projects, $rootScope, $state, pomodoro){
             var o = {
                 Socket: {}
             };
@@ -15,7 +16,7 @@ angular.module('pomoTracking')
                 if(data.created){
                     projects.projects.unshift(data.project);
                 }else if(data.deleted){
-                    console.log('$state.current.name', $state.current.name);
+                    pomodoro.stop();
                     if($state.current.name === 'project'){
                         $rootScope.$emit('projectDeleted');
                     }else $state.reload();

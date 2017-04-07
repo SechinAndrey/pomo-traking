@@ -38,8 +38,7 @@ angular.module('pomoTracking')
             o.stop = function(){
                 started = false;
                 $interval.cancel(o.timer);
-                o.min = 0;
-                o.sec = 0;
+                set_default();
             };
 
             var callback = function(data) {
@@ -71,7 +70,7 @@ angular.module('pomoTracking')
 
                     o.Socket.destroy =  function(){
                         o.Socket.pomodoroChannel.unsubscribe().then(function(){
-                            set_default();
+                            set_default(true);
                         });
                     };
                 });
@@ -105,17 +104,18 @@ angular.module('pomoTracking')
                 }
             };
 
-            var set_default = function(){
+            var set_default = function(clean_socket){
                 o.min = 0;
                 o.sec = 0;
                 o.time = 0;
-
                 o.current_project = undefined;
                 o.pomo_cycle = undefined;
                 o.endTime = 0;
                 o.period_type = '';
-                o.Socket.send = undefined;
-                o.Socket.pomodoroChannel = undefined;
+                if(clean_socket){
+                    o.Socket.send = undefined;
+                    o.Socket.pomodoroChannel = undefined;
+                }
             };
 
             return o;
