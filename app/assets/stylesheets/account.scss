@@ -2,18 +2,14 @@
   font-size: 28px;
 }
 .edit-wrap{
-
   width: 100%;
-
   @include breakpoint(small) {
     width: 75%;
     margin: auto;
     margin-top: 25px;
   }
 
-
   .img-container{
-
     width: 60%;
     float: none;
 
@@ -21,7 +17,6 @@
       width: 30%;
       float: left;
     }
-
 
     .test{
       background-image:url('https://farm4.staticflickr.com/3766/12953056854_b8cdf14f21.jpg');
@@ -47,61 +42,6 @@
         padding-bottom : 80%;
         margin:auto;
       }
-    }
-  }
-
-  .user-field-container{
-    width: 100%;
-    float: none;
-    color: #4b4b4b;
-    font-size: 16px;
-    line-height: 40px;
-    margin-top: 15px;
-
-    @include breakpoint(small) {
-      width: 60%;
-      float: right;
-      margin-top: -10px;
-    }
-
-    .editable-hide{
-      display: none;
-    }
-
-    .editable-controls{
-      width: 150px;
-      float: right;
-      margin-bottom: 0;
-    }
-
-    .editable-number{
-      .editable-controls{
-        width: 70px;
-      }
-    }
-
-    .title{
-      font-weight: 600;
-      display: inline;
-    }
-
-    .data{
-      float: right;
-    }
-
-    //input[type="text"], input[type="email"], input[type="number"] {
-    //}
-    //input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus,
-    //input[type="text"].focus, input[type="email"].focus, input[type="number"]:focus{
-    //
-    //}
-
-    .icon-pencil{
-      margin-right: 10px;
-    }
-
-    .delete-account{
-      color: #bb285c;
     }
   }
 }

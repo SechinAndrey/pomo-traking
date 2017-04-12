@@ -46,21 +46,56 @@
 
     <div class="project-settings">
         <h3> Project settings <span class="sub-hint"> (for this project only) </span> </h3>
+        <div class="modal fade" id="deleteProject" role="dialog" modal>
+            <div class="modal-dialog modal-sm">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Are you sure?</h4>
+                    </div>
+                    <div class="modal-body">
+                        <h4>{{project.title}}</h4>
+                        <p class="modal-message"> project will be deleted along with all the tracking data.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger pull-left" ng-click="deleteProject()">Delete Project</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="edit-wrap">
-        <div class="user-field-container">
-            <form editable-form name="editableForm" onaftersave="saveUser()">
+        <div class="editable-field-container">
+            <form editable-form name="editableForm" onaftersave="projects.edit(project)">
+                <div>
+                    <span class="title">Title:</span>
+                    <span class="data ellipsis" editable-text="project.title" e-name="name"
+                          onbeforesave="checkName($data)" e-required>
+                        {{ project.title || 'empty' }}
+                    </span>
+                </div>
                 <div>
                     <span class="title">Pomo time:</span>
-                    <span class="data" editable-number="user.pomo_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.pomo_time || 'empty' }} min</span>
+                    <span class="data" editable-number="project.pomo_duration" e-name="pomo_duration"
+                          onbeforesave="checkName($data)" e-required>
+                        {{ project.pomo_duration || 'empty' }} min
+                    </span>
                 </div>
                 <div>
                     <span class="title">Short break:</span>
-                    <span class="data" editable-number="user.short_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.short_break_time || 'empty' }} min</span>
+                    <span class="data" editable-number="project.short_break_duration" e-name="short_break_duration"
+                          onbeforesave="checkName($data)" e-required>
+                        {{ project.short_break_duration || 'empty' }} min
+                    </span>
                 </div>
                 <div>
                     <span class="title">Long Break:</span>
-                    <span class="data" editable-number="user.long_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.long_break_time || 'empty' }} min</span>
+                    <span class="data" editable-number="project.long_break_duration" e-name="long_break_duration"
+                          onbeforesave="checkName($data)" e-required>
+                        {{ project.long_break_duration || 'empty' }} min
+                    </span>
                 </div>
                 <div>
                     <!-- button to show form -->
@@ -68,31 +103,12 @@
                         <span class="icon-pencil"></span>Edit
                     </button>
                     <br>
-                    <a href class="delete" ng-click="openDeleteModal()" ng-hide="editableForm.$visible"><span class="icon-cross"></span> Delete </a>
-
-                    <div class="modal fade" id="deleteProject" role="dialog" modal>
-                        <div class="modal-dialog modal-sm">
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Are you sure?</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <h4>{{project.title}}</h4>
-                                    <p class="modal-message"> project will be deleted along with all the tracking data.</p>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-danger pull-left" ng-click="deleteProject()">Delete Project</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <a href class="delete" ng-click="openDeleteModal()" ng-hide="editableForm.$visible">
+                        <span class="icon-cross"></span> Delete
+                    </a>
                     <!-- buttons to submit / cancel form -->
                     <span class="save-cancel" ng-show="editableForm.$visible">
-                        <button type="submit" class="btn btn-primary" ng-disabled="editableForm.$waiting">
+                        <button class="btn btn-primary" type="submit"  ng-disabled="editableForm.$waiting">
                             Save
                         </button>
                         <button type="button" class="btn btn-default" ng-disabled="editableForm.$waiting"

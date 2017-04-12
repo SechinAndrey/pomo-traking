@@ -16,7 +16,8 @@ angular.module('pomoTracking')
 
                 element.on('hidden.bs.modal', function () {
                     if(redirect){
-                        ($state.previous !== $state.current) ? $state.go($state.previous) : $state.go('home');
+                        // console.log($state.previous, $state.current)
+                        ($state.previous.name !== '') ? $state.go($state.previous) : $state.go('home');
                         redirect = false;
                     }
                 })

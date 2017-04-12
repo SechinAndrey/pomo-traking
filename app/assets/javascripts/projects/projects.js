@@ -11,8 +11,12 @@ angular.module('pomoTracking')
             };
 
             o.create = function(project) {
-                return $http.post('/projects.json', project).success(function(data){
-                });
+                return $http.post('/projects.json', project).success(function(data){});
+            };
+
+            o.edit = function (project) {
+                console.log('Edit:', project);
+                return $http.put('/projects/' + project.id + '.json', project)
             };
 
             o.getAll = function(sort, per_page, page) {

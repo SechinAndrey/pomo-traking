@@ -7,12 +7,8 @@ angular.module('pomoTracking')
         'pomodoro',
         function($scope, projects, project, $rootScope, pomodoro) {
             $scope.project = project;
+            $scope.projects = projects;
             $scope.pomodoro = pomodoro;
-            $scope.user = {
-                pomo_time: 25,
-                short_break_time: 5,
-                long_break_time: 15
-            };
 
             $scope.openDeleteModal = function () {
                 $scope.openModal();

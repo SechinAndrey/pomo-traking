@@ -20,6 +20,8 @@ angular.module('pomoTracking')
                     if($state.current.name === 'project'){
                         $rootScope.$emit('projectDeleted');
                     }else $state.reload();
+                }else if(data.updated){
+                    $state.reload();
                 }
             };
 

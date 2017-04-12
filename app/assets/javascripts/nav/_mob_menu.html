@@ -3,6 +3,7 @@
         <li><a ng-click="closeMobMenu()">Close <span class="icon-cross"></span></a></li>
         <li ng-show="signedIn()"><a href="#/dashboard">Dashboard</a></li>
         <li ng-show="signedIn()"><a href="#/{{ user.id }}">Account</a></li>
+        <li ng-show="signedIn()"><a href="#/projects">Projects</a></li>
         <li role="separator" class="divider"></li>
         <li class="log-out" ng-show="signedIn()"><a ng-click="logout()">Log Out</a></li>
         <li ng-hide="signedIn()"><a href="#/login">Log In</a></li>

@@ -31,7 +31,7 @@ class ProjectsController < ApplicationController
   end
 
   def show
-    render json: current_user.projects.find(params[:id]).as_json(only: [:id, :title])
+    render json: current_user.projects.find(params[:id])
   end
 
   def create
@@ -48,9 +48,26 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def update
+    @project = current_user.projects.find(params[:id])
+    duration_settings = @project&.duration_settings&.update(duration_settings_params) ||
+        @project&.create_duration_settings(duration_settings_params).valid?
+    if duration_settings and @project&.update(project_params)
+      @broadcast_data = {
+          updated: true,
+          project: @project.serialize
+      }
+      broadcast
+      render json: { deleted: true }
+    else
+      render json: { deleted: false }
+    end
+
+  end
+
   def destroy
     project = current_user.projects.find(params[:id])
-    project.pomo_cycle.stop_timer
+    project.pomo_cycle&.stop_timer
     project.destroy
     if project.destroyed?
       @broadcast_data = {
@@ -67,6 +84,10 @@ class ProjectsController < ApplicationController
   private
   def project_params
     params.require(:project).permit(:title)
+  end
+
+  def duration_settings_params
+    params.permit(:pomo_duration, :short_break_duration, :long_break_duration)
   end
 
   def project_channel

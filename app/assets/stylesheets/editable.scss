@@ -1,0 +1,53 @@
+.editable-field-container{
+  width: 100%;
+  float: none;
+  color: #4b4b4b;
+  font-size: 16px;
+  line-height: 40px;
+  margin-top: 15px;
+
+  @include breakpoint(small) {
+    width: 60%;
+    float: right;
+    margin-top: -10px;
+  }
+
+  .editable-hide{
+    display: none;
+  }
+
+  .editable-controls{
+    width: 150px;
+    float: right;
+    margin-bottom: 0;
+  }
+
+  .editable-number{
+    .editable-controls{
+      width: 70px;
+    }
+  }
+
+  .title{
+    font-weight: 600;
+    display: inline;
+  }
+
+  .data{
+    float: right;
+    &.ellipsis{
+      text-align: right;
+      width: 70%;
+      @include breakpoint(w500) { width: 75% }
+      @include breakpoint(small) { width: 80% }
+    }
+  }
+
+  .icon-pencil{
+    margin-right: 10px;
+  }
+
+  .delete-account{
+    color: #bb285c;
+  }
+}
