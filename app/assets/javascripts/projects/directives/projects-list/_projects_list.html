@@ -5,7 +5,7 @@
      infinite-scroll-disabled='$projects.busy'>
     <switch-project></switch-project>
     <div class="dash-project" ng-repeat="project in projects">
-        <div class="title"><span ng-show="" class="icon-pause"></span> <a href="#/projects/{{project.id}}">{{project.title}}</a></div>
+        <div class="title ellipsis"><span ng-show="" class="icon-pause"></span> <a href="#/projects/{{project.id}}">{{project.title}}</a></div>
         <div class="pomo pull-left">
             {{project.pomo_count}}<br>
             <span>Pomo</span>
@@ -15,7 +15,7 @@
             <span>Time</span>
         </div>
         <div class="bottom-btn">
-            <div class="start pull-left" ng-click="toggleProject(project)"><span>{{actionTitle(project)}}</span></div>
+            <div class="start pull-left" ng-click="pomodoro.toggleProject(project)"><span>{{pomodoro.actionTitle(project)}}</span></div>
             <a href="#/projects/{{project.id}}"><div class="view pull-right"><span>View</span></div></a>
         </div>
     </div>

@@ -24,6 +24,7 @@
 
 .big-title{
   display: none;
+  position: relative;
   margin-bottom: 20px;
 
   @include breakpoint(small){
@@ -31,7 +32,13 @@
   }
 
   >h4{
-    display: inline;
+    width: 85%;
+  }
+
+  >span{
+    right: 0;
+    bottom: 0;
+    position: absolute;
   }
 }
 

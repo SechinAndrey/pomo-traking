@@ -16,14 +16,25 @@
       background-color: lightgray;
     }
 
+    .project-title{
+      display: inline-block;
+      width: 43%;
+      @include breakpoint(w350) { width: 50% }
+      @include breakpoint(w500) { width: 60% }
+      @include breakpoint(w668) { width: 70% }
+      @include breakpoint(small) { width: 75% }
+    }
     .period-type{
       color: #5e5e5e;
+      margin-right: 4px;
+      @include breakpoint(w350) { margin-right: 10px; }
     }
 
     .time-icon{
       font-size: 11px;
-      padding-right: 5px;
+      padding-right: 0;
       color: #5e5e5e;
+      @include breakpoint(w350) { margin-right: 5px; }
     }
 
     .time{

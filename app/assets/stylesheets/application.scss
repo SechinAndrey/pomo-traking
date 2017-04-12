@@ -32,3 +32,17 @@ html, body {
   white-space:nowrap !important;
   text-overflow: ellipsis !important;
 }
+
+#deleteProject, #switchProject{
+  .modal-body{
+    text-align: center;
+    .modal-message{
+      line-height: 24px;
+    }
+    p {
+      &:last-child {
+        color: grey;
+      }
+    }
+  }
+}

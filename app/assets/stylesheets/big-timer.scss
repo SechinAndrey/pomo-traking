@@ -22,18 +22,23 @@
   }
 
   .title{
-    font-weight: 800;
-    font-size: 16px;
     padding: 10px;
+    padding-bottom: 0;
+    font-size: 16px;
     border-bottom: 1px solid grey;
+    @include breakpoint(small){
+      display: none;
+    }
 
     >span{
-      font-weight: 400;
       font-size: 14px;
     }
 
-    @include breakpoint(small){
-      display: none;
+    .project-title{
+      width: 65%;
+      display: inline-block;
+      @include breakpoint(w500) { width: 70% }
+      @include breakpoint(w668) { width: 80% }
     }
   }
 

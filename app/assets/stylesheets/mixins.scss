@@ -23,7 +23,7 @@
   @elseif $point == small {
     @media (min-width: 768px) { @content; }
   }
-  @else if $point == medium {
+    @else if $point == medium {
     @media (min-width: 970px) { @content; }
   }
   @else if $point == large {

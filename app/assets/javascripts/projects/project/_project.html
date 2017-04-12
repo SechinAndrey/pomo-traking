@@ -1,8 +1,13 @@
-<div class="container-fluid timer-container">
+<div class="container-fluid timer-container" ng-controller="topItemCtrl">
     <small-timer></small-timer>
+    <switch-project></switch-project>
 </div>
 <div class="container-fluid page-container project-page">
-    <h3>{{project.title}}</h3>
+
+    <div class="title-start-container">
+        <h3 class="project-title ellipsis">{{project.title}}</h3>
+        <button type="button" class="btn btn-default start-btn" ng-click="pomodoro.toggleProject(project)"> {{pomodoro.actionTitle(project)}} </button>
+    </div>
     <div class="info-conteinr">
         <div class="info project-info">
             <h4 class="inf-title">Last project</h4>

@@ -4,8 +4,10 @@ angular.module('pomoTracking')
         'projects',
         'project',
         '$rootScope',
-        function($scope, projects, project, $rootScope) {
+        'pomodoro',
+        function($scope, projects, project, $rootScope, pomodoro) {
             $scope.project = project;
+            $scope.pomodoro = pomodoro;
             $scope.user = {
                 pomo_time: 25,
                 short_break_time: 5,
@@ -21,7 +23,7 @@ angular.module('pomoTracking')
             };
 
             $rootScope.$on('projectDeleted', function() {
-                $scope.closeModal();
+                $scope.closeModal(true);
             });
         }
     ]);

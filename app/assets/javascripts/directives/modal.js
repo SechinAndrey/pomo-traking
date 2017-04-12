@@ -3,8 +3,11 @@ angular.module('pomoTracking')
         return {
             restrict: 'A',
             link: function(scope, element, attr) {
-                scope.closeModal = function() {
+                var redirect = false;
+
+                scope.closeModal = function(_redirect) {
                     element.modal('hide');
+                    if(_redirect) redirect = _redirect;
                 };
 
                 scope.openModal = function () {
@@ -12,11 +15,9 @@ angular.module('pomoTracking')
                 };
 
                 element.on('hidden.bs.modal', function () {
-                    console.log('MODAL hidden.bs.modal');
-                    if(element[0].id === 'deleteProject' && $state.previous !== $state.current){
-                        $state.go($state.previous);
-                    }else{
-                        $state.go('home');
+                    if(redirect){
+                        ($state.previous !== $state.current) ? $state.go($state.previous) : $state.go('home');
+                        redirect = false;
                     }
                 })
             }

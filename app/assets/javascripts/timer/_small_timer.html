@@ -1,9 +1,10 @@
 <div class="small-timer" ng-class="{ narrow:isNarrow(), noproject:isEmptyProject()}" ng-click="pomodoroToggle()">
-    <b>{{pomodoro.current_project.title}}</b>
-    <span class="period-type">{{pomodoro.period_type}}</span>
+    <b class="project-title ellipsis">{{pomodoro.current_project.title}}</b>
+
     <span class="pull-right">
         <span ng-show="isPomoStrted()" class="icon-play time-icon"></span>
         <span ng-show="isPomoPaused()" class="icon-pause time-icon"></span>
         <b class="time">{{("00" + pomodoro.min).slice(-2)}} : {{("00" + pomodoro.sec).slice(-2)}}</b>
     </span>
+    <span class="period-type pull-right">{{pomodoro.period_type}}</span>
 </div>

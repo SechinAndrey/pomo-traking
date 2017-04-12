@@ -20,10 +20,11 @@ angular.module('pomoTracking')
                         o.min = Math.floor(o.time/60000);
                         o.sec = Math.floor(o.time/1000 % 60);
                         if(o.time < 300){
-                            o.stop();
                             o.Socket.pomodoroChannel.send({
                                 action: 'end',
-                                project: o.current_project.id });
+                                project: o.current_project.id
+                            });
+                            o.stop();
                         }
                     }, 200);
                     started = true;
@@ -39,6 +40,43 @@ angular.module('pomoTracking')
                 started = false;
                 $interval.cancel(o.timer);
                 set_default();
+            };
+
+            o.toggleProject = function (project) {
+                if(o.pomo_cycle){
+                    if(o.pomo_cycle.status === 'started'){
+                        if(o.current_project.id !== project.id){
+                            $rootScope.$broadcast('switch-project', project);
+                        }else{
+                            data = {
+                                action: 'pause',
+                                project: project.id
+                            };
+                            o.Socket.send(data);
+                        }
+                    }else{
+                        data = {
+                            action: 'start',
+                            project: project.id
+                        };
+                        o.Socket.send(data);
+                    }
+                }else{
+                    data = {
+                        action: 'start',
+                        project: project.id
+                    };
+                    o.Socket.send(data);
+                }
+            };
+
+            o.actionTitle = function(project){
+                if(o.current_project && o.current_project.id === project.id && o.pomo_cycle){
+                    o.pomo_cycle.status === 'started' ? title = 'Pause' : title = 'Start'
+                }else{
+                    title = 'Start'
+                }
+                return title;
             };
 
             var callback = function(data) {
