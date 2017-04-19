@@ -4,7 +4,8 @@ angular.module('pomoTracking')
         'projects',
         'pomodoro',
         '$localStorage',
-        function($scope, projects, pomodoro, $localStorage) {
+        'projectsManager',
+        function($scope, projects, pomodoro, $localStorage, projectsManager) {
             $scope.isMenuOpen = false;
             $scope.projects = projects;
             $scope.$storage = $localStorage;
@@ -31,7 +32,9 @@ angular.module('pomoTracking')
                 if($localStorage.sort === sort || $scope.desc){$scope.desc = !$scope.desc;}
                 if($scope.desc){sort += ':desc'}
                 $localStorage.sort = sort;
-                projects.getAll(sort, 50, 1);
+                projectsManager.loadAllProjects(sort, 50, 1).then(function (projects) {
+                    $scope.projects = projects;
+                });
             }
         }
     ]);

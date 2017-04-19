@@ -58,24 +58,27 @@ angular.module('pomoTracking')
 
         loadAllProjects: function(sort, perPage, page) {
             var scope = this;
-            if(scope._busy || scope._ended) return;
-            scope.busy = true;
             var deferred = $q.defer();
+            if(scope._busy ||(scope._ended && !page)){
+                deferred.reject();
+                return deferred.promise;
+            }
+            scope._busy = true;
             $http.get('/projects.json', {
                 params: {
                     sort: sort,
                     per_page: perPage,
-                    page: page || scope.page
+                    page: page || scope._page
                 }
             })
             .success(function(projectsArray) {
                 var projects = [];
                 if(page){
-                    scope.page = 1;
-                    scope.ended = false;
+                    scope._page = 2;
+                    scope._ended = false;
                 } else {
-                    if(projectsArray.length < perPage) scope.ended = true;
-                    scope.page ++;
+                    if(projectsArray.length < perPage) scope._ended = true;
+                    scope._page ++;
                 }
                 projectsArray.forEach(function(projectData) {
                     var project = scope._retrieveInstance(projectData.id, projectData);
@@ -87,8 +90,8 @@ angular.module('pomoTracking')
                 deferred.reject();
             })
             .finally(function () {
-                    scope.busy = false;
-                });
+                scope._busy = false;
+            });
             return deferred.promise;
         },
 

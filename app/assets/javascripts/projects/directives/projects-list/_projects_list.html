@@ -1,8 +1,9 @@
 <div class="project-list-container"
-     ng-class="{'loading-projects':$projects.busy}"
-     infinite-scroll='$projects.getAll($storage.sort, 50)'
+     ng-class="{'loading-projects':projectsManager._busy}"
+     infinite-scroll='getAll()'
      infinite-scroll-distance='100'
-     infinite-scroll-disabled='$projects.busy'>
+     infinite-scroll-disabled='projectsManager._busy'
+     infinite-scroll-immediate-check="false">
     <switch-project></switch-project>
     <div class="dash-project" ng-repeat="project in projects track by $index">
         <div class="title ellipsis"><span ng-show="" class="icon-pause"></span> <a href="#/projects/{{project.id}}">{{project.title}}</a></div>
