@@ -44,30 +44,39 @@ angular.module('pomoTracking')
         /* pomodoro actions */
 
         $scope.pomodoroStart = function(){
-            if(!$scope.isPomoStrted()){
-                data = {
-                    action: 'start',
-                    project: Auth._currentUser.current_project_id
-                };
-                pomodoro.Socket.send(data);
+            if (!$scope.isPomoStrted()) {
+                Auth.currentUser().then(function (user) {
+                    data = {
+                        action: 'start',
+                        project: user.current_project_id
+                    };
+                    pomodoro.Socket.send(data);
+                });
+
             }
         };
 
         $scope.pomodoroPause = function(){
             if(!$scope.isPomoPaused()){
-                data = {
-                    action: 'pause',
-                    project: Auth._currentUser.current_project_id
-                };
-                pomodoro.Socket.send(data);
+                Auth.currentUser().then(function (user) {
+                    data = {
+                        action: 'pause',
+                        project: user.current_project_id
+                    };
+                    pomodoro.Socket.send(data);
+                });
+
             }
         };
 
         $scope.pomodoroStop = function(){
-            data = {
-                action: 'stop',
-                project: Auth._currentUser.current_project_id
-            };
-            pomodoro.Socket.send(data);
+            Auth.currentUser().then(function (user) {
+                data = {
+                    action: 'stop',
+                    project: user.current_project_id
+                };
+                pomodoro.Socket.send(data);
+            });
+
         };
     }]);
