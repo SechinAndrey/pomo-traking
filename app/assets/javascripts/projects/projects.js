@@ -19,6 +19,12 @@ angular.module('pomoTracking')
                 return $http.put('/projects/' + project.id + '.json', project)
             };
 
+            o.get = function(id) {
+                return $http.get('/projects/' + id + '.json').then(function(res){
+                    return res.data;
+                });
+            };
+
             o.getAll = function(sort, per_page, page) {
                 if (o.busy || (o.ended && !page)) return;
                 o.busy = true;
@@ -29,23 +35,22 @@ angular.module('pomoTracking')
                         sort: sort
                     }
                 }).success(function(data){
+                    // console.warn('BEFORE o.projects.length -> ' + o.projects.length);
                     if(page){
+                        // console.info('---> if');
                         o.page = 1;
                         o.ended = false;
                         angular.copy(data, o.projects);
                     }else{
+                        // console.info('---> else');
                         if(data.length < per_page) o.ended = true;
                         o.page++;
                         data = o.projects.concat(data);
                         angular.copy(data, o.projects);
                     }
                     o.busy = false;
-                });
-            };
-
-            o.get = function(id) {
-                return $http.get('/projects/' + id + '.json').then(function(res){
-                    return res.data;
+                    // console.warn('AFTER o.projects.length -> ' + o.projects.length);
+                    // console.log('');console.log('');
                 });
             };
 

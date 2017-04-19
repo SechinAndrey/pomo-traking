@@ -119,6 +119,9 @@ angular.module('pomoTracking')
                     Auth._currentUser.current_project_id = data.current_project.id;
                 }
                 if(!data.current_project){return}
+
+                angular.merge(projects.projects, [data.current_project]);
+
                 o.current_project = {
                     id: data.current_project.id,
                     title: data.current_project.title

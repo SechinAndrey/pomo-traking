@@ -6,13 +6,9 @@ angular.module('pomoTracking')
         '$localStorage',
         function($scope, projects, pomodoro, $localStorage) {
             $scope.isMenuOpen = false;
-            $scope.$projects = projects;
-            $scope.projects = projects.projects;
-            // console.log('ssssssssssssssssssssssssssss');
-            // console.log($scope.projects);
+            $scope.projects = projects;
             $scope.$storage = $localStorage;
             $scope.desc = $localStorage.sort.includes('desc');
-
             $scope.sort_type = ['alphabet','date','pomo_count'];
 
             $scope.toggleSortMenu = function (){

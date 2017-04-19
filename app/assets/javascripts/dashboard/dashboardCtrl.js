@@ -3,6 +3,6 @@ angular.module('pomoTracking')
         '$scope',
         'projects',
         function($scope, projects) {
-            $scope.projects = projects.projects;
+            $scope.projects = projects;
         }
     ]);

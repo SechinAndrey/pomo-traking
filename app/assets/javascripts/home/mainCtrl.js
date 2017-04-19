@@ -1,12 +1,11 @@
 angular.module('pomoTracking')
 .controller('MainCtrl', [
     '$scope',
-    'projects',
     'pomodoro',
-    function($scope, projects, pomodoro){
-
+    'projects',
+    function($scope, pomodoro, projects){
         $scope.pomodoro = pomodoro;
-
+        $scope.projects = projects;
         $scope.periods = [
             {type: 'pomo', status: 'ended'},
             {type: 'short_break', status: 'ended'},
@@ -17,9 +16,6 @@ angular.module('pomoTracking')
             {type: 'pomo', status: 'no'},
             {type: 'long_break',  status: 'no'}
         ];
-
-        $scope.projects = projects.projects;
-
 
         $scope.isStarted = function(period){
            return period.status == 'started';
@@ -32,5 +28,4 @@ angular.module('pomoTracking')
         $scope.isEmpty = function(period){
             return period.status == '';
         };
-
     }]);

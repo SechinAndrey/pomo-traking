@@ -28,113 +28,157 @@ angular.module('pomoTracking', [
     '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
         $stateProvider
-            .state('home', {
-                url: '/home',
-                templateUrl: 'home/_home.html',
-                controller: 'MainCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
-                    $rootScope.$emit('menuToggle', false); // close mob_menu
-                    Auth.currentUser().then(function(user) {
-                        projects.getAll('date:desc', 10, 1);
-                    }, function(error) {
-                        $state.go('login');
-                    });
-                }]
-            })
-
-
-            .state('dashboard', {
-                url: '/dashboard',
-                templateUrl: 'dashboard/_dashboard.html',
-                controller: 'DashboardCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', 'projects', function($rootScope, $state, Auth, projects) {
-
-                    $rootScope.$emit('menuToggle', false); // close mob_menu
-
-                    Auth.currentUser().then(function(user) {
-                        projects.getAll('pomo_count:desc', 10, 1);
-                    }, function(error) {
-                        $state.go('login');
-                    });
-                }]
-            })
-
-            .state('account', {
-                url: '/users/{id}/edit',
-                templateUrl: 'account/_account.html',
-                controller: 'AccountCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
-                    $rootScope.$emit('menuToggle', false); // close mob_menu
-
-                    Auth.currentUser().then(function(user) {
-                    }, function(error) {
-                        $state.go('login');
-                    });
-                }]
+            .state('register', {
+                url: '/register',
+                templateUrl: 'auth/_register.html',
+                controller: 'AuthCtrl',
+                onEnter: [
+                    '$rootScope',
+                    '$state',
+                    'Auth',
+                    function($rootScope, $state, Auth) {
+                        $rootScope.$emit('menuToggle', false); // close mob_menu
+                        Auth.currentUser().then(function(user) {
+                            $state.go('home');
+                        }, function(error) {
+                            console.log(error)
+                        });
+                    }
+                ]
             })
 
             .state('login', {
                 url: '/login',
                 templateUrl: 'auth/_login.html',
                 controller: 'AuthCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
-                    $rootScope.$emit('menuToggle', false); // close mob_menu
-
-                    Auth.currentUser().then(function(user) {
-                        $state.go('home');
-                    }, function(error) {
-                        console.log(error)
-                    });
-                }]
+                onEnter: [
+                    '$rootScope',
+                    '$state',
+                    'Auth',
+                    function($rootScope, $state, Auth) {
+                        $rootScope.$emit('menuToggle', false); // close mob_menu
+                        Auth.currentUser().then(function(user) {
+                            $state.go('home');
+                        }, function(error) {
+                            console.log(error)
+                        });
+                    }
+                ]
             })
 
-            .state('register', {
-                url: '/register',
-                templateUrl: 'auth/_register.html',
-                controller: 'AuthCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
-                    $rootScope.$emit('menuToggle', false); // close mob_menu
+            .state('account', {
+                url: '/users/{id}/edit',
+                templateUrl: 'account/_account.html',
+                controller: 'AccountCtrl',
+                onEnter: [
+                    '$rootScope',
+                    '$state',
+                    'Auth',
+                    function($rootScope, $state, Auth) {
+                        $rootScope.$emit('menuToggle', false); // close mob_menu
+                        Auth.currentUser().then(function(user) {
+                        }, function(error) {
+                            $state.go('login');
+                        });
+                    }
+                ]
+            })
 
-                    Auth.currentUser().then(function(user) {
-                        $state.go('home');
-                    }, function(error) {
-                        console.log(error)
-                    });
-                }]
+            .state('home', {
+                url: '/home',
+                templateUrl: 'home/_home.html',
+                controller: 'MainCtrl',
+                onEnter: [
+                    '$rootScope',
+                    '$state',
+                    'Auth',
+                    function($rootScope, $state, Auth) {
+                        $rootScope.$emit('menuToggle', false); // close mob_menu
+                        Auth.currentUser().then(function(user) {
+                        }, function(error) {
+                            $state.go('login');
+                        });
+                    }
+                ],
+                resolve: {
+                    projects: function (projectsManager) {
+                        return projectsManager.loadAllProjects('date:desc', 10, 1).then(function (projects) {
+                            return projects;
+                        });
+                    }
+                }
+            })
+
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: 'dashboard/_dashboard.html',
+                controller: 'DashboardCtrl',
+                onEnter: [
+                    '$rootScope',
+                    '$state',
+                    'Auth',
+                    function($rootScope, $state, Auth) {
+                        $rootScope.$emit('menuToggle', false); // close mob_menu
+                        Auth.currentUser().then(function(user) {
+                        }, function(error) {
+                            $state.go('login');
+                        });
+                    }
+                ],
+                resolve: {
+                    projects: function (projectsManager) {
+                        return projectsManager.loadAllProjects('pomo_count:desc', 10, 1).then(function (projects) {
+                            return projects;
+                        });
+                    }
+                }
             })
 
             .state('projects', {
                 url: '/projects',
                 templateUrl: 'projects/_projects.html',
                 controller: 'ProjectsCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', 'projects', '$localStorage',
-                    function($rootScope, $state, Auth, projects, $localStorage) {
-                    $rootScope.$emit('menuToggle', false); // close mob_menu
-
-                    Auth.currentUser().then(function(user) {
-                        projects.getAll($localStorage.sort, 50, 1);
-                    }, function(error) {
-                        $state.go('login');
-                    });
-                }]
+                onEnter: [
+                    '$rootScope',
+                    '$state',
+                    'Auth',
+                    function($rootScope, $state, Auth) {
+                        $rootScope.$emit('menuToggle', false); // close mob_menu
+                        Auth.currentUser().then(function(user) {
+                        }, function(error) {
+                            $state.go('login');
+                        });
+                    }
+                ],
+                resolve: {
+                    projects: function (projectsManager, $localStorage) {
+                        return projectsManager.loadAllProjects($localStorage.sort, 50, 1).then(function (projects) {
+                            return projects;
+                        });
+                    }
+                }
             })
 
             .state('project', {
                 url: '/projects/{id}',
                 templateUrl: 'projects/project/_project.html',
                 controller: 'ProjectCtrl',
-                onEnter: ['$rootScope', '$state', 'Auth', function($rootScope, $state, Auth) {
-                    $rootScope.$emit('menuToggle', false); // close mob_menu
-
-                    Auth.currentUser().then(function(user) {
-                    }, function(error) {
-                        $state.go('login');
-                    });
-                }],
+                onEnter: [
+                    '$rootScope',
+                    '$state',
+                    'Auth',
+                    function($rootScope, $state, Auth) {
+                        $rootScope.$emit('menuToggle', false); // close mob_menu
+                        Auth.currentUser().then(function(user) {
+                        }, function(error) {
+                            $state.go('login');
+                        });
+                    }
+                ],
                 resolve: {
-                   project: ['$stateParams', 'projects', function ($stateParams, projects) {
-                       return projects.get($stateParams.id);
-                   }]
+                    project: function ($stateParams, projectsManager) {
+                        return projectsManager.getProject($stateParams.id);
+                    }
                 }
             });
 

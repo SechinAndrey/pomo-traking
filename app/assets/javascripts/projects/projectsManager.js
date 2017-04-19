@@ -1,0 +1,107 @@
+angular.module('pomoTracking')
+.factory('projectsManager', ['$http', '$q', 'project',  'Auth', function($http, $q, Project, Auth) {
+    var projectsManager = {
+        _pool: {},
+        _page: 1,
+        _busy: false,
+        _ended: false,
+        _retrieveInstance: function(projectId, projectData) {
+            var instance = this._pool[projectId];
+            if (instance) {
+                instance.setData(projectData);
+            } else {
+                instance = new Project(projectData);
+                this._pool[projectId] = instance;
+            }
+            return instance;
+        },
+        _search: function(projectId) {
+            return this._pool[projectId];
+        },
+        _load: function(projectId, deferred) {
+            var scope = this;
+            $http.get('/projects/' + projectId + '.json')
+                .success(function(projectData) {
+                    var project = scope._retrieveInstance(projectData.id, projectData);
+                    deferred.resolve(project);
+                })
+                .error(function() {
+                    deferred.reject();
+                });
+        },
+
+        createProject: function (projectData) {
+            $http.post('/projects.json', projectData);
+        },
+
+        addProject: function (projectData) {
+            return this._retrieveInstance(projectData.id, projectData);
+        },
+
+        getProject: function(projectId) {
+            var deferred = $q.defer();
+            var project = this._search(projectId);
+            if (project) {
+                deferred.resolve(project);
+            } else {
+                this._load(projectId, deferred);
+            }  return deferred.promise;
+        },
+
+        getCurrentProject: function() {
+            var project;
+            Auth.currentUser().then(function (user) {
+                project = this.getProject(user.current_project_id);
+            });
+            return project;
+        },
+
+        loadAllProjects: function(sort, perPage, page) {
+            var scope = this;
+            if(scope._busy || scope._ended) return;
+            scope.busy = true;
+            var deferred = $q.defer();
+            $http.get('/projects.json', {
+                params: {
+                    sort: sort,
+                    per_page: perPage,
+                    page: page || scope.page
+                }
+            })
+            .success(function(projectsArray) {
+                var projects = [];
+                if(page){
+                    scope.page = 1;
+                    scope.ended = false;
+                } else {
+                    if(projectsArray.length < perPage) scope.ended = true;
+                    scope.page ++;
+                }
+                projectsArray.forEach(function(projectData) {
+                    var project = scope._retrieveInstance(projectData.id, projectData);
+                    projects.push(project);
+                });
+                deferred.resolve(projects);
+            })
+            .error(function() {
+                deferred.reject();
+            })
+            .finally(function () {
+                    scope.busy = false;
+                });
+            return deferred.promise;
+        },
+
+        setProject: function(projectData) {
+            var scope = this;
+            var project = this._search(projectData.id);
+            if (project) {
+                project.setData(projectData);
+            } else {
+                project = scope._retrieveInstance(projectData);
+            }  return project;
+        },
+
+    };
+    return projectsManager;
+}]);
