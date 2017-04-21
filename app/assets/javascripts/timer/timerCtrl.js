@@ -22,11 +22,11 @@ angular.module('pomoTracking')
         });
 
         $scope.isPomoStrted = function(){
-            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'started' : false;
+            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'started' : false; //TODO: replace to projectsManager
         };
 
         $scope.isPomoPaused = function(){
-            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'paused' : false;
+            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'paused' : false; //TODO: replace to projectsManager
         };
 
         $scope.isNarrow = function(){
@@ -46,11 +46,7 @@ angular.module('pomoTracking')
         $scope.pomodoroStart = function(){
             if (!$scope.isPomoStrted()) {
                 Auth.currentUser().then(function (user) {
-                    data = {
-                        action: 'start',
-                        project: user.current_project_id
-                    };
-                    pomodoro.Socket.send(data);
+                    pomodoro.send('start', user.current_project_id);
                 });
 
             }
@@ -59,11 +55,7 @@ angular.module('pomoTracking')
         $scope.pomodoroPause = function(){
             if(!$scope.isPomoPaused()){
                 Auth.currentUser().then(function (user) {
-                    data = {
-                        action: 'pause',
-                        project: user.current_project_id
-                    };
-                    pomodoro.Socket.send(data);
+                    pomodoro.send('pause', user.current_project_id);
                 });
 
             }
@@ -71,11 +63,7 @@ angular.module('pomoTracking')
 
         $scope.pomodoroStop = function(){
             Auth.currentUser().then(function (user) {
-                data = {
-                    action: 'stop',
-                    project: user.current_project_id
-                };
-                pomodoro.Socket.send(data);
+                pomodoro.send('stop', user.current_project_id);
             });
 
         };

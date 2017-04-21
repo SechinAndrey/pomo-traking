@@ -19,6 +19,7 @@ angular.module('pomoTracking')
             return this._pool[projectId];
         },
         _load: function(projectId, deferred) {
+            if(projectId === null){ return deferred.reject();}
             var scope = this;
             $http.get('/projects/' + projectId + '.json')
                 .success(function(projectData) {
@@ -49,11 +50,10 @@ angular.module('pomoTracking')
         },
 
         getCurrentProject: function() {
-            var project;
-            Auth.currentUser().then(function (user) {
-                project = this.getProject(user.current_project_id);
+            var scope = this;
+            return Auth.currentUser().then(function (user) {
+                return scope.getProject(user.current_project_id);
             });
-            return project;
         },
 
         loadAllProjects: function(sort, perPage, page) {

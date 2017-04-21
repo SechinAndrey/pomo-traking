@@ -74,6 +74,7 @@ class PomoCycle < ApplicationRecord
         work_minutes = 0
         periods.each { |period| work_minutes += period.duration if period.periods_type == 'pomo' }
         if self.project.statistics.new({work_minutes: work_minutes}).save
+          self.project.user.current_project_id = nil
           self.destroy
         end
       else
