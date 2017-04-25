@@ -3,7 +3,8 @@ angular.module('pomoTracking')
     '$scope',
     'pomodoro',
     'projects',
-    function($scope, pomodoro, projects){
+    'projectsManager',
+    function($scope, pomodoro, projects, projectsManager){
         $scope.pomodoro = pomodoro;
         $scope.projects = projects;
         $scope.periods = [
@@ -17,15 +18,24 @@ angular.module('pomoTracking')
             {type: 'long_break',  status: 'no'}
         ];
 
+        var updateCurrentProject = function () {
+            projectsManager.getCurrentProject().then(function (current_project) {
+                $scope.current_project = current_project;
+            });
+        };
+
         $scope.isStarted = function(period){
-           return period.status == 'started';
+           return period.status === 'started';
         };
 
         $scope.isPaused = function(period){
-            return period.status == 'paused';
+            return period.status === 'paused';
         };
 
         $scope.isEmpty = function(period){
-            return period.status == '';
+            return period.status === '';
         };
+
+        updateCurrentProject();
+        $scope.$on('update', updateCurrentProject);
     }]);

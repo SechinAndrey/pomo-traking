@@ -25,10 +25,10 @@ angular.module('pomoTracking')
                         o.min = Math.floor(o.time/60000);
                         o.sec = Math.floor(o.time/1000 % 60);
                         if(o.time < 300){
-                            projectsManager.getCurrentProject().then(function (project) {
+                            projectsManager.getCurrentProject().then(function (current_project) {
                                 o.Socket.pomodoroChannel.send({
                                     action: 'end',
-                                    project: project.id
+                                    project: current_project.id
                                 });
                             });
                             o.stop();
@@ -58,22 +58,16 @@ angular.module('pomoTracking')
 
             o.toggleProject = function (starting_project) {
                 projectsManager.getCurrentProject().then(function (current_project) {
-                    console.log('-------------------> resolve');
-                    console.log(current_project.title, current_project.pomo_cycle.status);
                     if(current_project.pomo_cycle.status === 'started'){
                         if(current_project.id !== starting_project.id){
-                            console.log('-------------------> switch-project');
                             $rootScope.$broadcast('switch-project', starting_project);
                         }else{
-                            console.log('-------------------> pause');
                             o.send('pause', current_project.id);
                         }
                     }else{
-                        console.log('-------------------> start');
                         o.send('start', starting_project.id);
                     }
                 }, function () {
-                    console.log('-------------------> reject');
                     o.send('start', starting_project.id);
                 });
             };
@@ -139,6 +133,7 @@ angular.module('pomoTracking')
                 Auth.currentUser().then(function () {
                     Auth._currentUser.current_project_id = data.current_project.id;
                 });
+                $rootScope.$broadcast('update');
                 projectsManager.setProject(data.current_project);
 
                 if(o.pomo_cycle){ //TODO: replace to projectsManager

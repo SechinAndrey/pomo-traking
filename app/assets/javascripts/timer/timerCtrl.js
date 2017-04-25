@@ -6,13 +6,19 @@ angular.module('pomoTracking')
     'Auth',
     'pomodoro',
     '$state',
-    function($rootScope, $scope, Auth, pomodoro, $state){
+    'projectsManager',
+    function($rootScope, $scope, Auth, pomodoro, $state, projectsManager){
         var narrowTimerState = [
             'dashboard',
             'projects'
         ];
-
         $scope.pomodoro = pomodoro;
+        var updateCurrentProject = function () {
+            projectsManager.getCurrentProject().then(function (current_project) {
+                $scope.current_project = current_project;
+            });
+        };
+        updateCurrentProject();
 
         Auth.currentUser().then(function (){
             $scope.isEmptyProject = function(){
@@ -22,11 +28,11 @@ angular.module('pomoTracking')
         });
 
         $scope.isPomoStrted = function(){
-            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'started' : false; //TODO: replace to projectsManager
+            return $scope.current_project.pomo_cycle ? $scope.current_project.pomo_cycle.status === 'started' : false;
         };
 
         $scope.isPomoPaused = function(){
-            return pomodoro.pomo_cycle ? pomodoro.pomo_cycle.status === 'paused' : false; //TODO: replace to projectsManager
+            return $scope.current_project.pomo_cycle ? $scope.current_project.pomo_cycle.status === 'paused' : false;
         };
 
         $scope.isNarrow = function(){
@@ -67,4 +73,6 @@ angular.module('pomoTracking')
             });
 
         };
+
+        $scope.$on('update', updateCurrentProject);
     }]);
