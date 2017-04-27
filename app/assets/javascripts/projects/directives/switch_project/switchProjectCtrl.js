@@ -6,12 +6,7 @@ angular.module('pomoTracking')
         'projectsManager',
         function($scope, pomodoro, projectsManager){
             $scope.running_project = {};
-            var updateCurrentProject = function () {
-                projectsManager.getCurrentProject().then(function (current_project) {
-                    $scope.current_project = current_project;
-                });
-            };
-            updateCurrentProject();
+            $scope.current_project = projectsManager.current_project;
 
             $scope.$on('switch-project', function(event, project){
                 $scope.running_project = project;
@@ -22,5 +17,4 @@ angular.module('pomoTracking')
                 pomodoro.send('switch', $scope.running_project.id);
                 $scope.closeModal();
             };
-            $scope.$on('update', updateCurrentProject);
         }]);

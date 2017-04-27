@@ -1,10 +1,11 @@
 angular.module('pomoTracking')
-.factory('projectsManager', ['$http', '$q', 'project',  'Auth', function($http, $q, Project, Auth) {
-    var projectsManager = {
+.factory('projectsManager', ['$http', '$q', 'project',  'Auth', '$rootScope', function($http, $q, Project, Auth, $rootScope) {
+        var projectsManager = {
         _pool: {},
         _page: 1,
         _busy: false,
         _ended: false,
+        current_project: {},
         _retrieveInstance: function(projectId, projectData) {
             var instance = this._pool[projectId];
             if (instance) {
@@ -105,6 +106,15 @@ angular.module('pomoTracking')
             }  return project;
         },
 
+        actionTitle: function(project){
+            var scope = this;
+            if(scope.current_project && scope.current_project.id === project.id && project.pomo_cycle){
+                project.pomo_cycle.status === 'started' ? title = 'Pause' : title = 'Start'
+            }else{
+                title = 'Start'
+            }
+            return title;
+        }
     };
     return projectsManager;
 }]);

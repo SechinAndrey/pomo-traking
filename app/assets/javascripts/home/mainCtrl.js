@@ -17,12 +17,7 @@ angular.module('pomoTracking')
             {type: 'pomo', status: 'no'},
             {type: 'long_break',  status: 'no'}
         ];
-
-        var updateCurrentProject = function () {
-            projectsManager.getCurrentProject().then(function (current_project) {
-                $scope.current_project = current_project;
-            });
-        };
+        $scope.projectsManager = projectsManager;
 
         $scope.isStarted = function(period){
            return period.status === 'started';
@@ -35,7 +30,4 @@ angular.module('pomoTracking')
         $scope.isEmpty = function(period){
             return period.status === '';
         };
-
-        updateCurrentProject();
-        $scope.$on('update', updateCurrentProject);
     }]);

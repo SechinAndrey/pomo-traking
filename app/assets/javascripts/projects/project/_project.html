@@ -6,7 +6,7 @@
 
     <div class="title-start-container">
         <h3 class="project-title ellipsis">{{project.title}}</h3>
-        <button type="button" class="btn btn-default start-btn" ng-click="pomodoro.toggleProject(project)"> {{pomodoro.actionTitle(project)}} </button>
+        <button type="button" class="btn btn-default start-btn" ng-click="pomodoro.toggleProject(project)"> {{projectsManager.actionTitle(project)}} </button>
     </div>
     <div class="info-conteinr">
         <div class="info project-info">
@@ -68,7 +68,7 @@
     </div>
     <div class="edit-wrap">
         <div class="editable-field-container">
-            <form editable-form name="editableForm" onaftersave="projects.edit(project)">
+            <form editable-form name="editableForm" onaftersave="editProject()">
                 <div>
                     <span class="title">Title:</span>
                     <span class="data ellipsis" editable-text="project.title" e-name="name"

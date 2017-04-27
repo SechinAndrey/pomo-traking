@@ -1,21 +1,26 @@
 angular.module('pomoTracking')
     .controller('ProjectCtrl', [
         '$scope',
-        'projects',
         'project',
+        'projectsManager',
         '$rootScope',
         'pomodoro',
-        function($scope, projects, project, $rootScope, pomodoro) {
+        function($scope, project, projectsManager, $rootScope, pomodoro) {
             $scope.project = project;
-            $scope.projects = projects;
+            $scope.projectsManager = projectsManager;
             $scope.pomodoro = pomodoro;
 
             $scope.openDeleteModal = function () {
                 $scope.openModal();
             };
 
+
+            $scope.editProject = function(){
+                project.update();
+            };
+
             $scope.deleteProject = function(){
-                projects.delete(project.id);
+                project.delete();
             };
 
             $rootScope.$on('projectDeleted', function() {

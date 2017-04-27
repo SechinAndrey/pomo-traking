@@ -13,12 +13,8 @@ angular.module('pomoTracking')
             'projects'
         ];
         $scope.pomodoro = pomodoro;
-        var updateCurrentProject = function () {
-            projectsManager.getCurrentProject().then(function (current_project) {
-                $scope.current_project = current_project;
-            });
-        };
-        updateCurrentProject();
+        $scope.projectsManager = projectsManager;
+
 
         Auth.currentUser().then(function (){
             $scope.isEmptyProject = function(){
@@ -28,11 +24,11 @@ angular.module('pomoTracking')
         });
 
         $scope.isPomoStrted = function(){
-            return $scope.current_project.pomo_cycle ? $scope.current_project.pomo_cycle.status === 'started' : false;
+            return $scope.projectsManager.current_project.pomo_cycle ? $scope.projectsManager.current_project.pomo_cycle.status === 'started' : false;
         };
 
         $scope.isPomoPaused = function(){
-            return $scope.current_project.pomo_cycle ? $scope.current_project.pomo_cycle.status === 'paused' : false;
+            return $scope.projectsManager.current_project.pomo_cycle ? $scope.projectsManager.current_project.pomo_cycle.status === 'paused' : false;
         };
 
         $scope.isNarrow = function(){
@@ -73,6 +69,4 @@ angular.module('pomoTracking')
             });
 
         };
-
-        $scope.$on('update', updateCurrentProject);
     }]);
