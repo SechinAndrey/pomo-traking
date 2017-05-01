@@ -69,7 +69,16 @@ angular.module('pomoTracking')
             var callback = function(data) {
                 console.log("Callback data: ", data);
                 update(data);
-                if(!data.current_project){return}
+
+                if(!data.current_project){
+                    if(data.user_updated){
+                        Auth.currentUser().then(function () {
+                            angular.extend(Auth._currentUser, data.current_user);
+                        });
+                    }
+                    return;
+                }
+
                 projectsManager.getProject(data.current_project.id).then(function (project) {
                     if (!project.pomo_cycle){return}
                     switch (project.pomo_cycle.status) {

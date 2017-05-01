@@ -9,7 +9,7 @@
         </div>
 
         <div class="editable-field-container">
-            <form editable-form name="editableForm" onaftersave="saveUser()">
+            <form editable-form name="editableForm" onaftersave="update()">
 
                 <div>
                     <span class="title">UserName:</span>
@@ -21,15 +21,15 @@
                 </div>
                 <div>
                     <span class="title">Pomo time:</span>
-                    <span class="data" editable-number="user.pomo_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.pomo_time || 'empty' }} min</span>
+                    <span class="data" editable-number="user.pomo_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.pomo_duration || 'empty' }} min</span>
                 </div>
                 <div>
                     <span class="title">Short break:</span>
-                    <span class="data" editable-number="user.short_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.short_break_time || 'empty' }} min</span>
+                    <span class="data" editable-number="user.short_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.short_break_duration || 'empty' }} min</span>
                 </div>
                 <div>
                     <span class="title">Long Break:</span>
-                    <span class="data" editable-number="user.long_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.long_break_time || 'empty' }} min</span>
+                    <span class="data" editable-number="user.long_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.long_break_duration || 'empty' }} min</span>
                 </div>
                 <div>
                     <!-- button to show form -->
