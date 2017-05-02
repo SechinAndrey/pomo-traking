@@ -1,7 +1,10 @@
 class UserSerializer < ActiveModel::Serializer
-  ap '*' *1000
-  attributes :id, :current_project_id, :email, :username,
+  attributes :id, :current_project_id, :email, :username, :avatar,
              :pomo_duration, :short_break_duration, :long_break_duration
+
+  def avatar
+    object.avatar.avatar_url
+  end
 
   def pomo_duration
     object.duration_settings&.pomo_duration

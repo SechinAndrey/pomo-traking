@@ -5,7 +5,7 @@
     <h1>Account <span class="icon-cog2"></span></h1>
     <div class="edit-wrap">
         <div class="img-container">
-            <div class="square-img test"></div>
+            <div class="square-img" style="background-image:url({{user.avatar}});"></div>
         </div>
 
         <div class="editable-field-container">
@@ -21,15 +21,15 @@
                 </div>
                 <div>
                     <span class="title">Pomo time:</span>
-                    <span class="data" editable-number="user.pomo_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.pomo_duration || 'empty' }} min</span>
+                    <span class="data" editable-number="user.pomo_duration" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.pomo_duration || 'empty' }} min</span>
                 </div>
                 <div>
                     <span class="title">Short break:</span>
-                    <span class="data" editable-number="user.short_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.short_break_duration || 'empty' }} min</span>
+                    <span class="data" editable-number="user.short_break_duration" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.short_break_duration || 'empty' }} min</span>
                 </div>
                 <div>
                     <span class="title">Long Break:</span>
-                    <span class="data" editable-number="user.long_break_time" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.long_break_duration || 'empty' }} min</span>
+                    <span class="data" editable-number="user.long_break_duration" e-name="email" onbeforesave="checkName($data)" e-required>{{ user.long_break_duration || 'empty' }} min</span>
                 </div>
                 <div>
                     <!-- button to show form -->
