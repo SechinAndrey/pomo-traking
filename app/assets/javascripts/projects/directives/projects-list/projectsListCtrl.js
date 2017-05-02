@@ -1,11 +1,12 @@
 angular.module('pomoTracking')
 .controller('ProjectsListCtrl', [
     '$scope',
+    '$rootScope',
     'pomodoro',
     '$localStorage',
     'projectsManager',
     '$state',
-    function($scope, pomodoro, $localStorage, projectsManager, $state){
+    function($scope, $rootScope, pomodoro, $localStorage, projectsManager, $state){
         $scope.pomodoro = pomodoro;
         $scope.$storage = $localStorage;
         $scope.projectsManager = projectsManager;
@@ -17,4 +18,8 @@ angular.module('pomoTracking')
                 })
             }
         };
+
+        $rootScope.$on('projectCreated', function (event, project) {
+            $scope.projects.unshift(project);
+        });
     }]);

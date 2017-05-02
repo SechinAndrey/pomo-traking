@@ -2,11 +2,10 @@ angular.module('pomoTracking')
     .factory('wsproject', [
         'ActionCableChannel',
         'Auth',
-        'projects',
         '$rootScope',
         '$state',
         'pomodoro',
-        function(ActionCableChannel, Auth, projects, $rootScope, $state, pomodoro){
+        function(ActionCableChannel, Auth, $rootScope, $state, pomodoro){
             var o = {
                 Socket: {}
             };
@@ -14,7 +13,7 @@ angular.module('pomoTracking')
             var callback = function(data) {
                 console.log("Callback data: ", data);
                 if(data.created){
-                    projects.projects.unshift(data.project);
+                    $rootScope.$emit('projectCreated', data.project);
                 }else if(data.deleted){
                     pomodoro.stop();
                     if($state.current.name === 'project'){
