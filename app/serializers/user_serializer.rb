@@ -3,7 +3,7 @@ class UserSerializer < ActiveModel::Serializer
              :pomo_duration, :short_break_duration, :long_break_duration
 
   def avatar
-    object.avatar.avatar_url
+    object.avatar&.avatar_url
   end
 
   def pomo_duration
