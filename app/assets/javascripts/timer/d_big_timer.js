@@ -1,5 +1,5 @@
 angular.module('pomoTracking')
-    .directive("bigTimer", ['pomodoro', function(pomodoro) {
+    .directive("bigTimer", ['pomodoro', 'projectsManager', function(pomodoro, projectsManager) {
         return {
             restrict: 'E',
             replace: true,
@@ -23,7 +23,7 @@ angular.module('pomoTracking')
                 context2.stroke();
 
                 var renderTimer = function(){
-                    var p = 2 * $scope.pomodoro.time/(1500*1000);
+                    var p = 2 * $scope.pomodoro.time/(pomodoro.periodDuration*60*1000);
                     context.clearRect(0,0,timer.width,timer.height);
 
                     context.beginPath();

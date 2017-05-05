@@ -148,9 +148,12 @@ angular.module('pomoTracking')
                     if(_current_project.pomo_cycle){
                         var periods = _current_project.pomo_cycle.periods;
                         if(periods && periods.length > 0){
-                            o.endTime = periods[periods.length - 1].end_time;
-                            o.period_type = periods[periods.length - 1].periods_type;
+                            var lastPeriod = periods[periods.length - 1];
+                            o.periodDuration = lastPeriod.duration;
+                            o.endTime = lastPeriod.end_time;
+                            o.period_type = lastPeriod.periods_type;
                         }else{
+                            o.periodDuration = 0;
                             o.endTime = 0;
                             o.period_type = '';
                         }
