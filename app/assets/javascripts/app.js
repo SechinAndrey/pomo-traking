@@ -104,6 +104,8 @@ angular.module('pomoTracking', [
                     projects: function (projectsManager) {
                         return projectsManager.loadAllProjects('date:desc', 10, 1).then(function (projects) {
                             return projects;
+                        }, function () {
+                            return {};
                         });
                     }
                 }
@@ -129,6 +131,8 @@ angular.module('pomoTracking', [
                     projects: function (projectsManager) {
                         return projectsManager.loadAllProjects('pomo_count:desc', 10, 1).then(function (projects) {
                             return projects;
+                        },function () {
+                            return {};
                         });
                     }
                 }
@@ -154,6 +158,8 @@ angular.module('pomoTracking', [
                     projects: function (projectsManager, $localStorage) {
                         return projectsManager.loadAllProjects($localStorage.sort, 50, 1).then(function (projects) {
                             return projects;
+                        },function () {
+                            return {};
                         });
                     }
                 }
