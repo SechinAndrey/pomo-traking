@@ -96,7 +96,10 @@ class PomodoroChannel < ApplicationCable::Channel
       current_project = current_user.current_project
       if current_project&.pomo_cycle&.started?
         current_project.pomo_cycle.end_timer
-        @broadcast_data = {current_project: current_project.serialize}
+        @broadcast_data = {
+            ended: true,
+            current_project: current_project.serialize
+        }
         broadcast
       end
       REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')

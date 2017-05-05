@@ -37,10 +37,13 @@ angular.module('pomoTracking')
                 $interval.cancel(o.timer);
             };
 
-            o.stop = function(){
+            o.stop = function(to_default){
                 started = false;
                 $interval.cancel(o.timer);
-                set_default();
+                if(to_default){
+                    set_default();
+                }
+
             };
 
             o.send = function(action, projectId){
@@ -52,7 +55,7 @@ angular.module('pomoTracking')
 
             o.toggleProject = function (starting_project) {
                 projectsManager.getCurrentProject().then(function (current_project) {
-                    if(current_project.pomo_cycle.status === 'started'){
+                    if(current_project.pomo_cycle && current_project.pomo_cycle.status === 'started'){
                         if(current_project.id !== starting_project.id){
                             $rootScope.$broadcast('switch-project', starting_project);
                         }else{
@@ -80,22 +83,33 @@ angular.module('pomoTracking')
                 }
 
                 projectsManager.getProject(data.current_project.id).then(function (project) {
-                    if (!project.pomo_cycle){return}
+                    if (!project.pomo_cycle){
+                        if(data.ended){
+                            $rootScope.$emit('pomo-end');
+                            Auth.currentUser().then(function () {
+                                Auth._currentUser.current_project_id = null;
+                            });
+                            o.stop(true);
+                        }
+                        return
+                    }
                     switch (project.pomo_cycle.status) {
                         case 'started':
                             o.start();
+                           set_default(); $rootScope.$emit('pomo-start');
                             break;
                         case 'paused':
                             o.pause();
                             break;
                         case 'stopped':
-                            o.stop();
+                            o.stop(true);
                             break;
                         case 'ended':
+                            $rootScope.$emit('pomo-end');
                             Auth.currentUser().then(function () {
                                 Auth._currentUser.current_project_id = null;
                             });
-                            o.stop();
+                            o.stop(true);
                             break;
                     }
                 });
@@ -125,11 +139,15 @@ angular.module('pomoTracking')
                 });
                 projectsManager.setProject(data.current_project);
                 projectsManager.getCurrentProject().then(function (_current_project) {
-                    projectsManager.current_project = _current_project;
+                    if(projectsManager.current_project.id === _current_project.id){
+                        angular.extend(projectsManager.current_project, _current_project);
+                    }else{
+                        projectsManager.current_project = _current_project;
+                    }
 
                     if(_current_project.pomo_cycle){
                         var periods = _current_project.pomo_cycle.periods;
-                        if(periods.length > 0){
+                        if(periods && periods.length > 0){
                             o.endTime = periods[periods.length - 1].end_time;
                             o.period_type = periods[periods.length - 1].periods_type;
                         }else{
@@ -158,7 +176,6 @@ angular.module('pomoTracking')
                     o.Socket.pomodoroChannel = undefined;
                 }
             };
-
             return o;
         }
     ]);

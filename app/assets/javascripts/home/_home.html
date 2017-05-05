@@ -9,8 +9,8 @@
         </div>
         <div class="pomo-box">
             <ul class="pomos">
-                <li ng-repeat="period in periods">
-                    {{period.type}} <span class="time">25 min</span><span class="icon-period-{{period.status}} pull-right"></span>
+                <li class="status-{{period.status}}" ng-repeat="period in periods">
+                    {{period.periods_type}} <span class="time">{{duration(period)}}</span><span class="icon-period-{{period.status}} pull-right"></span>
                 </li>
             </ul>
         </div>

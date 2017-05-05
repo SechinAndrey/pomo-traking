@@ -3,7 +3,7 @@ class ProjectSerializer < ActiveModel::Serializer
              :pomo_duration, :short_break_duration, :long_break_duration
 
   def pomo_cycle
-    object.pomo_cycle.serialize
+    PomoCycle.where(id: object.pomo_cycle&.id).last.serialize
   end
 
   def pomo_count
