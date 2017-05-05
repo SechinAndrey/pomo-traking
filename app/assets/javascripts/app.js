@@ -20,6 +20,10 @@ angular.module('pomoTracking', [
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
             $state.previous = fromState;
         });
+
+        $rootScope.$on('$stateChangeError', function() {
+            console.error(arguments[5]);
+        });
     }
 ])
 
@@ -27,6 +31,7 @@ angular.module('pomoTracking', [
     '$stateProvider',
     '$urlRouterProvider',
     function($stateProvider, $urlRouterProvider) {
+
         $stateProvider
             .state('register', {
                 url: '/register',
@@ -101,13 +106,13 @@ angular.module('pomoTracking', [
                     }
                 ],
                 resolve: {
-                    projects: function (projectsManager) {
+                    projects: ['projectsManager', function (projectsManager) {
                         return projectsManager.loadAllProjects('date:desc', 10, 1).then(function (projects) {
                             return projects;
                         }, function () {
                             return {};
                         });
-                    }
+                    }]
                 }
             })
 
@@ -128,13 +133,13 @@ angular.module('pomoTracking', [
                     }
                 ],
                 resolve: {
-                    projects: function (projectsManager) {
+                    projects: ['projectsManager', function (projectsManager) {
                         return projectsManager.loadAllProjects('pomo_count:desc', 10, 1).then(function (projects) {
                             return projects;
                         },function () {
                             return {};
                         });
-                    }
+                    }]
                 }
             })
 
@@ -155,13 +160,13 @@ angular.module('pomoTracking', [
                     }
                 ],
                 resolve: {
-                    projects: function (projectsManager, $localStorage) {
+                    projects: ['projectsManager', '$localStorage', function (projectsManager, $localStorage) {
                         return projectsManager.loadAllProjects($localStorage.sort, 50, 1).then(function (projects) {
                             return projects;
                         },function () {
                             return {};
                         });
-                    }
+                    }]
                 }
             })
 
@@ -182,13 +187,16 @@ angular.module('pomoTracking', [
                     }
                 ],
                 resolve: {
-                    project: function ($stateParams, projectsManager) {
+                    project: ['$stateParams', 'projectsManager', function ($stateParams, projectsManager) {
                         return projectsManager.getProject($stateParams.id);
-                    }
+                    }]
                 }
             });
-
-        $urlRouterProvider.otherwise('home');
+        // $urlRouterProvider.otherwise('home');
+        $urlRouterProvider.otherwise(function($injector) {
+            var $state = $injector.get('$state');
+            return $state.go('home');
+        });
     }]);
 
 
