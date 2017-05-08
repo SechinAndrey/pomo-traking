@@ -16,35 +16,14 @@
     <div class="last-projects">
         <span><span class="icon-history"></span>Last projects</span>
         <ul>
-            <li>
-                <button type="button" class="btn btn-default ellipsis">
-                    prjoctprjoctprjoctprjoct 1
+
+            <li ng-repeat="project in timerProjets" ng-class="{'hide-last-pjct':canHide($index)}">
+                <button type="button" class="btn btn-default ellipsis" ng-click="pomodoro.toggleProject(project)">
+                    {{project.title}}
                 </button>
             </li>
             <li>
-                <button type="button" class="btn btn-default ellipsis">
-                    prjoct 2
-                </button>
-            </li>
-            <li class="hide-last-pjct">
-                <button type="button" class="btn btn-default ellipsis">
-                    prjoct 3
-                </button>
-            </li>
-            <li>
-                <div class="dropup">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        All
-                        <span class="icon-bars"></span>
-                    </button>
-                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu2">
-                        <li><a href="#">Action</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
-                    </ul>
-                </div>
+                <a href="#/projects" class="btn btn-default" role="button">All</a>
             </li>
         </ul>
     </div>

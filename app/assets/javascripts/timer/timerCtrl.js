@@ -15,6 +15,11 @@ angular.module('pomoTracking')
         $scope.pomodoro = pomodoro;
         $scope.projectsManager = projectsManager;
 
+        if($state.current.name === 'home'){
+            projectsManager.loadAllProjects('date:desc', 3, 1).then(function (projects) {
+                $scope.timerProjets = projects;
+            });
+        }
 
         Auth.currentUser().then(function (){
             $scope.isEmptyProject = function(){
@@ -41,6 +46,10 @@ angular.module('pomoTracking')
             }else{
                 $scope.pomodoroStart();
             }
+        };
+
+        $scope.canHide = function(index) {
+          return index === 2;
         };
 
         /* pomodoro actions */
