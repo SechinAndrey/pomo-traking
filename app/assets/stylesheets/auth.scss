@@ -1,0 +1,22 @@
+.auth{
+  h1{
+    text-align: center;
+  }
+
+  form{
+    width: 196px;
+    margin: auto;
+
+    .input-group{
+      margin-bottom: 10px;
+    }
+
+    .avatar{
+      width: 100%;
+    }
+
+    .btn{
+      width: 100%;
+    }
+  }
+}
