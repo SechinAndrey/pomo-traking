@@ -41,7 +41,7 @@ angular.module('pomoTracking')
                 started = false;
                 $interval.cancel(o.timer);
                 if(to_default){
-                    set_default();
+                    o.set_default();
                 }
 
             };
@@ -96,7 +96,7 @@ angular.module('pomoTracking')
                     switch (project.pomo_cycle.status) {
                         case 'started':
                             o.start();
-                           set_default(); $rootScope.$emit('pomo-start');
+                           o.set_default(); $rootScope.$emit('pomo-start');
                             break;
                         case 'paused':
                             o.pause();
@@ -126,7 +126,7 @@ angular.module('pomoTracking')
 
                     o.Socket.destroy =  function(){
                         o.Socket.pomodoroChannel.unsubscribe().then(function(){
-                            set_default(true);
+                            o.set_default(true);
                         });
                     };
                 });
@@ -167,7 +167,7 @@ angular.module('pomoTracking')
 
             };
 
-            var set_default = function(clean_socket){
+            o.set_default = function(clean_socket){
                 o.min = 0;
                 o.sec = 0;
                 o.time = 0;

@@ -7,7 +7,6 @@ angular.module('pomoTracking')
                 var closeModal = function(_redirect) {
                     element.modal('hide');
                     if(_redirect){
-                        console.log('++++++++++++++++++++++++');
                         redirect = _redirect;
                     }
                 };
