@@ -15,8 +15,8 @@
     </div>
     <div class="last-projects">
         <span><span class="icon-history"></span>Last projects</span>
+        <switch-project></switch-project>
         <ul>
-
             <li ng-repeat="project in timerProjets" ng-class="{'hide-last-pjct':canHide($index)}">
                 <button type="button" class="btn btn-default ellipsis" ng-click="pomodoro.toggleProject(project)">
                     {{project.title}}

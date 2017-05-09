@@ -15,6 +15,6 @@ angular.module('pomoTracking')
 
             $scope.switch_project = function () {
                 pomodoro.send('switch', $scope.running_project.id);
-                $scope.closeModal();
+                $scope.$emit('closeModal', false);
             };
         }]);

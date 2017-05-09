@@ -20,7 +20,7 @@ angular.module('pomoTracking')
                         $scope.title = '';
                         $scope.newProject.$setPristine();
                         $scope.newProject.$setUntouched();
-                        $scope.closeModal();
+                        $scope.$emit('closeModal', false);
                     }
                 });
             };

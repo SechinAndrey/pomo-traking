@@ -4,10 +4,12 @@ angular.module('pomoTracking')
             restrict: 'A',
             link: function(scope, element, attr) {
                 var redirect = false;
-
-                scope.closeModal = function(_redirect) {
+                var closeModal = function(_redirect) {
                     element.modal('hide');
-                    if(_redirect) redirect = _redirect;
+                    if(_redirect){
+                        console.log('++++++++++++++++++++++++');
+                        redirect = _redirect;
+                    }
                 };
 
                 scope.openModal = function () {
@@ -16,11 +18,14 @@ angular.module('pomoTracking')
 
                 element.on('hidden.bs.modal', function () {
                     if(redirect){
-                        // console.log($state.previous, $state.current)
                         ($state.previous.name !== '') ? $state.go($state.previous) : $state.go('home');
                         redirect = false;
                     }
-                })
+                });
+
+                scope.$on('closeModal', function(event, _redirect) {
+                    closeModal(_redirect);
+                });
             }
         }
     }]);

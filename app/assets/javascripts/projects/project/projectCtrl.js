@@ -24,7 +24,7 @@ angular.module('pomoTracking')
             };
 
             $rootScope.$on('projectDeleted', function() {
-                $scope.closeModal(true);
+                $scope.$emit('closeModal', true);
             });
         }
     ]);
