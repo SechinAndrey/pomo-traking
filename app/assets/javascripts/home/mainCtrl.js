@@ -40,7 +40,11 @@ angular.module('pomoTracking')
             });
         };
         updatePeriods();
-        
+
+        $scope.projectTitle = function() {
+            return projectsManager.getCurrentProjectTitle();
+        };
+
         $scope.isStarted = function(period){
            return period.status === 'started';
         };

@@ -70,6 +70,7 @@ class ProjectsController < ApplicationController
     project.pomo_cycle&.stop_timer
     project.destroy
     if project.destroyed?
+      project.user.update(current_project_id: nil) if project.id == project.user.current_project_id
       @broadcast_data = {
           deleted: true,
           project: project.serialize

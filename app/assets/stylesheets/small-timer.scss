@@ -49,7 +49,14 @@
   }
 
   .noproject{
-    display: none;
+    color: grey !important;
+    background-color: #ececec !important;
+    border-color: #a0a0a0 !important;
+
+    &:hover{
+      cursor: default;
+      background-color: white;
+    }
   }
 
 }

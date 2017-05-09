@@ -50,6 +50,10 @@ angular.module('pomoTracking')
             }  return deferred.promise;
         },
 
+        getCurrentProjectTitle: function() {
+            return this.current_project.title || 'The project is not started';
+        },
+
         getCurrentProject: function() {
             var scope = this;
             return Auth.currentUser().then(function (user) {

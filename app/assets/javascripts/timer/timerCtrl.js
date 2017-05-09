@@ -40,11 +40,17 @@ angular.module('pomoTracking')
             return narrowTimerState.includes($state.current.name);
         };
 
+        $scope.projectTitle = function() {
+            return projectsManager.getCurrentProjectTitle();
+        };
+
         $scope.pomodoroToggle = function(){
-            if($scope.isPomoStrted()){
-                $scope.pomodoroPause();
-            }else{
-                $scope.pomodoroStart();
+            if(!$scope.isEmptyProject()){
+                if($scope.isPomoStrted()){
+                    $scope.pomodoroPause();
+                }else{
+                    $scope.pomodoroStart();
+                }
             }
         };
 
