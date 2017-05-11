@@ -18,7 +18,9 @@ angular.module('pomoTracking', [
             sort: 'alphabet'
         });
         $rootScope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState) {
-            $state.previous = fromState;
+            if(fromState.name!== toState.name){
+                $state.previous = fromState;
+            }
         });
 
         $rootScope.$on('$stateChangeError', function() {
