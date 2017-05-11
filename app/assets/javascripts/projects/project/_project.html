@@ -13,27 +13,27 @@
             <h4 class="inf-title">Last project</h4>
             <div class="circles">
                 <div class="pomo-inf circle text-center">
-                    <span class="count"> 24 </span><br>
+                    <span class="count"> {{project.pomo_count}} </span><br>
                     <b> pomo </b>
                 </div>
                 <div class="min-inf circle text-center">
-                    <span class="count"> 600 </span><br>
-                    <b> min </b>
+                    <span class="count"> {{project.time}} </span><br>
+                    <b> time </b>
                 </div>
             </div>
            <div class="table">
                <table >
                    <tbody>
                    <tr>
-                       <td>6</td>
+                       <td>{{project.pomo_cycle_count}}</td>
                        <td>Pomo cycle</td>
                    </tr>
                    <tr>
-                       <td>18</td>
+                       <td>{{project.short_break_count}}</td>
                        <td>Shot break</td>
                    </tr>
                    <tr>
-                       <td>4</td>
+                       <td>{{project.long_break_count}}</td>
                        <td>Long break</td>
                    </tr>
                    </tbody>
