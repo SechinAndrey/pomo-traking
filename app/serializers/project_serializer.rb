@@ -29,7 +29,9 @@ class ProjectSerializer < ActiveModel::Serializer
 
   def short_break_count
     sb_count = object.statistics.count
-    sb_count += object.pomo_cycle&.periods&.where(periods_type: 'short break', ended: true).count
+    curent_count = object.pomo_cycle&.periods&.where(periods_type: 'short break', ended: true)&.count
+    sb_count += curent_count unless curent_count.nil?
+    sb_count
   end
 
   def long_break_count
