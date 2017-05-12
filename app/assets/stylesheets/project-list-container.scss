@@ -3,6 +3,13 @@
   position: relative;
   text-align: center;
 
+  .dash-project.new{
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+    box-shadow:         3px 3px 5px 6px #ccc;
+
+  }
+
   .dash-project{
     margin-bottom: 5px;
     width: 100%;
@@ -10,7 +17,6 @@
     text-align: left;
     display: inline-block;
     border: 1px solid black;
-
 
     @include breakpoint(w486){
       margin: 6px;

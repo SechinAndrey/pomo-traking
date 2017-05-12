@@ -20,6 +20,7 @@ angular.module('pomoTracking')
         };
 
         $rootScope.$on('projectCreated', function (event, project) {
+            project.new = true;
             $scope.projects.unshift(project);
         });
     }]);
