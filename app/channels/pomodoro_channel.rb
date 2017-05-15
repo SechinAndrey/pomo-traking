@@ -4,9 +4,9 @@ class PomodoroChannel < ApplicationCable::Channel
     ap 'PomodoroChannel - subscribed'
     stream_from stream_name
 
-    # ap '-----------------------------------------------'
-    # ap current_user.get_statistics 'all_time'
-    # ap '-----------------------------------------------'
+    ap '-----------------------------------------------'
+    ap current_user.get_statistics 'all_time'
+    ap '-----------------------------------------------'
 
     load_timer
   end

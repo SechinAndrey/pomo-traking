@@ -40,15 +40,35 @@ class User < ApplicationRecord
         .where('users.id = ? AND statistics.created_at BETWEEN ? AND ?', self.id, 1.week.ago, Time.now).last
     end
 
-    user.projects.each{ |project|
-      project.statistics.each{ |statistic|
-        statistics[:pomo_count] += 4
-        statistics[:short_break_count] += 3
-        statistics[:long_break_count] += 1
-        statistics[:pomo_cycle_count] += 1
-        statistics[:work_minutes] += statistic.work_minutes
+    unless user.nil?
+      user.projects.each{ |project|
+        project.statistics.each{ |statistic|
+          statistics[:pomo_count] += 4
+          statistics[:short_break_count] += 3
+          statistics[:long_break_count] += 1
+          statistics[:pomo_cycle_count] += 1
+          statistics[:work_minutes] += statistic.work_minutes
+        }
       }
-    }
+    end
+
+
+    user = User.eager_load(projects: {pomo_cycle: :periods})
+    .where('users.id = 3 and periods.ended = ?', true).last
+
+    unless user.nil?
+      user.projects.each{ |project|
+        project.pomo_cycle.periods.each{ |period|
+          case period.periods_type
+            when 'pomo'
+              statistics[:pomo_count] += 1
+              statistics[:work_minutes] += period.duration
+            when 'short break'
+              statistics[:short_break_count] += 1
+          end
+        }
+      }
+    end
 
     statistics
   end
