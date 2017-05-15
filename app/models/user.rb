@@ -19,6 +19,40 @@ class User < ApplicationRecord
     self.current_project_id.nil? ? nil : self.projects.where(id: self.current_project_id).last
   end
 
+  def get_statistics statistics_type
+    statistics = {
+        pomo_count: 0,
+        short_break_count: 0,
+        long_break_count: 0,
+        pomo_cycle_count: 0,
+        work_minutes: 0
+    }
+
+    case statistics_type
+      when 'all_time'
+        user = User.eager_load(projects: :statistics)
+        .where('users.id = ?', self.id).last
+      when 'last_month'
+        user = User.eager_load(projects: :statistics)
+        .where('users.id = ? AND statistics.created_at BETWEEN ? AND ?', self.id, 1.month.ago, Time.now).last
+      when 'last_week'
+        user = User.eager_load(projects: :statistics)
+        .where('users.id = ? AND statistics.created_at BETWEEN ? AND ?', self.id, 1.week.ago, Time.now).last
+    end
+
+    user.projects.each{ |project|
+      project.statistics.each{ |statistic|
+        statistics[:pomo_count] += 4
+        statistics[:short_break_count] += 3
+        statistics[:long_break_count] += 1
+        statistics[:pomo_cycle_count] += 1
+        statistics[:work_minutes] += statistic.work_minutes
+      }
+    }
+
+    statistics
+  end
+
   private
   def create_defaults
     self.create_duration_settings

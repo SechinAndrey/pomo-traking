@@ -1,6 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :current_project_id, :email, :username, :avatar,
-             :pomo_duration, :short_break_duration, :long_break_duration, :st
+             :pomo_duration, :short_break_duration, :long_break_duration
 
   def avatar
     object.avatar&.avatar_url

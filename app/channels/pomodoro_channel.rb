@@ -3,6 +3,11 @@ class PomodoroChannel < ApplicationCable::Channel
   def subscribed
     ap 'PomodoroChannel - subscribed'
     stream_from stream_name
+
+    # ap '-----------------------------------------------'
+    # ap current_user.get_statistics 'all_time'
+    # ap '-----------------------------------------------'
+
     load_timer
   end
 
