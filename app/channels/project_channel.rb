@@ -10,7 +10,6 @@ class ProjectChannel < ApplicationCable::Channel
     connection.close
   end
 
-
   def receive(data)
 
   end

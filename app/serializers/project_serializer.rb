@@ -4,6 +4,7 @@ class ProjectSerializer < ActiveModel::Serializer
              :pomo_duration, :short_break_duration, :long_break_duration
 
   def pomo_cycle
+    #todo: fix (?: in project only one pomo_cycle)
     PomoCycle.where(id: object.pomo_cycle&.id).last.serialize
   end
 
