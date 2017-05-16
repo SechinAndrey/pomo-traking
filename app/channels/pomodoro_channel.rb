@@ -2,12 +2,8 @@ class PomodoroChannel < ApplicationCable::Channel
 
   def subscribed
     ap 'PomodoroChannel - subscribed'
+    @statistics_params = ['all_time', 'last_month', 'last_week']
     stream_from stream_name
-
-    ap '-----------------------------------------------'
-    ap current_user.get_statistics 'all_time'
-    ap '-----------------------------------------------'
-
     load_timer
   end
 
@@ -50,7 +46,8 @@ class PomodoroChannel < ApplicationCable::Channel
     REDIS.set("sync_end_action_#{current_user.id}", 'synchronized')
     current_project = current_user.current_project
     current_project = current_project.pomo_cycle.load_timer if current_project&.pomo_cycle
-    @broadcast_data = {current_project: current_project.serialize}
+    statistics = current_user.get_statistics @statistics_params
+    @broadcast_data = {current_project: current_project.serialize, statistics: statistics}
     broadcast
   end
 
@@ -101,9 +98,11 @@ class PomodoroChannel < ApplicationCable::Channel
       current_project = current_user.current_project
       if current_project&.pomo_cycle&.started?
         current_project.pomo_cycle.end_timer
+        statistics = current_user.get_statistics @statistics_params
         @broadcast_data = {
             ended: true,
-            current_project: current_project.serialize
+            current_project: current_project.serialize,
+            statistics: statistics
         }
         broadcast
       end

@@ -6,7 +6,8 @@ angular.module('pomoTracking')
         'ActionCableChannel',
         'Auth',
         'projectsManager',
-        function($window, $rootScope, $interval, ActionCableChannel, Auth, projectsManager){
+        'statistics',
+        function($window, $rootScope, $interval, ActionCableChannel, Auth, projectsManager, statistics){
             var o = {
                 Socket: {}
             };
@@ -134,6 +135,7 @@ angular.module('pomoTracking')
 
             var update = function(data){
                 if(!data.current_project){return}
+                if(data.statistics){statistics = data.statistics; console.debug(statistics);}
                 Auth.currentUser().then(function () {
                     Auth._currentUser.current_project_id = data.current_project.id;
                 });
@@ -163,8 +165,6 @@ angular.module('pomoTracking')
                         o.sec = Math.floor(o.time/1000 % 60);
                     }
                 });
-
-
             };
 
             o.set_default = function(clean_socket){
