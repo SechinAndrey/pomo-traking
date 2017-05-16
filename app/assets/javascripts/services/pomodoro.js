@@ -135,7 +135,7 @@ angular.module('pomoTracking')
 
             var update = function(data){
                 if(!data.current_project){return}
-                if(data.statistics){statistics = data.statistics; console.debug(statistics);}
+                if(data.statistics){statistics.data = data.statistics; console.debug(statistics);}
                 Auth.currentUser().then(function () {
                     Auth._currentUser.current_project_id = data.current_project.id;
                 });
